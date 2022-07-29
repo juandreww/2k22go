@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	m1 := "mangtas"
+	// m1 := "mangtas"
 	m2 := "mang"
-	fmt.Println(strings.Contains(m1, m2))
+	fmt.Println(strings.ReplaceAll(m2, "m", "PED"))
 }
