@@ -1,9 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 func main() {
 	m1 := "mangtas"
-	m1 := "mangtios"
-	fmt.Println(m1)
+	m2 := "mang"
+	fmt.Println(strings.Contains(m1, m2))
 }
