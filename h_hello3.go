@@ -14,6 +14,17 @@ func main() {
 	} else if !*flag {
 		fmt.Println("True")
 	} else {
+		fmt.Println("False")
+	}
 
+	for i := 0; i < 10; i++ {
+		fmt.Println(i)
+	}
+
+	arr := []string{"Yangon", "Manila", "Haiti"}
+
+	for i, value := range arr {
+		fmt.Println(i)
+		fmt.Println(value)
 	}
 }
