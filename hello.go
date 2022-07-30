@@ -5,7 +5,7 @@ import (
 )
 
 func main() {
-	m1 := 3
-	m2 := "yes"
+	m1 := 3000000000000000000
+	m2 := "assss"
 	fmt.Println(&m1, &m2)
 }
