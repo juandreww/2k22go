@@ -20,4 +20,16 @@ func main() {
 		}
 		fmt.Println(i)
 	}
+
+	day := "Mon"
+	switch day {
+	case "Fri":
+		fmt.Println("TGIF")
+	case "Mon":
+		fmt.Println("I Love Monday")
+	case "Tue", "Wed", "Thu":
+		fmt.Println("I am trying to survive")
+	default:
+		fmt.Println("Everyday is awesome")
+	}
 }
