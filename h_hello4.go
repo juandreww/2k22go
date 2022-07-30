@@ -38,4 +38,5 @@ func main() {
 		fmt.Println("Thank you bye")
 		break;
 	}
+	fmt.Println("Test")
 }
