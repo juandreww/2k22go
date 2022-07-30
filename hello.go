@@ -6,7 +6,7 @@ import (
 
 type Car interface {
 	Drive()
-	FillGasoline() 
+	// FillGasoline() 
 	Stop()
 }
 
@@ -28,11 +28,22 @@ func (t *Toyota) Drive() {
 	fmt.Println(t.ToyotaModel)
 }
 
+func (t *Toyota) Stop() {
+	fmt.Println("Toyota is stopping")
+}
+
+func newModel(arg string) Car {
+	return &Toyota{arg}
+}
+
 
 func main() {
+	t := Toyota{"Yaris"}
+	t.Drive()
+
 	h := Honda{"Jazz"}
 	h.Drive()
 	
-	t := Toyota{"Yaris"}
-	t.Drive()
+	nm := newModel("Harrier")
+	nm.Drive()
 }
