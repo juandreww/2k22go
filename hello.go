@@ -29,5 +29,6 @@ func main() {
 		PhoneNo:	249899100}
 	c.Print()
 	c.Announce()
-	c.getPhone()
+	d := c.getPhone()
+	fmt.Println(d)
 }
