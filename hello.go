@@ -11,6 +11,9 @@ type Car struct {
 }
 
 func main() {
-	c := Car{"Adam", 24, 9899100}
+	c := Car{
+		Name: 		"Adam", 
+		Age:		24, 
+		PhoneNo:	249899100}
 	fmt.Println(c)
 }
