@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func swap(m1, m2) {
+func swap(m1, m2 *int) {
 	var temp int
 	temp = *m2
 	*m2 = *m1
