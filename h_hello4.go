@@ -32,4 +32,10 @@ func main() {
 	default:
 		fmt.Println("Everyday is awesome")
 	}
+
+	switch {
+	case day == "Mon":
+		fmt.Println("Thank you bye")
+		break;
+	}
 }
