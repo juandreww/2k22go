@@ -27,4 +27,12 @@ func main() {
 		fmt.Println(i)
 		fmt.Println(value)
 	}
+
+	mymap := make(map[string]interface{})
+	mymap["name"] = "Jamal"
+	mymap["age"] = 25
+
+	for k, v := range mymap {
+		fmt.Printf("Key: %s and Value: %v\n", k, v)
+	}
 }
