@@ -4,31 +4,32 @@ import (
 	"fmt"
 )
 
-type Car struct {
-	Name string
-	Age int
-	PhoneNo int
+type Car interface {
+	Drive()
+	FillGasoline() 
+	Stop()
 }
 
-func (c Car) Print() {
-	fmt.Println(c)
+type Toyota struct {
+	ToyotaModel string
 }
 
-func (c Car) Announce() {
-	fmt.Println("car is discounted")
+type Honda struct {
+	HondaModel string
 }
 
-func (c Car) getPhone() int {
-	return c.PhoneNo
+func (h *Honda) Drive() {
+	fmt.Println("Honda on the move")
+	fmt.Println(h.HondaModel)
 }
+
+func (t *Toyota) Drive() {
+	fmt.Println("Toyota on the go")
+	fmt.Println(t.ToyotaModel)
+}
+
 
 func main() {
-	c := Car{
-		Name: 		"Adam", 
-		Age:		24, 
-		PhoneNo:	249899100}
-	c.Print()
-	c.Announce()
-	d := c.getPhone()
-	fmt.Println(d)
+
+	
 }
