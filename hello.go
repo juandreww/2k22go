@@ -5,7 +5,11 @@ import (
 )
 
 func main() {
-	m1 := "mang"
-	m2 := "mang tas"
-	fmt.Println(strings.Split(m2, " "), m1+m2)
+	var arr []int
+	arr = append(arr, 1,2,3)
+	fmt.Println(arr)
+}
+
+func task() {
+
 }
