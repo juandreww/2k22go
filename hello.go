@@ -18,6 +18,10 @@ func (c Car) Announce() {
 	fmt.Println("car is discounted")
 }
 
+func (c Car) getPhone() int {
+	return c.PhoneNo
+}
+
 func main() {
 	c := Car{
 		Name: 		"Adam", 
@@ -25,4 +29,5 @@ func main() {
 		PhoneNo:	249899100}
 	c.Print()
 	c.Announce()
+	c.getPhone()
 }
