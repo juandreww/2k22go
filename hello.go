@@ -30,6 +30,9 @@ func (t *Toyota) Drive() {
 
 
 func main() {
-
+	h := Honda{"Jazz"}
+	h.Drive()
 	
+	t := Toyota{"Yaris"}
+	t.Drive()
 }
