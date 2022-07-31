@@ -7,6 +7,12 @@ import (
 func main() {
 	c := make(chan int)
 
-	fmt.Println(&c, c);
+	go func() {
+		c <- 1
+	}()
+	
+	val := <- c
+
+	fmt.Println(&c, c, val);
 }
 
