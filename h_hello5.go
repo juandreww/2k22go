@@ -19,9 +19,9 @@ func superheavy() {
 	}
 }
 
-func main() {
-	go heavy()
-	go superheavy()
-	fmt.Println("Fin")
-	time.Sleep(time.Second * 5)
-}
+// func main() {
+// 	go heavy()
+// 	go superheavy()
+// 	fmt.Println("Fin")
+// 	time.Sleep(time.Second * 5)
+// }
