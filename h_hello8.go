@@ -12,10 +12,10 @@ func main() {
 	c := make(chan *CarFree, 3)
 
 	go func() {
-		c <- &CarFree("1")
-		// c <- &Car("2")
-		// c <- &Car("3")
-		// c <- &Car("4")
+		c <- &CarFree{"1"}
+		c <- &CarFree{"2"}
+		c <- &CarFree{"3"}
+		c <- &CarFree{"4"}
 		close(c)
 	}()
 
