@@ -4,25 +4,25 @@ import (
 	"fmt"
 )
 
-type Car struct {
+type CarFree struct {
 	Model string
 }
 
 func main() {
-	c := make(chan *Car, 3)
+	c := make(chan *CarFree, 3)
 
 	go func() {
-		c <- &Car("1")
-		c <- &Car("2")
-		c <- &Car("3")
-		c <- &Car("4")
+		c <- &CarFree("1")
+		// c <- &Car("2")
+		// c <- &Car("3")
+		// c <- &Car("4")
 		close(c)
 	}()
 
-	fmt.Println("Fin")
+	// fmt.Println("Fin")
 	for i := range c {
 		fmt.Println(i.Model)
 	}
-	fmt.Println("Done")
+	// fmt.Println("Done")
 }
 
