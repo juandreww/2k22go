@@ -12,7 +12,13 @@ func main() {
 	}()
 	
 	val := <- c
+	fmt.Println(&c, c, val)
 
-	fmt.Println(&c, c, val);
+	go func() {
+		c <- 3
+	}()
+	
+	val = <- c
+	fmt.Println(&c, c, val)
 }
 
