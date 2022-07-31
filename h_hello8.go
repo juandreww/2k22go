@@ -4,24 +4,24 @@ import (
 	"fmt"
 )
 
-func main() {
-	c := make(chan int, 3)
+type Car struct {
+	Model string
+}
 
-	// fmt.Println(c)
-	// for i := range c {
-	// 	fmt.Println(i)
-	// }
+func main() {
+	c := make(chan *Car, 3)
+
 	go func() {
-		c <- 1
-		c <- 2
-		c <- 3
-		c <- 4
+		c <- &Car("1")
+		c <- &Car("2")
+		c <- &Car("3")
+		c <- &Car("4")
 		close(c)
 	}()
 
 	fmt.Println("Fin")
 	for i := range c {
-		fmt.Println(i)
+		fmt.Println(i.Model)
 	}
 	fmt.Println("Done")
 }
