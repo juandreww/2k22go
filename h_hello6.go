@@ -2,15 +2,25 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
 
 func main() {
-	func() {
+
+	wg := &sync.WaitGroup{}
+
+	wg.Add(2)
+	go func() {
 		fmt.Println("Hallo")
+		wg.Done()
 	}()
-	func() {
+	go func() {
 		fmt.Println("World")
+		wg.Done()
 	}()
+
 	fmt.Println("Fin")
+	wg.Wait()
+	fmt.Println("Done")
 }
 
