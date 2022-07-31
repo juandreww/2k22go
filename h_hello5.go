@@ -12,7 +12,10 @@ func heavy() {
 	}
 }
 
+
+
 func main() {
 	go heavy()
 	fmt.Println("Fin")
+	time.Sleep(time.Second * 5)
 }
