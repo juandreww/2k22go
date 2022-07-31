@@ -37,13 +37,13 @@ func newModel(arg string) Car {
 }
 
 
-func main() {
-	t := Toyota{"Yaris"}
-	t.Drive()
+// func main() {
+// 	t := Toyota{"Yaris"}
+// 	t.Drive()
 
-	h := Honda{"Jazz"}
-	h.Drive()
+// 	h := Honda{"Jazz"}
+// 	h.Drive()
 	
-	nm := newModel("Harrier")
-	nm.Drive()
-}
+// 	nm := newModel("Harrier")
+// 	nm.Drive()
+// }
