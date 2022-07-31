@@ -7,7 +7,7 @@ import (
 func main() {
 	c := make(chan int, 3)
 
-	fmt.Println(c)
+	// fmt.Println(c)
 	// for i := range c {
 	// 	fmt.Println(i)
 	// }
@@ -16,6 +16,7 @@ func main() {
 		c <- 2
 		c <- 3
 		c <- 4
+		close(c)
 	}()
 
 	fmt.Println("Fin")
