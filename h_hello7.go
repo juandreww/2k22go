@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 ) 
 
 func main() {
@@ -18,7 +19,9 @@ func main() {
 		c <- 3
 	}()
 	
+	time.Sleep(time.Second * 2)
 	val = <- c
 	fmt.Println(&c, c, val)
+	fmt.Println("Fin")
 }
 
