@@ -21,7 +21,7 @@ func superheavy() {
 
 func main() {
 	go heavy()
-	superheavy()
+	go superheavy()
 	fmt.Println("Fin")
 	time.Sleep(time.Second * 5)
 }
