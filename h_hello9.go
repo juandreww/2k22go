@@ -5,9 +5,23 @@ import (
 	"time"
 )
 
-func pinger()
+func pinger(pinger <- chan int, ponger <- chan int) {
+	for {
+		<-pinger
+		fmt.Println("ping")
+		time.Sleep(time.Second)
+		ponger <- 1
+	}
+}
 
-func ponger()
+func ponger(pinger chan <- int, ponger chan <- int) {
+	for {
+		<-ponger
+		fmt.Println("pong")
+		time.Sleep(time.Second)
+		pinger <-1
+	}
+}
 
 func main() {
 	ping := make(chan int)
@@ -18,7 +32,5 @@ func main() {
 
 	ping <- 1
 
-	for {
-		time.Sleep(time.Second * 1)
-	}
+	select{}
 }
