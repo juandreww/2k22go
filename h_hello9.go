@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func pinger(pinger <- chan int, ponger <- chan int) {
+func pinger(pinger <- chan int, ponger chan <- int) {
 	for {
 		<-pinger
 		fmt.Println("ping")
@@ -14,7 +14,7 @@ func pinger(pinger <- chan int, ponger <- chan int) {
 	}
 }
 
-func ponger(pinger chan <- int, ponger chan <- int) {
+func ponger(pinger chan <- int, ponger <- chan int) {
 	for {
 		<-ponger
 		fmt.Println("pong")
