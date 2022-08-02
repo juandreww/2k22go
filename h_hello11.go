@@ -5,5 +5,9 @@ import (
 )
 
 func main() {
-	http.ListenAndServe("localhost:8000", nil)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/getgoing", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Hello World"))
+	})
+	http.ListenAndServe("localhost:3000", nil)
 }
