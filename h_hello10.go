@@ -24,4 +24,6 @@ func main() {
 	go func() {
 		c <- 1
 	}()
+
+	select{}
 }
