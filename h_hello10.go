@@ -25,5 +25,6 @@ func main() {
 		c <- 1
 	}()
 
+	c <- 1
 	select{}
 }
