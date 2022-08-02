@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"fmt"
 )
 
 func main() {
@@ -9,5 +10,6 @@ func main() {
 	mux.HandleFunc("/getgoing", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Hello World"))
 	})
-	http.ListenAndServe("localhost:3000", nil)
+	fmt.Println("listening")
+	http.ListenAndServe("localhost:80", mux)
 }
