@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 )
 
 func Select(c chan int, quits chan struct{}) {
@@ -11,7 +12,7 @@ func Select(c chan int, quits chan struct{}) {
 			fmt.Println("received")
 		case <- quits:
 			fmt.Println("Quit")
-			break
+			os.Exit(0)
 		}
 	}
 }
@@ -23,6 +24,7 @@ func main() {
 
 	go func() {
 		c <- 1
+		quits <- struct{}{}
 	}()
 
 	c <- 1
