@@ -16,6 +16,7 @@ func main() {
 				Code : http.StatusOK,
 				Body : "pong",
 			}
+			
 			json.NewEncoder(w).Encode(data)
 		}
 	})
