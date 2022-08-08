@@ -14,4 +14,6 @@ func Connect() *sql.DB {
 	
 	fmt.Println("Connected to postgres")
 	return db
+
+	
 }
