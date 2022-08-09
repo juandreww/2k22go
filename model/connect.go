@@ -27,6 +27,7 @@ func Connect() *sql.DB {
 		log.Fatal(err)
 	}
 	
+	
 	fmt.Println("Connected to postgres")
 	con = db
 	return db
