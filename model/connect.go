@@ -16,6 +16,8 @@ const (
 
 )
 
+var con *sql.DB
+
 func Connect() *sql.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
     "password=%s dbname=%s sslmode=disable",
@@ -26,6 +28,7 @@ func Connect() *sql.DB {
 	}
 	
 	fmt.Println("Connected to postgres")
+	con = db
 	return db
 
 	
