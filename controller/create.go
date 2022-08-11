@@ -4,7 +4,7 @@ import (
 	"net/http"
 	// "encoding/json"
 	"2k22go/model"
-	// "fmt"
+	"fmt"
 )
 
 func create() http.HandlerFunc {
@@ -14,6 +14,7 @@ func create() http.HandlerFunc {
 				w.Write([]byte("Some error"))
 				return
 			}
+			fmt.Println("this is post method...")
 		}
 	}
 }

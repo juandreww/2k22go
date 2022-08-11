@@ -12,6 +12,7 @@ func main() {
 	mux := controller.Register()
 	db := model.Connect()
 	defer db.Close()
+	
 	fmt.Println("Serving...");
 	http.ListenAndServe(":80", mux)
 }
