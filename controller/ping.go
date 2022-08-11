@@ -8,6 +8,7 @@ import (
 )
 
 func ping() http.HandlerFunc {
+	fmt.Println("ping")
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == http.MethodGet {
 			fmt.Println("Request received")
