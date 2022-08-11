@@ -10,5 +10,6 @@ import (
 func Register() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/ping", ping())
+	mux.HandleFunc("/try", try())
 	return mux
 }
