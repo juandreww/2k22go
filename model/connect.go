@@ -18,6 +18,12 @@ const (
 
 var con *sql.DB
 
+type Result struct {
+	uid string
+	type2 string
+	quantity int
+}
+
 func Connect() *sql.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
     "password=%s dbname=%s sslmode=disable",
@@ -27,7 +33,14 @@ func Connect() *sql.DB {
 		log.Fatal(err)
 	}
 
-	fmt.Sprintf("SELECT * FROM trnkelapabakar")
+	var result Result
+	resultSql:= "SELECT uid, type2, quantity FROM trnkelapabakar"
+	
+	err = db.QueryRow(resultSql).Scan(&result.uid, &result.type2, &result.quantity)
+	
+	if err != nil {
+		log.Fatal("Failed to execute query: ", err)
+	}
 	
 	fmt.Println("Connected to postgres")
 	con = db
