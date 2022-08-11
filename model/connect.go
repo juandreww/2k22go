@@ -26,10 +26,11 @@ func Connect() *sql.DB {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Sprintf("SELECT * FROM trnkelapabakar")
 	
 	fmt.Println("Connected to postgres")
 	con = db
 	return db
-
 	
 }
