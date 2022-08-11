@@ -2,9 +2,9 @@ package controller
 
 import (
 	"net/http"
-	"encoding/json"
-	"2k22go/views"
-	"fmt"
+	// "encoding/json"
+	"2k22go/model"
+	// "fmt"
 )
 
 func create() http.HandlerFunc {
