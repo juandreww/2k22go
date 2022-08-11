@@ -34,14 +34,15 @@ func Connect() *sql.DB {
 	}
 
 	var result Result
-	resultSql:= "SELECT uid, type2, quantity FROM trnkelapabakar"
+	resultSql:= "SELECT uid, type2, quantity FROM trnkelapabakar WHERE uid='00f713dc-5649-4a0a-96c6-d442b81a0aa1'"
 	
 	err = db.QueryRow(resultSql).Scan(&result.uid, &result.type2, &result.quantity)
-	
+
 	if err != nil {
 		log.Fatal("Failed to execute query: ", err)
 	}
 	
+	fmt.Printf("Hi %s, Welcoma back!\n", result.type2)
 	fmt.Println("Connected to postgres")
 	con = db
 	return db
