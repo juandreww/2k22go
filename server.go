@@ -14,6 +14,11 @@ const (
 	dbname = "d4ehughfapgq0k"
 )
 
+type Kelapa struct {
+	type2 string
+	quantity int
+}
+
 func main() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
     "password=%s dbname=%s sslmode=require",
@@ -31,4 +36,13 @@ func main() {
 
 	fmt.Println("Connected successfully")
 	
+	var kelapa Kelapa
+	kelapaSql := "SELECT type2, quantity FROM trnkelapabakar"
+
+	err = db.QueryRow(kelapaSql).Scan(&kelapa.type2, &kelapa.quantity)
+	if err != nil {
+		log.Fatal("Failed to execute query: ", err)
+	}
+
+	fmt.Printf("Hi %s welcome to my channel", kelapa.type2)
 }
