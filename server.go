@@ -17,7 +17,7 @@ const (
 
 type Kelapa struct {
 	type2 string
-	quantity int
+	quantity float64
 }
 
 func main() {
@@ -45,5 +45,5 @@ func main() {
 		log.Fatal("Failed to execute query: ", err)
 	}
 
-	fmt.Printf("Hi %s welcome to my channel", kelapa.type2)
+	fmt.Printf("Hi %s welcome to my channel, quantity is %.2f", kelapa.type2, kelapa.quantity)
 }
