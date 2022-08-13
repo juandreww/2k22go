@@ -10,12 +10,10 @@ import (
 func create() http.HandlerFunc {
 	fmt.Println("create")
 	return func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodPost {
+		if r.Method == http.MethodGet {
 			if err := model.CreateKelapa(); err != nil {
 				w.Write([]byte("Some error"))
 				return
-			} else {
-				w.Write([]byte("No error"))
 			}
 		}
 	}
