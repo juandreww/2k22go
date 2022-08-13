@@ -18,12 +18,6 @@ const (
 
 var con *sql.DB
 
-type Result struct {
-	uid string
-	type2 string
-	quantity int
-}
-
 func Connect() *sql.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
     "password=%s dbname=%s sslmode=disable",
