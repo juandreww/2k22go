@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"log"
+	"github.com/google/uuid"
 )
 
 const (
@@ -47,5 +48,7 @@ func main() {
 
 	fmt.Printf("Hi %s welcome to my channel, quantity is %.2f", kelapa.type2, kelapa.quantity)
 
-	
+	// $query := "INSERT INTO trnkelapabakar ("
+	id := uuid.New()
+	fmt.Println(id.String())
 }
