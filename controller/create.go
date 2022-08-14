@@ -6,7 +6,7 @@ import (
 	// "2k22go/model"
 	"2k22go/views"
 	"log"
-	// "fmt"
+	"fmt"
 
 )
 
@@ -16,6 +16,8 @@ func create() http.HandlerFunc {
 			data := views.Kelapa{}
 			log.Println(data)
 			json.NewDecoder(r.Body).Decode(&data)
+			fmt.Println(data)
+			log.Println(r.Body)
 			// if err := model.CreateKelapa(data.type2, data.quantity); err != nil {
 			// 	w.Write([]byte("Some error"))
 			// 	return
