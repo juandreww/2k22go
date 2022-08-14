@@ -6,6 +6,6 @@ type Response struct {
 }
 
 type Kelapa struct {
-	Type2 string `json:"type2"`
-	Quantity float64 `json:"quantity"`
+	Type2 string `json:"Type2"`
+	Quantity float64 `json:"Quantity"`
 }

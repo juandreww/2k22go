@@ -20,7 +20,10 @@ func ReadAll() ([]views.Kelapa, error) {
 			break;
 		}
 		data := views.Kelapa{}
-		spew.Dump(rows);
+		if i == 1 {
+			fmt.Println(rows)
+			fmt.Println(rows.Scan(&data.Type2, &data.Quantity))
+		}
 		rows.Scan(&data.Type2, &data.Quantity)
 		coconut = append(coconut, data)
 		i++
