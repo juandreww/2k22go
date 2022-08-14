@@ -12,6 +12,7 @@ func ReadAll() ([]views.Kelapa, error) {
 	if err != nil {
 		return nil, err
 	}
+	defer rows.Close()
 	
 	coconut := []views.Kelapa{}
 	i := 0;
@@ -19,13 +20,14 @@ func ReadAll() ([]views.Kelapa, error) {
 		if i == 5 {
 			break;
 		}
-		data := views.Kelapa{}
+		var type2 string
+		var quantity float64
 		if i == 1 {
-			fmt.Println(rows)
-			fmt.Println(rows.Scan(&data.Type2, &data.Quantity))
+			// fmt.Println(rows)
 		}
-		rows.Scan(&data.Type2, &data.Quantity)
-		coconut = append(coconut, data)
+		rows.Scan(&type2, &quantity)
+		fmt.Println(type2)
+		// coconut = append(coconut, type2)
 		i++
 	}
 	
