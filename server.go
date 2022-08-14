@@ -46,7 +46,7 @@ func main() {
 		log.Fatal("Failed to execute query: ", err)
 	}
 
-	fmt.Printf("Hi %s welcome to my channel, quantity is %.2f", kelapa.type2, kelapa.quantity)
+	fmt.Printf("Hi %s welcome to my channel, quantity is %.2f\n", kelapa.type2, kelapa.quantity)
 
 	// $query := "INSERT INTO trnkelapabakar ("
 	id := uuid.New()
