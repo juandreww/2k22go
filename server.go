@@ -21,7 +21,7 @@ type Kelapa struct {
 	quantity float64
 }
 
-func main() {
+func main2() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
     "password=%s dbname=%s sslmode=require",
     host, port, user, password, dbname)
