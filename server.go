@@ -48,7 +48,15 @@ func main() {
 
 	fmt.Printf("Hi %s welcome to my channel, quantity is %.2f\n", kelapa.type2, kelapa.quantity)
 
-	// $query := "INSERT INTO trnkelapabakar ("
+	
 	id := uuid.New()
-	fmt.Println(id.String())
+	// fmt.Println(id.String())
+	query := "INSERT INTO trnkelapabakar (uid, type2, quantity)
+	VALUES ($1, $2, $3)"
+
+	_, err = db.Exec(query, id.String(), "bakar", 999)
+	if err != nil {
+		panic(err)
+	}
+
 }
