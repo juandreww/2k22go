@@ -14,18 +14,46 @@ func ReadAll() ([]views.Kelapa, error) {
 	}
 	
 	coconut := []views.Kelapa{}
-	spew.Dump(coconut)
+	i := 0;
+	for rows.Next() {
+		if i == 5 {
+			break;
+		}
+		data := views.Kelapa{}
+		spew.Dump(rows);
+		rows.Scan(&data.Type2, &data.Quantity)
+		coconut = append(coconut, data)
+		i++
+	}
+	
+	fmt.Println("CreateKelapa here...")
+	
+	return coconut, nil
+}
+
+func ReadSelected(uid string) ([]views.Kelapa, error) {
+	spew.Dump(uid)
+	rows, err := con.Query("SELECT * FROM trnkelapabakar WHERE type2 = ?", uid)
+	spew.Dump(rows)
+
+	if rows == nil {
+		fmt.Println("No rows returned")
+	}
+	if err != nil {
+		return nil, err
+	} 
+	
+	coconut := []views.Kelapa{}
+	// spew.Dump(coconut)
+	
 	for rows.Next() {
 		data := views.Kelapa{}
+		
 		rows.Scan(&data.Type2, &data.Quantity)
 		coconut = append(coconut, data)
 	}
 	
 	fmt.Println("CreateKelapa here...")
-	// if err != nil {
-	// 	return err
-	// }
-	// defer insertQ.Close()
 	
 	return coconut, nil
 }
