@@ -24,11 +24,11 @@ func Connect() *sql.DB {
     host, port, user, password, dbname)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
+		fmt.Println("error in model connect")
 		log.Fatal(err)
 	}
 	
 	fmt.Println("Connected to postgres")
 	con = db
 	return db
-	
 }

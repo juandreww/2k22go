@@ -5,11 +5,13 @@ import (
 )
 
 func CreateKelapa() error {
-	insertQ, err := con.Query("INSERT INTO trnkelapabakar VALUES(?, ?)", "Try", "Try")
-	defer insertQ.Close()
+	insertQ, err := con.Query("INSERT INTO trnkelapabakar(type2, quantity) VALUES(?, ?)", "Try", "Try")
+	
+	fmt.Println("CreateKelapa here...")
 	if err != nil {
 		return err
 	}
-	fmt.Println("CreateKelapa here...")
+	defer insertQ.Close()
+	
 	return nil
 }
