@@ -51,8 +51,8 @@ func main() {
 	
 	id := uuid.New()
 	// fmt.Println(id.String())
-	query := "INSERT INTO trnkelapabakar (uid, type2, quantity)
-	VALUES ($1, $2, $3)"
+	query := `INSERT INTO trnkelapabakar (uid, type2, quantity)
+	VALUES ($1, $2, $3)`
 
 	_, err = db.Exec(query, id.String(), "bakar", 999)
 	if err != nil {
