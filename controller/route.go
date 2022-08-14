@@ -7,7 +7,7 @@ import (
 	// "fmt"
 )
 
-func Register() *http.ServeMux {
+func RegisterApi() *http.ServeMux {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/ping", ping())
 	mux.HandleFunc("/create", create())

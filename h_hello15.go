@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	mux := controller.Register()
-	db := model.Connect()
+	mux := controller.RegisterApi()
+	db := model.ConnectDB()
 	defer db.Close()
 	
 	fmt.Println("Serving...");

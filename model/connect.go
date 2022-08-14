@@ -18,7 +18,7 @@ const (
 
 var con *sql.DB
 
-func Connect() *sql.DB {
+func ConnectDB() *sql.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
     "password=%s dbname=%s sslmode=require",
     host, port, user, password, dbname)
