@@ -3,31 +3,31 @@ package model
 import (
 	"2k22go/views"
 	"fmt"
-
+	"log"
 	"github.com/davecgh/go-spew/spew"
 )
 
 func ReadAll() ([]views.Kelapa, error) {
 	rows, err := con.Query("SELECT * FROM trnkelapabakar")
 	if err != nil {
-		return nil, err
+		log.Fatal(err)
 	}
 	defer rows.Close()
 	
 	coconut := []views.Kelapa{}
 	i := 0;
 	for rows.Next() {
+		var type2 string
+		var quantity float64
 		if i == 5 {
 			break;
 		}
-		var type2 string
-		var quantity float64
-		if i == 1 {
-			// fmt.Println(rows)
-		}
-		rows.Scan(&type2, &quantity)
-		fmt.Println(type2)
-		// coconut = append(coconut, type2)
+		
+		if err := rows.Scan(&type2, &quantity); err != nil {
+            log.Fatal(err)
+        }
+
+		fmt.Printf("hey %s you %.2f", type2, quantity)
 		i++
 	}
 	
