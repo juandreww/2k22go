@@ -40,6 +40,7 @@ func ReadSelected(uid string) ([]views.Kelapa, error) {
 	spew.Dump(uid)
 	rows, err := con.Query("SELECT * FROM trnkelapabakar WHERE type2 = ?", uid)
 	spew.Dump(rows)
+	
 
 	if rows == nil {
 		fmt.Println("No rows returned")
