@@ -8,7 +8,7 @@ import (
 )
 
 func ReadAll() ([]views.Kelapa, error) {
-	rows, err := con.Query("SELECT * FROM trnkelapabakar")
+	rows, err := con.Query("SELECT Quantity FROM trnkelapabakar")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -16,18 +16,19 @@ func ReadAll() ([]views.Kelapa, error) {
 	
 	coconut := []views.Kelapa{}
 	i := 0;
+	fmt.Println("wdaw")
 	for rows.Next() {
 		var type2 string
-		var quantity float64
+		var Quantity float64
 		if i == 5 {
 			break;
 		}
 		
-		if err := rows.Scan(&type2, &quantity); err != nil {
+		if err := rows.Scan(&Quantity); err != nil {
             log.Fatal(err)
         }
 
-		fmt.Printf("hey %s you %.2f", type2, quantity)
+		fmt.Printf("hey %s you %.2f", type2, Quantity)
 		i++
 	}
 	
