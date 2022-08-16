@@ -8,7 +8,7 @@ import (
 )
 
 func ReadAll() ([]views.Kelapa, error) {
-	rows, err := con.Query("SELECT Quantity FROM trnkelapabakar")
+	rows, err := con.Query("SELECT type2 FROM trnkelapabakar")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -18,17 +18,18 @@ func ReadAll() ([]views.Kelapa, error) {
 	i := 0;
 	fmt.Println("wdaw")
 	for rows.Next() {
-		var type2 string
-		var Quantity float64
+		// var Type2 string
+		
+		kelapa := views.Kelapa{}
 		if i == 5 {
 			break;
 		}
 		
-		if err := rows.Scan(&Quantity); err != nil {
+		if err := rows.Scan(&kelapa.Type2); err != nil {
             log.Fatal(err)
         }
 
-		fmt.Printf("hey %s you %.2f", type2, Quantity)
+		fmt.Printf("hey %s you\n", kelapa.Type2)
 		i++
 	}
 	
