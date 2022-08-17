@@ -39,9 +39,7 @@ func ReadAll() ([]views.Kelapa, error) {
 }
 
 func ReadSelected(uid string) ([]views.Kelapa, error) {
-	spew.Dump(uid)
-	rows, err := con.Query("SELECT * FROM trnkelapabakar WHERE type2 = ?", uid)
-	spew.Dump(rows)
+	rows, err := con.Query("SELECT * FROM trnkelapabakar WHERE uid = ?", uid)
 	
 
 	if rows == nil {
