@@ -34,8 +34,7 @@ func create() http.HandlerFunc {
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(data)
 		} else if r.Method == http.MethodDelete { 
-			uid := r.URL.Path[1:]
-			spew.Dump(uid)
+			uid := r.URL.Query().Get("uid")
 			if err := model.DeleteSelected(uid); err != nil {
 				w.Write([]byte("Some error"))
 				return
