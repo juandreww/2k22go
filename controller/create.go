@@ -33,14 +33,17 @@ func create() http.HandlerFunc {
 			}
 			w.WriteHeader(http.StatusOK)
 			json.NewEncoder(w).Encode(data)
-		} else if r.Method == http.MethodDelete {
-			uid := r.URL.Query().Get("uid")
-			data, err := model.DeleteSelected(uid)
-			if err != nil {
-				w.Write([]byte(err.Error()))
+		} else if r.Method == http.MethodDelete { 
+			uid := r.URL.Path[1:]
+			if err := model.DeleteSelected(uid); err != nil {
+				w.Write([]byte("Some error"))
+				return
 			}
+			
 			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode(data)
+			json.NewEncoder(w).Encode(struct {
+				Status string `json:"Status"`
+			}{"Item Deleted"})
 		}
 	}
 }
