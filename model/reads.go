@@ -18,8 +18,6 @@ func ReadAll() ([]views.Kelapa, error) {
 	i := 0;
 	fmt.Println("wdaw")
 	for rows.Next() {
-		// var Type2 string
-		
 		kelapa := views.Kelapa{}
 		if i == 5 {
 			break;
