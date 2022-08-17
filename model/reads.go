@@ -39,9 +39,11 @@ func ReadAll() ([]views.Kelapa, error) {
 }
 
 func ReadSelected(uid string) ([]views.Kelapa, error) {
-	rows, err := con.Query("SELECT * FROM trnkelapabakar WHERE uid = ?", uid)
+	spew.Dump(uid)
+	uuid := "4b979091-af5f-43cb-ba1f-d44cbfa68959"
+	spew.Dump(uuid)
+	rows, err := con.Query("SELECT type2, quantity FROM trnkelapabakar WHERE uid::text = ($1)::uuid", uid)
 	
-
 	if rows == nil {
 		fmt.Println("No rows returned")
 	}
