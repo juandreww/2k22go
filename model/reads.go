@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"log"
 	"github.com/davecgh/go-spew/spew"
+	// "database/sql"
 )
 
 func ReadAll() ([]views.Kelapa, error) {
-	rows, err := con.Query("SELECT type2 FROM trnkelapabakar")
+	rows, err := con.Query("SELECT type2, quantity FROM trnkelapabakar")
 	if err != nil {
+		fmt.Println("ya")
 		log.Fatal(err)
 	}
 	defer rows.Close()
@@ -23,11 +25,11 @@ func ReadAll() ([]views.Kelapa, error) {
 			break;
 		}
 		
-		if err := rows.Scan(&kelapa.Type2); err != nil {
+		if err := rows.Scan(&kelapa.Type2, &kelapa.Quantity); err != nil {
             log.Fatal(err)
         }
 
-		fmt.Printf("hey %s you\n", kelapa.Type2)
+		fmt.Printf("hey %s you %.2f\n", kelapa.Type2, kelapa.Quantity)
 		i++
 	}
 	
