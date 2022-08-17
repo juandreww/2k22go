@@ -6,7 +6,7 @@ import (
 	"2k22go/model"
 	"2k22go/views"
 	// "log"
-	// "github.com/davecgh/go-spew/spew"
+	"github.com/davecgh/go-spew/spew"
 	// "fmt"
 
 )
@@ -35,6 +35,7 @@ func create() http.HandlerFunc {
 			json.NewEncoder(w).Encode(data)
 		} else if r.Method == http.MethodDelete { 
 			uid := r.URL.Path[1:]
+			spew.Dump(uid)
 			if err := model.DeleteSelected(uid); err != nil {
 				w.Write([]byte("Some error"))
 				return
