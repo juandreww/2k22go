@@ -6,6 +6,8 @@ import (
 	// "encoding/json"
 	"2k22go/controller"
 	"2k22go/model"
+	"log"
+	"os"
 )
 
 func main() {
@@ -14,5 +16,7 @@ func main() {
 	defer db.Close()
 	
 	fmt.Println("Serving...");
-	http.ListenAndServe(":80", mux)
+	port := os.Getenv("PORT")
+	log.Fatal(http.ListenAndServe(":"+port, mux))
+	// http.ListenAndServe(":80", mux)
 }
