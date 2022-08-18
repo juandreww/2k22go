@@ -16,7 +16,11 @@ func main() {
 	defer db.Close()
 	
 	fmt.Println("Serving...");
+
+	// for heroku
 	port := os.Getenv("PORT")
 	log.Fatal(http.ListenAndServe(":"+port, mux))
+
+	// for Local
 	// http.ListenAndServe(":80", mux)
 }
