@@ -17,7 +17,7 @@ type secretAgent struct {
 }
 
 func (p person) speak() {
-	fmt.Println(p.fname, `says, "Good morning, James."`)
+	fmt.Println(p.fname, p.lname, `says, "Good morning, James."`)
 }
 
 func main() {
