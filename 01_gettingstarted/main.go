@@ -6,6 +6,15 @@ import (
 
 var x int
 
+type person struct {
+	fname string
+	lname string
+}
+
+func (p person) speak() {
+	fmt.Println(p.fname, `says, "Good morning, James."`)
+}
+
 func main() {
 	x := 7
 	// started(x)
@@ -19,4 +28,11 @@ func main() {
 		"Girl" : 10,
 	}
 	fmt.Println(mp)
+
+	p1 := person{
+		"Miss",
+		"MoneyPenny",
+	}
+	fmt.Println(p1)
+	p1.speak()
 }
