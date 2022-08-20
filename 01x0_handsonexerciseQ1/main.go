@@ -38,6 +38,14 @@ func calculateRing(r size) {
 	fmt.Println("Her finger circumference is", r.circumference())
 } 
 
+type box struct {
+	size float64
+}
+
+func (b box) volume() {
+	fmt.Printf("%.2f cm", math.Pow(b.size, 3))
+}
+
 func main() {
 	myGf := girlfriend{
 		"Yomelia",
@@ -53,6 +61,9 @@ func main() {
 	r.diameter()
 	calculateRing(r)
 
+	fmt.Println("I have a box, with volume ")
+	box := box{10}
+	box.volume()
 
 	// create type square
 
