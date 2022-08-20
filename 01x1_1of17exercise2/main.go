@@ -7,6 +7,7 @@ import (
 var horseNumbers = []int{889, 112, 334, 556, 838, 909, 990, 883, 723, 233}
 
 /*
+	--
 	1. buat sebuahslice of integer
 	2. print out slice tersebut
 	3. looping dan print index nya
