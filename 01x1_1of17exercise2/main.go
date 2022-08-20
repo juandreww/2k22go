@@ -4,89 +4,19 @@ import (
 	"fmt"
 )
 
-/*
-	1. buatlah sebuah interface yang type di implementasi oleh person dan secretAgent
-	2. deklarasi sebuah fungsi dengan parameter interface tsb
-	3. panggil function tersebut di main dan value nya adalah type person
-	4. panggil function tersebut di main dan value nya adalah secretAgent
-*/
-
-type man struct {
-	name string
-	height int
-	weight float64
-}
-
-type woman struct {
-	name string
-	height int
-	weight float64
-}
-
-func (p man) validateheight() string {
-	if p.height < 170 {
-		return p.name + " is short"
-	} else {
-		return p.name + " is tall"
-	}
-}
-
-func (p woman) validateheight() string {
-	if p.height < 155 {
-		return p.name + " is short"
-	} else {
-		return p.name + " is tall"
-	}
-}
-
-func (p woman) validateweight() string {
-	if p.weight < 50.5 {
-		return p.name + " is skinny"
-	} else {
-		return p.name + " is fat"
-	}
-}
-
-func (p man) validateweight() string {
-	if p.weight < 65.5 {
-		return p.name + " is skinny"
-	} else {
-		return p.name + " is fat"
-	}
-}
-
-type validation interface {
-	validateheight() string
-	validateweight() string
-}
-
-func myOpinion(v validation) {
-	fmt.Println("Here is my thought...", v.validateheight())
-	
-}
-
-func my2ndOpinion(v validation) {
-	fmt.Println("Here is my 2nd thought...", v.validateweight())
-}
+var horseNumbers = []int{889, 112, 334, 556, 838, 909, 990, 883, 723, 233}
 
 func main() {
-	man := man{
-		"Javier",
-		180,
-		64.5,
+	fmt.Println("Ukuran maximum slice adalah:", cap(horseNumbers))
+	fmt.Println("Kuda yang akan bertarung berjumlah:",len(horseNumbers))
+	fmt.Println(horseNumbers)
+
+	for k, _ := range horseNumbers {
+		fmt.Println("Aku adalah kuda urutan ke", k)
 	}
 
-	wman := woman{
-		"Helena",
-		150,
-		55,
+	for k, v := range horseNumbers {
+		fmt.Printf("Kuda bernomor %d akan berada di urutan ke %d\n", v, k)
 	}
-	fmt.Println(man.validateheight())
-	fmt.Println(wman.validateheight())
-	myOpinion(wman)
-	myOpinion(man)
-	fmt.Println(man.validateweight())
-	fmt.Println(wman.validateweight())
-	my2ndOpinion(wman)
-	my2ndOpinion(man)
+
 }
