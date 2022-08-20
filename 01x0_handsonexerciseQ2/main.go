@@ -12,6 +12,16 @@ import (
 	buat struct oriflame
 	facecream
 	isSkinCare
+
+	1. buat struct person
+	2. buat struct agent fields, dan embed person
+	3. gunakan method pSpeak
+	4. gunakan method secretAgentSpeak
+	5. buat variabel type person
+	6. buat variabel type secret agent
+	7. panggil method Speak dari person
+	8. print secret agent
+	9. print speak dari variabel secret agent
 */
 
 type facecream struct {
