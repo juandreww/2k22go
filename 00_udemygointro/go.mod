@@ -1,4 +1,4 @@
-module 2k22go
+module 00_udemygointro
 
 go 1.18
 
