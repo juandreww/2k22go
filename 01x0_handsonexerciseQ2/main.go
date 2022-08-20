@@ -44,7 +44,6 @@ func (fc oriflame) isoriflame() {
 	} else {
 		fmt.Println("\"", fc.fName, fc.lName, "\" is not an Oriflame")
 	}
-	
 }
 
 func main() {
