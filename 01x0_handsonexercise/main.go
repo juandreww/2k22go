@@ -17,16 +17,22 @@ func bar(res http.ResponseWriter, req *http.Request) {
 func main() {
 	x := []int{7, 14, 21}
 	fmt.Println(x)
+	for i, _ := range x {
+		fmt.Println(i, "-", x[i])
+	}
 
 	y := make([]int, 0, 100)
 	y = append(y,200)
 	y = append(y,400)
 	y = append(y,800)
 	fmt.Println(y)
+	for i, v := range y {
+		fmt.Println(i, "-", v)
+	}
 
-	http.HandleFunc("/", foo)
-	http.HandleFunc("/dog", bar)
+	// http.HandleFunc("/", foo)
+	// http.HandleFunc("/dog", bar)
 
-	fmt.Println("Serving...");
-	http.ListenAndServe(":8080", nil)
+	// fmt.Println("Serving...");
+	// http.ListenAndServe(":8080", nil)
 }
