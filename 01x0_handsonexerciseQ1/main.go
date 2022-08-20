@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 /*
@@ -26,15 +27,15 @@ func (r rings) diameter() {
 }
 
 func (r rings) circumference() float64 {
-	
+	return math.Round(math.Pi * (r.radius * 2) * 100) / 100
 }
 
 type size interface {
-	circumference()
+	circumference() float64
 }
 
 func calculateRing(r size) {
-	
+	fmt.Println("Her finger circumference is", r.circumference())
 } 
 
 func main() {
@@ -50,7 +51,7 @@ func main() {
 	r := rings{4}
 	fmt.Println("Her finger diameter is ")
 	r.diameter()
-	fmt.Println("Her finger circumference is ")
+	calculateRing(r)
 
 
 	// create type square
