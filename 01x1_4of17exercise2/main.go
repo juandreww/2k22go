@@ -14,5 +14,5 @@ func main() {
 		"Epson",
 		"EP-200",
 	}
-	fmt.Println(p1)
+	fmt.Println("Printer adalah", p1.brand)
 }
