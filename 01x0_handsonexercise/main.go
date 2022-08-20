@@ -30,6 +30,17 @@ func main() {
 		fmt.Println(i, "-", v)
 	}
 
+	z := map[string]int{
+		"Todd" : 45,
+		"Helen" : 30,
+		"Miranda" : 22,
+	}
+	fmt.Println()
+	fmt.Println(z)
+	for k, v := range z {
+		fmt.Println(k, " - ", v)
+	}
+
 	// http.HandleFunc("/", foo)
 	// http.HandleFunc("/dog", bar)
 
