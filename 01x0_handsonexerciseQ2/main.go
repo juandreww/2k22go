@@ -14,6 +14,16 @@ import (
 	isSkinCare
 */
 
+type facecream struct {
+	fName string
+	lName string
+}
+
+type oriflame struct {
+	facecream
+	isSkinCare bool
+}
+
 func main() {
 	
 }
