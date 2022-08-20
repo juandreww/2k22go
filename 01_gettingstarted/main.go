@@ -11,6 +11,11 @@ type person struct {
 	lname string
 }
 
+type secretAgent struct {
+	person,
+	allowedtobringgun bool
+}
+
 func (p person) speak() {
 	fmt.Println(p.fname, `says, "Good morning, James."`)
 }
