@@ -19,9 +19,13 @@ type person struct {
 	lName string
 }
 
+func (p person) speak() {
+	fmt.Println("Speak of", p.fName)
+}
+
 func main() {
-	m := meaning()
-	fmt.Println(m)
+	p1 := person{"Nina", "Dobrev",}
+	p1.speak()
 
 	// http.HandleFunc("/", foo)
 	// http.HandleFunc("/dog", bar)
