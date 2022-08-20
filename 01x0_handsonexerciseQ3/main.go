@@ -39,12 +39,34 @@ func (p woman) validateheight() string {
 	}
 }
 
+func (p woman) validateweight() string {
+	if p.weight < 50.5 {
+		return p.name + " is skinny"
+	} else {
+		return p.name + " is fat"
+	}
+}
+
+func (p man) validateweight() string {
+	if p.weight < 65.5 {
+		return p.name + " is skinny"
+	} else {
+		return p.name + " is fat"
+	}
+}
+
 type validation interface {
 	validateheight() string
+	validateweight() string
 }
 
 func myOpinion(v validation) {
 	fmt.Println("Here is my thought...", v.validateheight())
+	
+}
+
+func my2ndOpinion(v validation) {
+	fmt.Println("Here is my 2nd thought...", v.validateweight())
 }
 
 func main() {
@@ -57,11 +79,14 @@ func main() {
 	wman := woman{
 		"Helena",
 		150,
-		45,
+		55,
 	}
 	fmt.Println(man.validateheight())
 	fmt.Println(wman.validateheight())
 	myOpinion(wman)
 	myOpinion(man)
-
+	fmt.Println(man.validateweight())
+	fmt.Println(wman.validateweight())
+	my2ndOpinion(wman)
+	my2ndOpinion(man)
 }
