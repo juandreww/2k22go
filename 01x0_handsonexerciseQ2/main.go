@@ -24,6 +24,25 @@ type oriflame struct {
 	isSkinCare bool
 }
 
+func (fc facecream) note() {
+	fmt.Println("\"", fc.fName, fc.lName, "\" be your own beauty")
+}
+
 func main() {
+	fs := facecream{
+		"North for Men",
+		"Ultimate Balance",
+	}
+	fmt.Println(fs)
+	fs.note()
 	
+	of := oriflame {
+		facecream {
+			"Southern Woman",
+			"Young Gel",
+		},
+		true,
+	}
+
+	of.note()
 }
