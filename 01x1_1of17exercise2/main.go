@@ -18,5 +18,4 @@ func main() {
 	for k, v := range horseNumbers {
 		fmt.Printf("Kuda bernomor %d akan berada di urutan ke %d\n", v, k)
 	}
-
 }
