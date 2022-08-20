@@ -38,6 +38,15 @@ func (fc facecream) note() {
 	fmt.Println("\"", fc.fName, fc.lName, "\" be your own beauty")
 }
 
+func (fc oriflame) isoriflame() {
+	if fc.isSkinCare == true {
+		fmt.Println("\"", fc.fName, fc.lName, "\" is product of Oriflame")
+	} else {
+		fmt.Println("\"", fc.fName, fc.lName, "\" is not an Oriflame")
+	}
+	
+}
+
 func main() {
 	fs := facecream{
 		"North for Men",
@@ -55,4 +64,5 @@ func main() {
 	}
 
 	of.note()
+	of.isoriflame()
 }
