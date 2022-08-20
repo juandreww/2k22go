@@ -15,6 +15,15 @@ func bar(res http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+	x := []int{7, 14, 21}
+	fmt.Println(x)
+
+	y := make([]int, 0, 100)
+	y = append(y,200)
+	y = append(y,400)
+	y = append(y,800)
+	fmt.Println(y)
+
 	http.HandleFunc("/", foo)
 	http.HandleFunc("/dog", bar)
 
