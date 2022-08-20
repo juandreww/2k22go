@@ -3,7 +3,7 @@ package controller
 import (
 	"net/http"
 	"encoding/json"
-	"2k22go/views"
+	"00_udemygointro/views"
 	"fmt"
 )
 

@@ -1,7 +1,7 @@
 package model
 
 import (
-	"2k22go/views"
+	"00_udemygointro/views"
 	"fmt"
 	"log"
 	// "github.com/davecgh/go-spew/spew"

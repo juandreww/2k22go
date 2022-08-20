@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 	"encoding/json"
-	"2k22go/model"
-	"2k22go/views"
+	"00_udemygointro/model"
+	"00_udemygointro/views"
 	// "log"
 	// "github.com/davecgh/go-spew/spew"
 	// "fmt"

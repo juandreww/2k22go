@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	// "encoding/json"
-	"2k22go/controller"
-	"2k22go/model"
+	"00_udemygointro/controller"
+	"00_udemygointro/model"
 	"log"
 	"os"
 )
