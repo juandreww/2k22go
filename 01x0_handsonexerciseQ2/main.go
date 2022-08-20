@@ -64,4 +64,13 @@ func main() {
 
 	of.note()
 	of.isoriflame()
+
+	ofs := oriflame {
+		facecream {
+			"East Girl",
+			"Normal Gel",
+		},
+		false,
+	}
+	ofs.isoriflame()
 }
