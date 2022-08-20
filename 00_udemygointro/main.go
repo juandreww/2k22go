@@ -6,8 +6,8 @@ import (
 	// "encoding/json"
 	"00_udemygointro/controller"
 	"00_udemygointro/model"
-	"log"
-	"os"
+	// "log"
+	// "os"
 )
 
 func main() {
@@ -18,9 +18,9 @@ func main() {
 	fmt.Println("Serving...");
 
 	// for heroku
-	port := os.Getenv("PORT")
-	log.Fatal(http.ListenAndServe(":"+port, mux))
+	// port := os.Getenv("PORT")
+	// log.Fatal(http.ListenAndServe(":"+port, mux))
 
 	// for Local
-	// http.ListenAndServe(":80", mux)
+	http.ListenAndServe(":80", mux)
 }
