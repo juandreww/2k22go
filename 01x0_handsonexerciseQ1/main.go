@@ -24,6 +24,7 @@ func main() {
 	}
 	fmt.Println("My girlfriend name is: ")
 	fmt.Println(myGf)
+	fmt.Println()
 
 	// create type square
 
