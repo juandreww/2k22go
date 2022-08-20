@@ -37,6 +37,9 @@ func main() {
 	}
 	fmt.Println()
 	fmt.Println(z)
+
+	fmt.Printf("%T\n", z)
+	fmt.Println(z["Todd"])
 	for k, v := range z {
 		fmt.Println(k, "-", v)
 	}
