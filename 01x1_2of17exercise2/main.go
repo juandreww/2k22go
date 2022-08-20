@@ -16,4 +16,15 @@ func main() {
 	farm["goat"] = 33
 
 	fmt.Println("Jumlah anjing adalah", farm["dog"])
+	fmt.Println()
+	
+	for k, _ := range farm {
+		fmt.Println("Ada hewan", k)
+	}
+
+	fmt.Println()
+
+	for k, v := range farm {
+		fmt.Println("Jumlah hewan", k, "adalah", v)
+	}
 }
