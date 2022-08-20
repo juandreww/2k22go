@@ -14,44 +14,32 @@ func bar(res http.ResponseWriter, req *http.Request) {
 	io.WriteString(res, "bar ran")
 }
 
+type person struct {
+	fName string
+	lName string
+}
+
 func main() {
-	x := []int{7, 14, 21}
-	fmt.Println(x)
-	for i, _ := range x {
-		fmt.Println(i, "-", x[i])
-	}
-
-	y := make([]int, 0, 100)
-	y = append(y,200)
-	y = append(y,400)
-	y = append(y,800)
-	fmt.Println(y)
-	for i, v := range y {
-		fmt.Println(i, "-", v)
-	}
-
-	z := map[string]int{
-		"Todd" : 45,
-		"Helen" : 30,
-		"Miranda" : 22,
-	}
-	fmt.Println()
-	fmt.Println(z)
-
-	fmt.Printf("%T\n", z)
-	fmt.Println(z["Todd"])
-	for k, v := range z {
-		fmt.Println(k, "-", v)
-	}
-	fmt.Println()
-
-	for k, _ := range z {
-		fmt.Println(k, "-", z[k])
-	}
-
 	aa := make(map[string]string)
 	aa["James"] = "007";
 	fmt.Println(aa["James"])
+
+
+	p1 := person{"Nina", "Dobrev",}
+	p2 := person{"Alicia", "Key",}
+	fmt.Println(p1)
+	fmt.Println(p2)
+
+	a1 := struct{
+		breed string
+		name string
+	}{
+		"Holywings",
+		"Shaun",
+	}
+
+	fmt.Println(a1)
+
 
 	// http.HandleFunc("/", foo)
 	// http.HandleFunc("/dog", bar)
