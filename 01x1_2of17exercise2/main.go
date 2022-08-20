@@ -6,6 +6,16 @@ import (
 
 var farm map[string]int
 
+/*
+	1. inisialisasi MAP, menggunakan key string value int
+	2. print out map nya
+	3. print key
+	4. print key & value
+	---
+	1. peternakan & jumlah binatangnya
+	2. ada ayam, sapi, ikan, kambing, anjing
+*/
+
 func main() {
 	farm = map[string]int{}
 
@@ -17,7 +27,7 @@ func main() {
 
 	fmt.Println("Jumlah anjing adalah", farm["dog"])
 	fmt.Println()
-	
+
 	for k, _ := range farm {
 		fmt.Println("Ada hewan", k)
 	}
