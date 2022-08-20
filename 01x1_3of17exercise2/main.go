@@ -4,6 +4,15 @@ import (
 	"fmt"
 )
 
+type Person struct {
+	fName string
+	lName string
+}
+
 func main() {
-	fmt.Println("yers")
+	p1 := Person{
+		"Andika",
+		"Wijaya",
+	}
+	fmt.Println(p1)
 }
