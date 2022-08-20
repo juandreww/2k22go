@@ -17,6 +17,26 @@ type girlfriend struct {
 	lName string
 }
 
+type rings struct {
+	radius float64
+}
+
+func (r rings) diameter() {
+	fmt.Printf("%.2f cm\n", r.radius * 2)
+}
+
+func (r rings) circumference() float64 {
+	
+}
+
+type size interface {
+	circumference()
+}
+
+func calculateRing(r size) {
+	
+} 
+
 func main() {
 	myGf := girlfriend{
 		"Yomelia",
@@ -25,8 +45,13 @@ func main() {
 	
 	fmt.Println("My girlfriend name is: ")
 	fmt.Println(myGf)
-	fmt.Println()
-	
+	fmt.Println("I am going to propose her with a ring..")
+
+	r := rings{4}
+	fmt.Println("Her finger diameter is ")
+	r.diameter()
+	fmt.Println("Her finger circumference is ")
+
 
 	// create type square
 
