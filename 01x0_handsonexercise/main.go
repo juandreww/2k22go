@@ -49,6 +49,10 @@ func main() {
 		fmt.Println(k, "-", z[k])
 	}
 
+	aa := make(map[string]string)
+	aa["James"] = "007";
+	fmt.Println(aa["James"])
+
 	// http.HandleFunc("/", foo)
 	// http.HandleFunc("/dog", bar)
 
