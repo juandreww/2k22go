@@ -5,10 +5,15 @@ import (
 )
 
 /*
-	buat struct purchase delivery
-	buat struct purchase invoice yang bisa pilih purchase delivery
+	buat struct facecream
+	fName North For Men
+	lName Ultimate Balance
+
+	buat struct oriflame
+	facecream
+	isSkinCare
 */
 
 func main() {
-
+	
 }
