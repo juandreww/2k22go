@@ -5,14 +5,23 @@ import (
 )
 
 type gator int
+type flamingo bool
 var x int
 
-func (g1 gator) greeting() {
-	fmt.Println("I am gator", g1)
+func (p gator) greeting() {
+	fmt.Println("I am gator", p)
+}
+
+func (p flamingo) greeting() {
+	fmt.Println("I am gator", p)
 }
 
 func main() {
 	var g1 gator
 	g1 = 42
 	g1.greeting()
+
+	var f1 flamingo
+	f1 = false
+	fmt.Println("I am not beautiful", f1)
 }
