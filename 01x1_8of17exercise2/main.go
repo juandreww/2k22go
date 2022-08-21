@@ -31,20 +31,20 @@ func (p sedan) isluxury() string {
 	}
 }
 
-func (p truck) transportationDevice() {
-	fmt.Println("The truck is four wheel:", p.fourWheel)
+func (p truck) transportationDevice() string {
+	return "The truck is four wheel"
 }
 
-func (p sedan) transportationDevice() {
-	fmt.Println("The sedan is luxurious:", p.luxury)
+func (p sedan) transportationDevice() string {
+	return "The sedan is luxurious"
 }
 
 type transportation interface {
 	transportationDevice() string
 }
 
-func (p transportation) report() string {
-	return p.transportationDevice()
+func report(p transportation) {
+	fmt.Println(p.transportationDevice())
 }
 
 func main() {
@@ -58,6 +58,7 @@ func main() {
 	fwd := trk.isFourWheel()
 	fmt.Println(fwd)
 	fmt.Println(trk)
+	report(trk)
 
 	sdn := sedan {
 		vehicle {
@@ -68,6 +69,7 @@ func main() {
 
 	fmt.Println(sdn.isluxury())
 	fmt.Println(sdn)
+	report(sdn)
 
 
 }
