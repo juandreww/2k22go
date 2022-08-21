@@ -37,6 +37,10 @@ type transportation interface {
 	transportationDevice() string
 }
 
+func (p transportation) report() string {
+	
+}
+
 func main() {
 	trk := truck {
 		vehicle {
