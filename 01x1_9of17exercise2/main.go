@@ -12,13 +12,11 @@ type vehicle struct {
 type truck struct {
 	vehicle
 	fourWheel bool
-	transportationDevice()
 }
 
 type sedan struct {
 	vehicle
 	luxury bool
-	transportationDevice()
 }
 
 func (p truck) isFourWheel() string {
@@ -31,10 +29,6 @@ func (p sedan) isluxury() string {
 	} else {
 		return "sedan with " + p.doors + " and " + p.color + " color is not luxury"
 	}
-}
-
-type transportation interface {
-	transportationDevice() string
 }
 
 func main() {
@@ -58,4 +52,6 @@ func main() {
 
 	fmt.Println(sdn.isluxury())
 	fmt.Println(sdn)
+
+
 }
