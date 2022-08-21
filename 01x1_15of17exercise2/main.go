@@ -8,12 +8,20 @@ type gator int
 type flamingo bool
 var x int
 
-func (p gator) greeting() {
-	fmt.Println("I am gator", p)
+func (p gator) greeting() string {
+	return "I am gator"
 }
 
-func (p flamingo) greeting() {
-	fmt.Println("I am the flamingo", p)
+func (p flamingo) greeting() string {
+	return "I am the flamingo"
+}
+
+type swampCreature interface {
+	greeting() string
+}
+
+func bayou(p swampCreature) {
+	fmt.Println("do you know this ..." + p.greeting())
 }
 
 func main() {
@@ -27,4 +35,7 @@ func main() {
 
 	f1 = true
 	f1.greeting()
+
+	bayou(g1)
+	bayou(f1)
 }
