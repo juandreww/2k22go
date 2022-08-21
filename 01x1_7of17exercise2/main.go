@@ -11,10 +11,12 @@ type vehicle struct {
 
 type truck struct {
 	vehicle
+	fourWheel bool
 }
 
 type sedan struct {
-
+	vehicle
+	luxury bool
 }
 
 func main() {
