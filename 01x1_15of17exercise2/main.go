@@ -13,7 +13,7 @@ func (p gator) greeting() {
 }
 
 func (p flamingo) greeting() {
-	fmt.Println("I am gator", p)
+	fmt.Println("I am the flamingo", p)
 }
 
 func main() {
@@ -24,4 +24,7 @@ func main() {
 	var f1 flamingo
 	f1 = false
 	fmt.Println("I am not beautiful", f1)
+
+	f1 = true
+	f1.greeting()
 }
