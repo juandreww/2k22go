@@ -10,7 +10,7 @@ type Person struct {
 }
 
 func (p Person) walk() string {
-	return p.fName + "is walking"
+	return fmt.Sprintln(p.fName, "is walking")
 }
 
 func main() {
@@ -18,5 +18,6 @@ func main() {
 		"Donny",
 		"Yen",
 	}
-	fmt.Sprintln(p1.walk())
+	s := p1.walk()
+	fmt.Println(s)
 }
