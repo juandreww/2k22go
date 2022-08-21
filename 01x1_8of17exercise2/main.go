@@ -12,13 +12,11 @@ type vehicle struct {
 type truck struct {
 	vehicle
 	fourWheel bool
-	transportationDevice()
 }
 
 type sedan struct {
 	vehicle
 	luxury bool
-	transportationDevice()
 }
 
 func (p truck) isFourWheel() string {
@@ -33,12 +31,20 @@ func (p sedan) isluxury() string {
 	}
 }
 
+func (p truck) transportationDevice() {
+	fmt.Println("The truck is four wheel:", p.fourWheel)
+}
+
+func (p sedan) transportationDevice() {
+	fmt.Println("The sedan is luxurious:", p.luxury)
+}
+
 type transportation interface {
 	transportationDevice() string
 }
 
 func (p transportation) report() string {
-	
+	return p.transportationDevice()
 }
 
 func main() {
@@ -62,4 +68,6 @@ func main() {
 
 	fmt.Println(sdn.isluxury())
 	fmt.Println(sdn)
+
+
 }
