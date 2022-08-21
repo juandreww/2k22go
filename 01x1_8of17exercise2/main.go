@@ -25,9 +25,9 @@ func (p truck) isFourWheel() string {
 
 func (p sedan) isluxury() string {
 	if p.luxury == true {
-		return "sedan with " + p.doors + " and " + p.color + " is luxury"
+		return "sedan with " + p.doors + " and " + p.color + " color is luxury"
 	} else {
-		return "sedan with " + p.doors + " and " + p.color + " is not luxury"
+		return "sedan with " + p.doors + " and " + p.color + " color is not luxury"
 	}
 }
 
