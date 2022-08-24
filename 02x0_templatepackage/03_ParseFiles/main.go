@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	tpl, err := template.ParseFiles("one.gofile")
+	tpl, err := template.ParseFiles("two.gofile")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -17,7 +17,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	tpl, err = tpl.ParseFiles("two.gofile", "three.gofile")
+	tpl, err = tpl.ParseFiles("one.gofile", "three.gofile")
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -37,6 +37,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	// choose whatever first
 	err = tpl.Execute(os.Stdout, nil)
 	if err != nil {
 		log.Fatalln(err)
