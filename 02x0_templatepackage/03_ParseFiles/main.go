@@ -17,17 +17,17 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	tpl, err = template.ParseFiles("two.gofile", "three.gofile")
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	err = tpl.ExecuteTemplate(os.Stdout, "two.gofile", nil)
+	tpl, err = tpl.ParseFiles("two.gofile", "three.gofile")
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	err = tpl.ExecuteTemplate(os.Stdout, "three.gofile", nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	err = tpl.ExecuteTemplate(os.Stdout, "two.gofile", nil)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -41,6 +41,4 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
-	
 }
