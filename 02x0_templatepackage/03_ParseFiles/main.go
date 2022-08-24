@@ -32,11 +32,15 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	nf, err := os.Create("index.html")
+	err = tpl.ExecuteTemplate(os.Stdout, "one.gofile", nil)
 	if err != nil {
-		log.Println("error creating file", err)
+		log.Fatalln(err)
 	}
-	defer nf.Close()
+
+	err = tpl.Execute(os.Stdout, nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	
 }
