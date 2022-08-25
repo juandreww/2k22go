@@ -10,4 +10,3 @@
 			<h1>Life has meaning of {{$wisdom}}</h1>
 		</body>
 		</html>
-	
