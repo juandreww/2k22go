@@ -4,7 +4,6 @@
 		<meta charset="UTF-8">
 		<title>Hello World!</title>
 		</head>
-
 		<body>
             {{ $wisdom := . }}
 			<h1>Life has meaning of {{$wisdom}}</h1>
