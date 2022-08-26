@@ -51,6 +51,25 @@ func main() {
 				},
 			},
 		},
+		year {
+			AcaYear: "2026-2027",
+			Summer: semester {
+				Term: "Summer",
+				Courses: []course {
+					course{"CSCI-40", "Introduction to Programming in GO", "4"},
+					course{"CSCI-130", "Introduction to Web Programming with GO", "4"},
+					course{"CSCI-140", "Mobile Apps Using Go", "4"},
+				},
+			},
+			Fall: semester {
+				Term: "Fall",
+				Courses: []course {
+					course{"CSCI-50", "Advanced Go", "5"},
+					course{"CSCI-130", "Advanced Web Programming with Go", "5"},
+					course{"CSCI-140", "Advanced Mobile Apps with Go", "5"},
+				},
+			},
+		},
 	}
 
 	err := tpl.Execute(os.Stdout, nil)
