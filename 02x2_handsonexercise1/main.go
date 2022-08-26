@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"text/template"
 )
@@ -31,5 +31,22 @@ func init() {
 }
 
 func main() {
-	
+	years := []year {
+		year {
+			AcaYear: "2025-2026",
+			Fall: semester {
+
+			},
+			Spring: semester {
+
+			},
+			Summer: semester {
+				
+			},
+		},
+	}
+	err := tpl.Execute(os.Stdout, nil)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
