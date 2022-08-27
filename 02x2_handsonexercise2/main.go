@@ -1,79 +1,31 @@
 package main
 
 import (
-	"log"
-	"os"
-	"text/template"
+	"fmt"
+	// "log"
+	// "os"
 )
 
-type course struct {
-	Number string
+type Hotel struct {
 	Name string
-	Units string
+	Address string
+	City string
+	Zip string
+	Region string
 }
 
-type semester struct {
-	Term string
-	Courses []course
+type Region struct {
+	Name string
+	Hotel []Hotel
 }
 
-type year struct {
-	AcaYear string
-	Fall semester
-	Spring semester
-	Summer semester
-}
-
-var tpl *template.Template
-
-func init() {
-	tpl = template.Must(template.ParseFiles("tpl.gohtml"))
+type California struct {
+	Region []Region
 }
 
 func main() {
-	years := []year {
-		year {
-			AcaYear: "2025-2026",
-			Fall: semester {
-				Term: "Fall",
-				Courses: []course {
-					course{"CSCI-40", "Introduction to Programming in GO", "4"},
-					course{"CSCI-130", "Introduction to Web Programming with GO", "4"},
-					course{"CSCI-140", "Mobile Apps Using Go", "4"},
-				},
-			},
-			Spring: semester {
-				Term: "Spring",
-				Courses: []course {
-					course{"CSCI-50", "Advanced Go", "5"},
-					course{"CSCI-130", "Advanced Web Programming with Go", "5"},
-					course{"CSCI-140", "Advanced Mobile Apps with Go", "5"},
-				},
-			},
-		},
-		year {
-			AcaYear: "2026-2027",
-			Summer: semester {
-				Term: "Summer",
-				Courses: []course {
-					course{"CSCI-40", "Introduction to Programming in GO", "4"},
-					course{"CSCI-130", "Introduction to Web Programming with GO", "4"},
-					course{"CSCI-140", "Mobile Apps Using Go", "4"},
-				},
-			},
-			Fall: semester {
-				Term: "Fall",
-				Courses: []course {
-					course{"CSCI-50", "Advanced Go", "5"},
-					course{"CSCI-130", "Advanced Web Programming with Go", "5"},
-					course{"CSCI-140", "Advanced Mobile Apps with Go", "5"},
-				},
-			},
-		},
+	calf := Region {
+		Name: "Southern",
 	}
-
-	err := tpl.Execute(os.Stdout, years)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	fmt.Println(calf)
 }
