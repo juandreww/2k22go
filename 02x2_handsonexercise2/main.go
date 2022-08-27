@@ -36,10 +36,74 @@ func main() {
 							"440004",
 							"Southern",
 						},
+						Hotel {
+							"Hotel Park",
+							"California A12",
+							"California South",
+							"440004",
+							"Southern",
+						},
+						Hotel {
+							"Hotel Grand",
+							"California A13",
+							"California South",
+							"440004",
+							"Southern",
+						},
 					},
 				},
-			// Region {"Northern", },
-			// Region {"Central", },
+			Region {
+				"Southern", 
+					[]Hotel {
+						Hotel {
+							"Hotel 81",
+							"California A11",
+							"California South",
+							"440004",
+							"Southern",
+						},
+						Hotel {
+							"Hotel Park",
+							"California A12",
+							"California South",
+							"440004",
+							"Southern",
+						},
+						Hotel {
+							"Hotel Grand",
+							"California A13",
+							"California South",
+							"440004",
+							"Southern",
+						},
+					},
+				},
+			Region {
+				"Southern", 
+					[]Hotel {
+						Hotel {
+							"Hotel 81",
+							"California A11",
+							"California South",
+							"440004",
+							"Southern",
+						},
+						Hotel {
+							"Hotel Park",
+							"California A12",
+							"California South",
+							"440004",
+							"Southern",
+						},
+						Hotel {
+							"Hotel Grand",
+							"California A13",
+							"California South",
+							"440004",
+							"Southern",
+						},
+					},
+				},
 		},
 	}
 
