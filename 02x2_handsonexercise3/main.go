@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	// "reflect"
 )
 
 type Item struct {
@@ -84,5 +85,21 @@ func main() {
 		},
 	}
 
-	fmt.Println(dq)
+	nasgor := 5;
+
+	// fmt.Println(dq.Period)
+	for k, v := range dq.Period {
+		fmt.Println("Period: " + v.Name)
+		for k2, v2 := range v.Item {
+			fmt.Printf("Item: %s with Stocks: %d\n", v2.Name, v2.Quantity)
+			if v2.Name == "Indomie Kuah" {
+				dq.Period[k].Item[k2].Quantity -= nasgor
+				fmt.Printf("Sisa %s adalah %d\n", v2.Name, v2.Quantity)
+			}
+		}
+	}
+
+	fmt.Println(dq.Period)
+	
+	
 }
