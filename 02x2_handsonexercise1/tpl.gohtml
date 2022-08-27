@@ -7,10 +7,13 @@
 <body>
     {{range .}}
         <div> Academic Year {{.AcaYear}} </div>
-        <div> {{.Fall.Term}} </div>
+        <div> Season {{.Fall.Term}} </div>
+        <div>
+        Curriculum
         {{range .Fall.Courses}}
             {{.Name}}
         {{end}}
+        </div>
     {{end}}
 </body>
 </html>
