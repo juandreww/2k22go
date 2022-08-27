@@ -6,10 +6,10 @@
 </head>
 <body>
     {{range .}}
-        {{.AcaYear}}
-        {{.Fall.Term}}
+        <div> Academic Year {{.AcaYear}} </div>
+        <div> {{.Fall.Term}} </div>
         {{range .Fall.Courses}}
-            {{.}}
+            {{.Name}}
         {{end}}
     {{end}}
 </body>
