@@ -16,7 +16,7 @@ type Hotel struct {
 
 type Region struct {
 	Name string
-	// Hotel []Hotel
+	Hotel []Hotel
 }
 
 type California struct {
@@ -26,9 +26,20 @@ type California struct {
 func main() {
 	calf := California {
 		Region: []Region {
-			Region {"Southern", },
-			Region {"Northern", },
-			Region {"Central", },
+			Region {
+				"Southern", 
+					[]Hotel {
+						Hotel {
+							"Hotel 81",
+							"California A11",
+							"California South",
+							"440004",
+							"Southern",
+						},
+					},
+				},
+			// Region {"Northern", },
+			// Region {"Central", },
 		},
 	}
 
