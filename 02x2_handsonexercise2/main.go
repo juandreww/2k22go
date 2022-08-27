@@ -16,7 +16,7 @@ type Hotel struct {
 
 type Region struct {
 	Name string
-	Hotel []Hotel
+	// Hotel []Hotel
 }
 
 type California struct {
@@ -24,8 +24,14 @@ type California struct {
 }
 
 func main() {
-	calf := Region {
-		Name: "Southern",
+	calf := California {
+		Region: []Region {
+			Region {"Southern", },
+			Region {"Northern", },
+			Region {"Central", },
+		},
 	}
+
+
 	fmt.Println(calf)
 }
