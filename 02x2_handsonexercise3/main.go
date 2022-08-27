@@ -94,7 +94,7 @@ func main() {
 			fmt.Printf("Item: %s with Stocks: %d\n", v2.Name, v2.Quantity)
 			if v2.Name == "Indomie Kuah" {
 				dq.Period[k].Item[k2].Quantity -= nasgor
-				fmt.Printf("Sisa %s adalah %d\n", v2.Name, v2.Quantity)
+				fmt.Printf("Sisa %s adalah %d\n", v2.Name, v2.Quantity) // disini ga berubah
 			}
 		}
 	}
