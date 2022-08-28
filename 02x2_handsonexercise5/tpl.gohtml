@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div>GroupName1 {{.BranchName}}</div>
+    {{$i := 1}}
+    {{range .DQCoffee}}
+        <div> GroupName2 Branch no. {{$i}}</div>
+        {{range .MealPeriod}}
+            <div> GroupName3 MealPeriod {{.Name}} </div>
+            {{range .Item}}
+                <div> {{.Name}}, stocks {{.Quantity}} </div>
+            {{end}}
+        {{end}}
+        {{$i = add $i 1}}
+    {{end}}
+</body>
+</html>
