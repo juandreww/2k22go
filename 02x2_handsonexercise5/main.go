@@ -13,8 +13,22 @@ type Commodity struct {
 	Location, Name string
 }
 
-func createCommodityList(data [][]string) string {
-	
+func createCommodityList(data [][]string) []Commodity {
+	var list []Commodity
+	for k, v := range data {
+		if (k > 0) {
+			var com Commodity
+			for k2, v2 := range v {
+				if k2 == 0 {
+					com.Location = v2
+				} else if k2 == 1 {
+					com.Name = v2
+				}
+			}
+			list = append(list, com)
+		}
+	}
+	return list
 }
 
 // var tpl *template.Template
@@ -44,7 +58,11 @@ func main() {
 
 	commodityList := createCommodityList(data)
 
-	fmt.Println(commodityList)
+	for _, v := range commodityList {
+		fmt.Printf("%+v\n", v)
+	}
+
+	// fmt.Printf("%+v\n", commodityList)
 
 	// err = tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", f)
 	// if err != nil {
