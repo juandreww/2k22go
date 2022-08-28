@@ -1,7 +1,7 @@
 package main
 
 import (
-	// "fmt"
+	"fmt"
 	"encoding/csv"
 	"text/template"
 	"os"
@@ -37,6 +37,8 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	fmt.Println(data)
 
 	err = tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", f)
 	if err != nil {
