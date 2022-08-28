@@ -99,6 +99,69 @@ func main() {
 					},
 				},
 			},
+			DQCoffee {
+				[]MealPeriod {
+					MealPeriod{
+						"Breakfast",
+						[]Item {
+							Item {
+								"Nasi Kucing",
+								10,
+							},
+							Item {
+								"Nasi Lemak",
+								10,
+							},
+							Item {
+								"Bubur Ayam",
+								10,
+							},
+						},
+					},
+					MealPeriod{
+						"Lunch",
+						[]Item {
+							Item {
+								"Soto Solo",
+								10,
+							},
+							Item {
+								"Soto Daging",
+								10,
+							},
+							Item {
+								"Soto Rempah",
+								10,
+							},
+							Item {
+								"Soto Kecap",
+								10,
+							},
+						},
+					},
+					MealPeriod{
+						"Dinner",
+						[]Item {
+							Item {
+								"Teh Milkshake",
+								10,
+							},
+							Item {
+								"Teh Susu",
+								10,
+							},
+							Item {
+								"Matcha Latte",
+								10,
+							},
+							Item {
+								"Wedang Jahe",
+								10,
+							},
+						},
+					},
+				},
+			},
 		},
 	}
 
