@@ -7,13 +7,12 @@
 <body>
     <div> List Commodity di Pasar Bandung Th 2017 </div>
     {{ $group := "" }}
-    {{ range $item := . }}
+    {{ range . }}
         {{if noteq .Location $group }}
             Lokasi: {{ .Location }}
             {{ $group = .Location }}
         {{end}}
         <div>{{ .Name }}</div>
-        <div>{{ $item.marketLocation }}</div>
     {{ end }}
     <p> {{template "commodity2"}} </p>
 </body>
