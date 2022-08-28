@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"encoding/csv"
-	"text/template"
+	// "text/template"
 	"os"
 	"log"
 	// "reflect"
@@ -13,7 +13,11 @@ type Commodity struct {
 	Location, Name string
 }
 
-var tpl *template.Template
+func createCommodityList(data [][]string) string {
+	
+}
+
+// var tpl *template.Template
 
 // var fm = template.FuncMap{
 // 	"add": func(a, b int) int {
@@ -21,9 +25,9 @@ var tpl *template.Template
 // 	},
 // }
 
-func init() {
-	tpl = template.Must(template.New("").ParseFiles("tpl.gohtml"))
-}
+// func init() {
+// 	tpl = template.Must(template.New("").ParseFiles("tpl.gohtml"))
+// }
 
 func main() {
 	f, err := os.Open("hargakomoditas.csv")
@@ -38,12 +42,14 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	fmt.Println(data)
+	commodityList := createCommodityList(data)
 
-	err = tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", f)
-	if err != nil {
-		log.Fatalln(err)
-	}
+	fmt.Println(commodityList)
+
+	// err = tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", f)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
 	
 	
 }
