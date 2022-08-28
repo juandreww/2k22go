@@ -1,15 +1,33 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"text/template"
-	"strings"
-	// "reflect"
+	"encoding/csv"
+	"sort"
 )
+
+type person struct {
+	Name string
+	Age  int
+}
 
 type Commodity struct {
 	Location, Name string
+}
+
+func (p person) SomeProcessing() int {
+	return 7
+}
+
+func (p person) AgeDbl() int {
+	return p.Age * 2
+}
+
+func (p person) TakesArg(x int) int {
+	return x * 2
 }
 
 func createCommodityList(data [][]string) []Commodity {
@@ -30,19 +48,6 @@ func createCommodityList(data [][]string) []Commodity {
 	return list
 }
 
-func (p Commodity) marketLocation() string {
-	if strings.Contains(p.Name, "Daging") {
-		return "ada di Pasar Kopo"
-	} else if strings.Contains(p.Name, "Beras") {
-		return "ada di Pasar Pademangan"
-	}
-	return "none"
-}
-
-func (p Commodity) marketNumber() int {
-	return 7
-}
-
 var tpl *template.Template
 
 func init() {
@@ -50,13 +55,31 @@ func init() {
 }
 
 func main() {
-
-	p1 := Commodity {
-		"Bandung Barat",
-		"Cilegon",
+	f, err := os.Open("hargakomoditas.csv")
+	if err != nil {
+		log.Fatalln(err)
 	}
 
-	err := tpl.Execute(os.Stdout, p1)
+	defer f.Close()
+	csvReader := csv.NewReader(f)
+	data, err := csvReader.ReadAll()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	commodityList := createCommodityList(data)
+
+	for _, v := range commodityList {
+		fmt.Printf("%s: %s\n", v.Location, v.Name)
+	}
+
+	fmt.Println()
+
+	sort.SliceStable(commodityList, func (i, j int) bool {
+		return commodityList[i].Name < commodityList[j].Name
+	})
+
+	err = tpl.Execute(os.Stdout, commodityList)
 	if err != nil {
 		log.Fatalln(err)
 	}
