@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fmt"
 	"encoding/csv"
-	"text/template"
-	"os"
+	"fmt"
 	"log"
+	"os"
+	"sort"
+	"text/template"
 	// "reflect"
 )
 
@@ -58,11 +59,15 @@ func main() {
 
 	commodityList := createCommodityList(data)
 
-	// for _, v := range commodityList {
-	// 	fmt.Printf("%s: %s\n", v.Location, v.Name)
-	// }
+	for _, v := range commodityList {
+		fmt.Printf("%s: %s\n", v.Location, v.Name)
+	}
+	
+	fmt.Println()
 
-	// // fmt.Printf("%+v\n", commodityList)
+	sort.SliceStable(commodityList, func (i, j int) bool {
+		return commodityList[i].Name < commodityList[j].Name
+	})
 
 	err = tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", commodityList)
 	if err != nil {
