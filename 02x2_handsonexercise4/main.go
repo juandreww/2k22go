@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"text/template"
 	// "reflect"
 )
 
@@ -18,12 +17,6 @@ type Period struct {
 
 type DQCoffee struct {
 	Period []Period
-}
-
-var tpl *template.Template
-
-func init() {
-	tpl = template.Must(template.ParseFiles("tpl.gohtml"))
 }
 
 func main() {
@@ -106,7 +99,7 @@ func main() {
 		}
 	}
 
-	// fmt.Println(dq.Period)
+	fmt.Println(dq.Period)
 	
 	
 }
