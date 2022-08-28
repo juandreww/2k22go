@@ -7,6 +7,7 @@ import (
 	"os"
 	"sort"
 	"text/template"
+	"strings"
 	// "reflect"
 )
 
@@ -30,6 +31,15 @@ func createCommodityList(data [][]string) []Commodity {
 		}
 	}
 	return list
+}
+
+func (p Commodity) marketLocation() string {
+	if strings.Contains(p.Name, "Daging") {
+		return "ada di Pasar Kopo"
+	} else if strings.Contains(p.Name, "Beras") {
+		return "ada di Pasar Pademangan"
+	}
+	return "none"
 }
 
 var tpl *template.Template
