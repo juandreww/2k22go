@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"text/template"
 	// "reflect"
 )
 
@@ -11,37 +10,20 @@ type Item struct {
 	Quantity int
 }
 
-type MealPeriod struct {
+type Period struct {
 	Name string
 	Item []Item
 }
 
 type DQCoffee struct {
-	MealPeriod []MealPeriod
-}
-
-type Branch struct {
-	BranchName string
-	DQCoffee []DQCoffee
-}
-
-var tpl *template.Template
-
-func init() {
-	tpl = template.Must(template.ParseFiles("tpl.gohtml"))
+	Period []Period
 }
 
 func main() {
 	// DQ Coffee 24 / 7
-	dqc := Branch {
-		"Batam Centre",
-		[]DQCoffee {
-			
-		},
-	}
 	dq := DQCoffee {
-		[]MealPeriod {
-			MealPeriod{
+		[]Period {
+			Period{
 				"Breakfast",
 				[]Item {
 					Item {
@@ -58,7 +40,7 @@ func main() {
 					},
 				},
 			},
-			MealPeriod{
+			Period{
 				"Lunch",
 				[]Item {
 					Item {
@@ -79,7 +61,7 @@ func main() {
 					},
 				},
 			},
-			MealPeriod{
+			Period{
 				"Dinner",
 				[]Item {
 					Item {
@@ -104,18 +86,20 @@ func main() {
 	}
 
 	nasgor := 5;
-	for k, v := range dq.MealPeriod {
-		fmt.Println("MealPeriod: " + v.Name)
+
+	// fmt.Println(dq.Period)
+	for k, v := range dq.Period {
+		fmt.Println("Period: " + v.Name)
 		for k2, v2 := range v.Item {
 			fmt.Printf("Item: %s with Stocks: %d\n", v2.Name, v2.Quantity)
 			if v2.Name == "Indomie Kuah" {
-				dq.MealPeriod[k].Item[k2].Quantity -= nasgor
+				dq.Period[k].Item[k2].Quantity -= nasgor
 				fmt.Printf("Sisa %s adalah %d\n", v2.Name, v2.Quantity) // disini ga berubah
 			}
 		}
 	}
 
-	// err := tpl.Execute(os.Stdout, )
+	fmt.Println(dq.Period)
 	
 	
 }
