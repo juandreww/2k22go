@@ -1,11 +1,8 @@
 package main
 
 import (
-	"encoding/csv"
-	"fmt"
 	"log"
 	"os"
-	"sort"
 	"text/template"
 	"strings"
 	// "reflect"
@@ -48,42 +45,18 @@ func (p Commodity) marketNumber() int {
 
 var tpl *template.Template
 
-var fm = template.FuncMap{
-	"noteq": func(a, b string) bool {
-		return a != b
-	},
-}
-
 func init() {
-	tpl = template.Must(template.New("").Funcs(fm).ParseGlob("*.gohtml"))
+	tpl = template.Must(template.ParseFiles("tpl.gohtml"))
 }
 
 func main() {
-	f, err := os.Open("hargakomoditas.csv")
-	if err != nil {
-		log.Fatalln(err)
+
+	p1 := Commodity {
+		"Bandung Barat",
+		"Cilegon",
 	}
 
-	defer f.Close()
-	csvReader := csv.NewReader(f)
-	data, err := csvReader.ReadAll()
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	commodityList := createCommodityList(data)
-
-	for _, v := range commodityList {
-		fmt.Printf("%s: %s\n", v.Location, v.Name)
-	}
-
-	fmt.Println()
-
-	sort.SliceStable(commodityList, func (i, j int) bool {
-		return commodityList[i].Name < commodityList[j].Name
-	})
-
-	err = tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", commodityList)
+	err := tpl.Execute(os.Stdout, p1)
 	if err != nil {
 		log.Fatalln(err)
 	}
