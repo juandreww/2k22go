@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"encoding/csv"
-	// "text/template"
+	"text/template"
 	"os"
 	"log"
 	// "reflect"
@@ -31,7 +31,7 @@ func createCommodityList(data [][]string) []Commodity {
 	return list
 }
 
-// var tpl *template.Template
+var tpl *template.Template
 
 // var fm = template.FuncMap{
 // 	"add": func(a, b int) int {
@@ -39,9 +39,9 @@ func createCommodityList(data [][]string) []Commodity {
 // 	},
 // }
 
-// func init() {
-// 	tpl = template.Must(template.New("").ParseFiles("tpl.gohtml"))
-// }
+func init() {
+	tpl = template.Must(template.New("").ParseFiles("tpl.gohtml"))
+}
 
 func main() {
 	f, err := os.Open("hargakomoditas.csv")
@@ -58,16 +58,14 @@ func main() {
 
 	commodityList := createCommodityList(data)
 
-	for _, v := range commodityList {
-		fmt.Printf("%+v\n", v)
-	}
-
-	// fmt.Printf("%+v\n", commodityList)
-
-	// err = tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", f)
-	// if err != nil {
-	// 	log.Fatalln(err)
+	// for _, v := range commodityList {
+	// 	fmt.Printf("%s: %s\n", v.Location, v.Name)
 	// }
-	
-	
+
+	// // fmt.Printf("%+v\n", commodityList)
+
+	err = tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", commodityList)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
