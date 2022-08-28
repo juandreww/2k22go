@@ -34,14 +34,14 @@ func createCommodityList(data [][]string) []Commodity {
 
 var tpl *template.Template
 
-// var fm = template.FuncMap{
-// 	"add": func(a, b int) int {
-// 		return a + b
-// 	},
-// }
+var fm = template.FuncMap{
+	"noteq": func(a, b string) bool {
+		return a != b
+	},
+}
 
 func init() {
-	tpl = template.Must(template.New("").ParseFiles("tpl.gohtml"))
+	tpl = template.Must(template.New("").Funcs(fm).ParseFiles("tpl.gohtml"))
 }
 
 func main() {
@@ -62,7 +62,7 @@ func main() {
 	for _, v := range commodityList {
 		fmt.Printf("%s: %s\n", v.Location, v.Name)
 	}
-	
+
 	fmt.Println()
 
 	sort.SliceStable(commodityList, func (i, j int) bool {

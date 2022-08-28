@@ -5,6 +5,14 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <div> List Commodity di Pasar Bandung Th 2017 </div>
+    {{ $group := "" }}
+    {{ range . }}
+        {{if noteq .Location $group }}
+            Lokasi: {{ .Location }}
+            {{ $group = .Location }}
+        {{end}}
+        <div>{{ .Name }}</div>
+    {{ end }}
 </body>
 </html>
