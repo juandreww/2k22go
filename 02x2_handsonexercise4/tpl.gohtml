@@ -5,6 +5,17 @@
     <title>Document</title>
 </head>
 <body>
-    {{.BranchName}}
+    <div>GroupName1 {{.BranchName}}</div>
+    {{$i := 1}}
+    {{range .DQCoffee}}
+        <div> GroupName2 Branch no. {{$i}}</div>
+        {{range .MealPeriod}}
+            <div> GroupName3 MealPeriod {{.Name}} </div>
+            {{range .Item}}
+                <div> {{.Name}}, stocks {{.Quantity}} </div>
+            {{end}}
+        {{end}}
+        {{add $i 1}}
+    {{end}}
 </body>
 </html>

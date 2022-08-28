@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"text/template"
 	"os"
 	"log"
@@ -28,8 +28,14 @@ type Branch struct {
 
 var tpl *template.Template
 
+var fm = template.FuncMap{
+	"add": func(a, b int) int {
+		return a + b
+	},
+}
+
 func init() {
-	tpl = template.Must(template.ParseFiles("tpl.gohtml"))
+	tpl = template.Must(template.New("").Funcs(fm).ParseFiles("tpl.gohtml"))
 }
 
 func main() {
@@ -166,7 +172,7 @@ func main() {
 		},
 	}
 
-	fmt.Println(dqc)
+	// fmt.Println(dqc)
 
 	err := tpl.Execute(os.Stdout, dqc)
 	if err != nil {
