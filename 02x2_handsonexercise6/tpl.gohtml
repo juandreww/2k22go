@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div> List Commodity di Pasar Bandung Th 2017 </div>
+    {{ $group := "" }}
+    {{ range . }}
+        {{if noteq .Location $group }}
+            Lokasi: {{ .Location }}
+            {{ $group = .Location }}
+        {{end}}
+        <div>{{ .Name }}</div>
+        <p> {{template "commodity2"}} </p>
+    {{ end }}
+</body>
+</html>

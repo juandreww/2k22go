@@ -172,8 +172,6 @@ func main() {
 		},
 	}
 
-	// fmt.Println(dqc)
-
 	err := tpl.ExecuteTemplate(os.Stdout, "tpl.gohtml", dqc)
 	if err != nil {
 		log.Fatalln(err)
