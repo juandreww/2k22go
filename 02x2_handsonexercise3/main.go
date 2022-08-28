@@ -21,7 +21,8 @@ type DQCoffee struct {
 }
 
 type Branch struct {
-	
+	BranchName string
+	DQCoffee []DQCoffee
 }
 
 var tpl *template.Template
@@ -32,6 +33,12 @@ func init() {
 
 func main() {
 	// DQ Coffee 24 / 7
+	dqc := Branch {
+		"Batam Centre",
+		[]DQCoffee {
+			
+		},
+	}
 	dq := DQCoffee {
 		[]MealPeriod {
 			MealPeriod{
