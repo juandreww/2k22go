@@ -42,6 +42,10 @@ func (p Commodity) marketLocation() string {
 	return "none"
 }
 
+func (p Commodity) marketNumber() int {
+	return 7
+}
+
 var tpl *template.Template
 
 var fm = template.FuncMap{
