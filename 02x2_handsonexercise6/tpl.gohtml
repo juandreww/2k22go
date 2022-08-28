@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Composition</title>
+    <title>Document</title>
 </head>
 <body>
-
-{{range .}}
-    {{.marketLocation}}
-{{end}}
-
+    {{range .}}
+        <div>{{ .Location }}</div>
+        <div>{{ .Name }}</div>
+        <div>{{ .MarketLocation | .DoubleMarket }}</div>
+    {{end}}
 </body>
 </html>

@@ -30,8 +30,12 @@ func (p person) TakesArg(x int) int {
 	return x * 2
 }
 
-func (p Commodity) marketLocation() int {
+func (p Commodity) MarketLocation() int {
 	return 7
+}
+
+func (p Commodity) DoubleMarket(x int) int {
+	return x * 2
 }
 
 func createCommodityList(data [][]string) []Commodity {
