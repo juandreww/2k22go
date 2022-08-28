@@ -11,13 +11,17 @@ type Item struct {
 	Quantity int
 }
 
-type Period struct {
+type MealPeriod struct {
 	Name string
 	Item []Item
 }
 
 type DQCoffee struct {
-	Period []Period
+	MealPeriod []MealPeriod
+}
+
+type Branch struct {
+	
 }
 
 var tpl *template.Template
@@ -29,8 +33,8 @@ func init() {
 func main() {
 	// DQ Coffee 24 / 7
 	dq := DQCoffee {
-		[]Period {
-			Period{
+		[]MealPeriod {
+			MealPeriod{
 				"Breakfast",
 				[]Item {
 					Item {
@@ -47,7 +51,7 @@ func main() {
 					},
 				},
 			},
-			Period{
+			MealPeriod{
 				"Lunch",
 				[]Item {
 					Item {
@@ -68,7 +72,7 @@ func main() {
 					},
 				},
 			},
-			Period{
+			MealPeriod{
 				"Dinner",
 				[]Item {
 					Item {
@@ -93,20 +97,18 @@ func main() {
 	}
 
 	nasgor := 5;
-
-	// fmt.Println(dq.Period)
-	for k, v := range dq.Period {
-		fmt.Println("Period: " + v.Name)
+	for k, v := range dq.MealPeriod {
+		fmt.Println("MealPeriod: " + v.Name)
 		for k2, v2 := range v.Item {
 			fmt.Printf("Item: %s with Stocks: %d\n", v2.Name, v2.Quantity)
 			if v2.Name == "Indomie Kuah" {
-				dq.Period[k].Item[k2].Quantity -= nasgor
+				dq.MealPeriod[k].Item[k2].Quantity -= nasgor
 				fmt.Printf("Sisa %s adalah %d\n", v2.Name, v2.Quantity) // disini ga berubah
 			}
 		}
 	}
 
-	// fmt.Println(dq.Period)
+	// err := tpl.Execute(os.Stdout, )
 	
 	
 }
