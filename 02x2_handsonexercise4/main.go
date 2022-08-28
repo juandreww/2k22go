@@ -147,15 +147,15 @@ func main() {
 								10,
 							},
 							Item {
-								"Teh Susu",
+								"Coffee Milk",
 								10,
 							},
 							Item {
-								"Matcha Latte",
+								"Coffee Latte",
 								10,
 							},
 							Item {
-								"Wedang Jahe",
+								"Coffee Arabica",
 								10,
 							},
 						},
