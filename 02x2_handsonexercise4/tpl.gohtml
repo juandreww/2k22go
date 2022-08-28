@@ -5,15 +5,6 @@
     <title>Document</title>
 </head>
 <body>
-    {{range .}}
-        <div> Academic Year {{.AcaYear}} </div>
-        <div> Season {{.Fall.Term}} </div>
-        <div>
-        Curriculum
-        {{range .Fall.Courses}}
-            {{.Name}}
-        {{end}}
-        </div>
-    {{end}}
+    {{.BranchName}}
 </body>
 </html>
