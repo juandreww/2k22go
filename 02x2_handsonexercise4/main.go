@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	// "text/template"
+	"text/template"
+	"os"
+	"log"
 	// "reflect"
 )
-
 type Item struct {
 	Name string
 	Quantity int
@@ -25,11 +26,11 @@ type Branch struct {
 	DQCoffee []DQCoffee
 }
 
-// var tpl *template.Template
+var tpl *template.Template
 
-// func init() {
-// 	tpl = template.Must(template.ParseFiles("tpl.gohtml"))
-// }
+func init() {
+	tpl = template.Must(template.ParseFiles("tpl.gohtml"))
+}
 
 func main() {
 	// DQ Coffee 24 / 7
@@ -167,19 +168,10 @@ func main() {
 
 	fmt.Println(dqc)
 
-	// nasgor := 5;
-	// for k, v := range dq.MealPeriod {
-	// 	fmt.Println("MealPeriod: " + v.Name)
-	// 	for k2, v2 := range v.Item {
-	// 		fmt.Printf("Item: %s with Stocks: %d\n", v2.Name, v2.Quantity)
-	// 		if v2.Name == "Indomie Kuah" {
-	// 			dq.MealPeriod[k].Item[k2].Quantity -= nasgor
-	// 			fmt.Printf("Sisa %s adalah %d\n", v2.Name, v2.Quantity) // disini ga berubah
-	// 		}
-	// 	}
-	// }
-
-	// err := tpl.Execute(os.Stdout, )
+	err := tpl.Execute(os.Stdout, dqc)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	
 	
 }
