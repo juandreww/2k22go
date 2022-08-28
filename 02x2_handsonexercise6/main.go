@@ -30,6 +30,10 @@ func (p person) TakesArg(x int) int {
 	return x * 2
 }
 
+func (p Commodity) marketLocation() int {
+	return 7
+}
+
 func createCommodityList(data [][]string) []Commodity {
 	var list []Commodity
 	for k, v := range data {
