@@ -33,6 +33,7 @@ func handle(conn net.Conn) {
 		r := rot13(bs)
 
 		fmt.Fprintf(conn, "%s - %s\n\n", ln, r)
+		fmt.Fprintln(conn, bs)
 	}
 }
 
