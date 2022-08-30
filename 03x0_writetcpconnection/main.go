@@ -15,6 +15,7 @@ func main() {
 	defer li.Close()
 
 	for {
+		// LAC : Listen Accept Connect
 		conn, err := li.Accept()
 		if err != nil {
 			log.Println(err)
