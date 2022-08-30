@@ -30,6 +30,7 @@ func handle(conn net.Conn) {
 
 	// read request
 	request(conn)
+
 	// write response
 	respond(conn)
 }
@@ -38,7 +39,7 @@ func request(conn net.Conn) {
 	i := 0
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
-		fmt.Println(i)
+		// fmt.Println(i)
 		ln := scanner.Text()
 		fmt.Println(ln)
 		if i == 0 {
