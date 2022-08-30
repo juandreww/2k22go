@@ -3,11 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"log"
 	"net"
 	"strings"
-	"math/rand"
-	"strconv"
 )
 
 func main() {
@@ -15,6 +14,7 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
 	defer li.Close()
 
 	for {
@@ -28,54 +28,45 @@ func main() {
 }
 
 func handle(conn net.Conn) {
+	defer conn.Close()
+
+	io.WriteString(conn, "\r\nIN-MEMORYDATABASE\r\n\r\n" +
+		"USE:\r\n"+
+		"\tSET key value \r\n"+
+		"\tGET key \r\n"+
+		"EXAMPLE:\r\n"+
+		"\tSET fav  chocolate \r\n"+
+		"\tGET fav \r\n\r\n\r\n")
+
+	data := make(map[string]string)
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
-		/*
-			insert full name
-			check first character of two word after space
-			if theres only 1 string then use the first two character
-			concat with random int(3)
-			upper case letter
-		*/
-		ln := strings.ToUpper(scanner.Text())
-		bs := []byte(ln)
-		if len(bs) < 3 {
-			log.Fatalln("Your name must be 3 characters minimum")
+		ln := scanner.Text()
+		fs := strings.Fields(ln)
+
+		if len(fs) < 1 {
+			continue
 		}
-		r := registernickname(bs)
 
-		fmt.Fprintf(conn, "%s - Your Registered Nickname is: %s\n", ln, r)
-		fmt.Fprintln(conn, bs)
-	}
-}
-
-func registernickname(bs []byte) []byte {
-	var res = make([]byte, 5)
-	count := 0
-	for i, v := range bs {
-		if i == 0 {
-			res[count] = v
-			count++
-		} else if count == 2 {
-			break
-		} else if v == 32 && len(bs) > i {
-			res[count] = bs[i+1]
-			count++
+		switch fs[0] {
+		case "GET":
+			k := fs[1]
+			v := data[k]
+			fmt.Fprintf(conn, "%s\r\n", v)
+		case "SET":
+			if len(fs) != 3 {
+				fmt.Fprintln(conn, "EXPECTED VALUE\r")
+				continue
+			}
+			k := fs[1]
+			v := fs[2]
+			data[k] = v
+		case "DEL":
+			k := fs[1]
+			delete(data, k)
+		default:
+			fmt.Fprintln(conn, "INVALID COMMAND " +fs[0]+"\r\n")
+			continue
 		}
 	}
-	
-
-	if res[1] == 0 {
-		res[1] = bs[1]
-	}
-
-	intgr := randomInRange(100, 300)
-	str := []byte(strconv.Itoa(intgr))
-	resnew := append(res, str[0], str[1], str[2])
-
-	return resnew
-}
-
-func randomInRange(a, b int) int {
-	return a + rand.Intn(b-a)
 }
