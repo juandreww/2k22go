@@ -6,8 +6,6 @@ import (
 	"log"
 	"net"
 	"strings"
-	"net/http"
-	"encoding/json"
 )
 
 type Response struct {
@@ -81,7 +79,31 @@ func mux(conn net.Conn, ln string) {
 }
 
 func first(conn net.Conn) {
+	body := `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title></title></head><body>
+			<strong>FIRST</strong><br>
+			<a href="/first">first</a><br>
+			<a href="/second">second</a><br>
+			</body></html>
+			`
+	fmt.Fprint(conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint(conn, "Content-Type: text/html\r\n")
+	fmt.Fprint(conn, "\r\n")
+	fmt.Fprint(conn, body)
+}
 
+func second(conn net.Conn) {
+	body := `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title></title></head><body>
+			<strong>SECOND</strong><br>
+			<a href="/first">first</a><br>
+			<a href="/second">second</a><br>
+			</body></html>
+			`
+	fmt.Fprint(conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint(conn, "Content-Type: text/html\r\n")
+	fmt.Fprint(conn, "\r\n")
+	fmt.Fprint(conn, body)
 }
 
 func respond(conn net.Conn) {
