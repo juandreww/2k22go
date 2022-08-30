@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"strings"
+	"net/http"
 )
 
 func main() {
@@ -14,6 +15,10 @@ func main() {
 		log.Fatalln(err.Error())
 	}
 	defer li.Close()
+
+	mux := http.DefaultServeMux
+	mux.HandleFunc("/first", first())
+	mux.HandleFunc("/second", second())
 
 	for {
 		conn, err := li.Accept()
@@ -33,6 +38,14 @@ func handle(conn net.Conn) {
 
 	// write response
 	respond(conn)
+}
+
+func first() string {
+	return "first"
+}
+
+func second() string {
+	return "second"
 }
 
 func request(conn net.Conn) {
