@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	// "log"
+	"log"
 	"net"
 	"strings"
 	"net/http"
@@ -16,16 +16,16 @@ type Response struct {
 }
 
 func main() {
-	mux := http.DefaultServeMux
-	mux.HandleFunc("/first", first())
-	mux.HandleFunc("/second", second())
+	// mux := http.DefaultServeMux
+	// mux.HandleFunc("/first", first())
+	// mux.HandleFunc("/second", second())
+	// http.ListenAndServe(":8080", mux)
 
-	http.ListenAndServe(":8080", mux)
-	// li, err := net.Listen("tcp", ":8080")
-	// if err != nil {
-	// 	log.Fatalln(err.Error())
-	// }
-	// defer li.Close()
+	li, err := net.Listen("tcp", ":8080")
+	if err != nil {
+		log.Fatalln(err.Error())
+	}
+	defer li.Close()
 
 	
 
