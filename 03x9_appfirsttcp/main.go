@@ -3,31 +3,40 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
+	// "log"
 	"net"
 	"strings"
 	"net/http"
+	"encoding/json"
 )
 
-func main() {
-	li, err := net.Listen("tcp", ":8080")
-	if err != nil {
-		log.Fatalln(err.Error())
-	}
-	defer li.Close()
+type Response struct {
+	Code int `json:"code"`
+	Body interface{} `json:"body"`
+}
 
+func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/first", first())
 	mux.HandleFunc("/second", second())
 
-	for {
-		conn, err := li.Accept()
-		if err != nil {
-			log.Fatalln(err.Error())
-			continue
-		}
-		go handle(conn)
-	}
+	http.ListenAndServe(":8080", mux)
+	// li, err := net.Listen("tcp", ":8080")
+	// if err != nil {
+	// 	log.Fatalln(err.Error())
+	// }
+	// defer li.Close()
+
+	
+
+	// for {
+	// 	conn, err := li.Accept()
+	// 	if err != nil {
+	// 		log.Fatalln(err.Error())
+	// 		continue
+	// 	}
+	// 	go handle(conn)
+	// }
 }
 
 func handle(conn net.Conn) {
@@ -40,12 +49,32 @@ func handle(conn net.Conn) {
 	respond(conn)
 }
 
-func first() string {
-	return "first"
+func first() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			data := Response{
+				Code : http.StatusOK,
+				Body : "first",
+			}
+			
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(data)
+		}
+	}
 }
 
-func second() string {
-	return "second"
+func second() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			data := Response{
+				Code : http.StatusOK,
+				Body : "second",
+			}
+			
+			w.WriteHeader(http.StatusOK)
+			json.NewEncoder(w).Encode(data)
+		}
+	}
 }
 
 func request(conn net.Conn) {
