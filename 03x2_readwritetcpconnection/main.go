@@ -29,7 +29,8 @@ func handle(conn net.Conn) {
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
 		ln := scanner.Text()
-		fmt.Println(ln)
+		fmt.Println("he says " + ln)
+		fmt.Fprintf(conn, "I heard what you say : %s\n", ln)
 	}
 	defer conn.Close()
 
