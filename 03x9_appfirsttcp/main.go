@@ -27,16 +27,14 @@ func main() {
 	}
 	defer li.Close()
 
-	
-
-	// for {
-	// 	conn, err := li.Accept()
-	// 	if err != nil {
-	// 		log.Fatalln(err.Error())
-	// 		continue
-	// 	}
-	// 	go handle(conn)
-	// }
+	for {
+		conn, err := li.Accept()
+		if err != nil {
+			log.Println(err.Error())
+			continue
+		}
+		go handle(conn)
+	}
 }
 
 func handle(conn net.Conn) {
@@ -46,57 +44,44 @@ func handle(conn net.Conn) {
 	request(conn)
 
 	// write response
-	respond(conn)
-}
-
-func first() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodGet {
-			data := Response{
-				Code : http.StatusOK,
-				Body : "first",
-			}
-			
-			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode(data)
-		}
-	}
-}
-
-func second() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodGet {
-			data := Response{
-				Code : http.StatusOK,
-				Body : "second",
-			}
-			
-			w.WriteHeader(http.StatusOK)
-			json.NewEncoder(w).Encode(data)
-		}
-	}
+	// respond(conn)
 }
 
 func request(conn net.Conn) {
 	i := 0
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
-		// fmt.Println(i)
 		ln := scanner.Text()
 		fmt.Println(ln)
 		if i == 0 {
 			// request line
-			c := strings.Fields(ln)[1]
-			m := strings.Fields(ln)[0]
-			fmt.Println("***METHOD", m)
-			fmt.Println("***URL", c)
+			mux(conn, ln)
 		}
 		if ln == "" {
-			// headers are done
 			break
 		}
+
 		i++
 	}
+}
+
+func mux(conn net.Conn, ln string) {
+	m := strings.Fields(ln)[0]
+	u := strings.Fields(ln)[1]
+	fmt.Println("***METHOD", m)
+	fmt.Println("***URI", u)
+
+	if m == "GET" && u == "/first" {
+		first(conn)
+	}
+
+	if m == "GET" && u == "/second" {
+		second(conn)
+	}
+}
+
+func first(conn net.Conn) {
+
 }
 
 func respond(conn net.Conn) {
