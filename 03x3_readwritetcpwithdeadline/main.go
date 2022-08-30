@@ -31,7 +31,7 @@ func handle(conn net.Conn) {
 	if err != nil {
 		log.Fatalln("CONN TIMEOUT")
 	}
-	
+
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
 		ln := scanner.Text()
@@ -40,5 +40,5 @@ func handle(conn net.Conn) {
 	}
 	defer conn.Close()
 
-	fmt.Println("Code got here.")
+	fmt.Println("OK YOUR 30 SECONDS IS UP")
 }
