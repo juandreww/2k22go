@@ -20,6 +20,11 @@ func main() {
 		if err != nil {
 			log.Println(err)
 		}
+
 		io.WriteString(conn, "\nHello from TCP Server\n")
+		fmt.Fprintln(conn, "How is your day?")
+		fmt.Fprintf(conn, "%v", "Well I Hope")
+		
+		conn.Close()
 	}
 }
