@@ -37,6 +37,9 @@ func handle(conn net.Conn) {
 		*/
 		ln := strings.ToUpper(scanner.Text())
 		bs := []byte(ln)
+		if len(bs) < 3 {
+			log.Fatalln("Your name must be 3 characters minimum")
+		}
 		r := registernickname(bs)
 
 		fmt.Fprintf(conn, "%s - Your Registered Nickname is: %s\n", ln, r)
