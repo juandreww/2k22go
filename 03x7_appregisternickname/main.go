@@ -52,19 +52,22 @@ func handle(conn net.Conn) {
 func registernickname(bs []byte) []byte {
 	var res = make([]byte, 5)
 	fmt.Println(res[1])
+	count := 0
 	for i, v := range bs {
 		if i == 0 {
-			res[i] = v
-		} else if res[1] != 0 {
+			res[count] = v
+			count++
+		} else if count == 2 {
 			fmt.Println("break")
 			fmt.Println(i)
 			fmt.Println(v)
 			break
 		} else if v == 32 && len(bs) > i {
-			res[i] = bs[i+1]
+			res[count] = bs[i+1]
+			count++
 		}
 	}
-	fmt.Println(len(res))
+	fmt.Println(res)
 	if res[1] == 0 {
 		fmt.Println("break2")
 		res[1] = bs[1]
