@@ -29,9 +29,10 @@ func (p handlerlemon) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 var tpl *template.Template
 
 func init() {
-	tpl = 
+	tpl = template.Must(template.ParseFiles("index.gohtml"))
 }
 
 func main() {
-
+	var p lemonhandler
+	http.ListenAndServe(":8080", p)
 }
