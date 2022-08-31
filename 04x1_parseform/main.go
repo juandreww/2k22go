@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-type lemon int
+type lemon float64
 
 func (p lemon) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
