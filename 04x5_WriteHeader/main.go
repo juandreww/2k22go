@@ -1,41 +1,25 @@
 package main
 
 import (
-	"html/template"
-	"log"
+	"fmt"
 	"net/http"
-	"net/url"
 )
 
-type hotdog int
+type lemonhandler float64
 
-func (m hotdog) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	err := req.ParseForm()
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	data := struct {
-		Method      string
-		URL         *url.URL
-		Submissions map[string][]string
-		Header      http.Header
-	}{
-		req.Method,
-		req.URL,
-		req.Form,
-		req.Header,
-	}
-	tpl.ExecuteTemplate(w, "index.gohtml", data)
+func (p lemonhandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Toon-Lemon", "this is Toon Lemon Shop")
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	fmt.Fprintln(w, "<h1>Any code you want in this func</h1>")
 }
 
-var tpl *template.Template
+// var tpl *template.Template
 
-func init() {
-	tpl = template.Must(template.ParseFiles("index.gohtml"))
-}
+// func init() {
+// 	tpl = template.Must(template.ParseFiles("index.gohtml"))
+// }
 
 func main() {
-	var d hotdog
-	http.ListenAndServe(":8080", d)
+	var p lemonhandler
+	http.ListenAndServe(":8080", p)
 }
