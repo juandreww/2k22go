@@ -4,12 +4,12 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"net/url`"
+	"net/url"
 )
 
 type handlerlemon float64
 
-func (p handlerlemon) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (p handlerlemon) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	err := req.ParseForm()
 	if err != nil {
 		log.Fatalln(err)
@@ -33,6 +33,6 @@ func init() {
 }
 
 func main() {
-	var p lemonhandler
+	var p handlerlemon
 	http.ListenAndServe(":8080", p)
 }
