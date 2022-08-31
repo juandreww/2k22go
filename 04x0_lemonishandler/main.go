@@ -1,17 +1,24 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
+	"log"
 	"net/http"
 )
 
-type lemon float64
+type lemon int
 
-func (p lemon) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hey, anything you want to order?")
+func (p lemon) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	err := req.ParseForm()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	tpl.ExecuteTemplate(w, "index.gohtml", req.Form)
 }
 
-func main() {
-	var p lemon
-	http.ListenAndServe(":8080", p)
+var tpl *template.Template
+
+func init() {
+	tpl = template.Must(template.ParseFiles("index.gohtml"))
 }
