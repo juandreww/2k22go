@@ -8,6 +8,12 @@
     <header>
         <h1>Show Information about Types of Lemon</h1>
     </header>
+    {{if .Form}}
+        {{range $k, $v := .Form}}
+            {{$k}}<br>
+            {{$v}}<br>
+        {{end}}
+    {{end}}
 
     <form action="/checkinfo" method="POST">
         <input type="text" name="name" placeholder="Types of lemon.." autofocus autocomplete="off">
@@ -30,6 +36,7 @@
         <li>RawQuery: {{.URL.RawQuery}}</li>
         <li>Fragment: {{.URL.Fragment}}</li>
     </ul>
+
     <br>
     <br>
     <hr>
@@ -58,5 +65,16 @@
         <li>Villafranca Lemon</li>   
         <li>Kagzi Lime</li>   
     </ul>
+    <br>
+    <br>
+    <hr>
+    {{range $k, $v := .Header}}
+        {{$k}}
+        <ul>
+        {{range $v}}
+            <li>{{.}}</li>
+        {{end}}
+        </ul>
+    {{end}}
 </body>
 </html>
