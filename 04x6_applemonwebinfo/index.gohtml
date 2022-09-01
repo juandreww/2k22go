@@ -8,17 +8,55 @@
     <header>
         <h1>Show Information about Types of Lemon</h1>
     </header>
-    {{if .Form}}
-        {{range $k, $v := .Form}}
-            {{$k}}<br>
-            {{$v}}<br>
-        {{end}}
-    {{end}}
+
+    
 
     <form action="/checkinfo" method="POST">
         <input type="text" name="name" placeholder="Types of lemon.." autofocus autocomplete="off">
         <input type="submit" name="submit-btn" value="Open Information">
     </form>
+
+    {{if .Submissions}}<p><strong>Newest information about</strong>:</p>
+        {{range $key, $value := .Submissions}}
+                {{if eq "name" $key}}
+                    <ul>{{range $value}}
+                            <li><em>{{.}}</em></li>
+                            {{if eq "Avalon Lemon" .}}
+                                <p>Native to Florida, this lemon variety is also known as Avon lemon and is close to the Lisbon lemon. 
+                                You can find them easily in the supermarket as concentrate juice in the produce section.</p>
+                            {{end}}
+                            {{if eq "Bearss Lemon" .}}
+                                <p>Bearss lemons are from Italy but now grown in Florida since the 1950s. 
+                                These high-quality juicy lemons contain an ample amount of lemon oil in their peel as well. 
+                                This is one of the popular, different types of lemons!</p>
+                            {{end}}
+                            {{if eq "Buddha’s Hand Lemons" .}}
+                                <p>Also known as Finger Citron in many Asian countries, this variety is native to Himalayan lower regions. 
+                                This fragrant lemon variety resembles fingers, the rind and pith both are useful as it does not contain any seeds or juice. 
+                                These lemons are grown in China and considered a symbol of happiness and fortune.</p>
+                            {{end}}
+                            {{if eq "Bush Lemon" .}}
+                                <p>This lemon variety is also known as rough lemon, due to the thick and rigid appearance of the rind that has a strong flavor. 
+                                They are wild-growing species, found in subtropical regions of Australia. 
+                                Bush lemons do not contain much juice and mainly used for transplanting other lemons.</p>
+                            {{end}}
+                            {{if eq "Baboon Lemons" .}}
+                                <p>The baboon lemons are endemic to Brazil and have bright yellow skin and sour flavor that tastes like lime. 
+                                Its rind and pulp are used in the preparation of several types of sauces, such as barbeque and pasta sauce.</p>
+                            {{end}}
+                            {{if eq "Avalon Lemon" .}}
+                                <p>Native to Florida, this lemon variety is also known as Avon lemon and is close to the Lisbon lemon. 
+                                You can find them easily in the supermarket as concentrate juice in the produce section.</p>
+                            {{end}}
+                            {{if eq "Avalon Lemon" .}}
+                                <p>Native to Florida, this lemon variety is also known as Avon lemon and is close to the Lisbon lemon. 
+                                You can find them easily in the supermarket as concentrate juice in the produce section.</p>
+                            {{end}}
+                        {{end}}
+                    </ul>
+                {{end}}     
+        {{end}}
+    {{end}}
 
     <br>
     <br>
