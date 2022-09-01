@@ -4,12 +4,14 @@ import (
 	// "fmt"
 	"net/http"
 	"html/template"
+	"net/url"
+	"log"
 )
 
 type lemonhandler float64
 
 func (p lemonhandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	tpl.ExecuteTemplate(w, "index.gohtml", req.Form)
+	err := req.Parseform()
 }
 
 var tpl *template.Template
