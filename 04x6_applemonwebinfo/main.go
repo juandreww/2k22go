@@ -11,7 +11,17 @@ import (
 type lemonhandler float64
 
 func (p lemonhandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	err := req.Parseform()
+	err := req.ParseForm()
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	data := struct {
+		Method		string
+		URL			*url.URL
+		Submissions map[string][]string
+		Header		http.Header
+	}
 }
 
 var tpl *template.Template
