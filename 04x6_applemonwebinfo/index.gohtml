@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Lemonade Shop</title>
+    <title>Lemonade Web Information</title>
 </head>
 <body>
-    <strong>Enter the shop</strong><br>
-    <a href="/home">Enter</a><br>
-    <br>
-    <strong>Go to next shop</strong><br>
-    <a href="/gotonext">Go to next shop</a><br>
+    <header>
+    </header>
+
+    <form action="/checkinfo" method="POST">
+        <input type="text" name="name" placeholder="Types of lemon.." autofocus autocomplete="off">
+        <input type="submit" name="submit-btn" value="Open Information">
+    </form>
 </body>
 </html>
