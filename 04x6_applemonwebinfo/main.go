@@ -21,7 +21,14 @@ func (p lemonhandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		URL			*url.URL
 		Submissions map[string][]string
 		Header		http.Header
+	}{
+		req.Method,
+		req.URL,
+		req.Form,
+		req.Header,
 	}
+
+	tpl.ExecuteTemplate(w, "index.gohtml", data)
 }
 
 var tpl *template.Template
