@@ -6,12 +6,28 @@
 </head>
 <body>
     <header>
-        <h1>Show Information about Lemon</h1>
+        <h1>Show Information about Types of Lemon</h1>
     </header>
 
     <form action="/checkinfo" method="POST">
         <input type="text" name="name" placeholder="Types of lemon.." autofocus autocomplete="off">
         <input type="submit" name="submit-btn" value="Open Information">
     </form>
+
+    <br>
+    <br>
+    <br>
+    <p>The request method: {{.Method}}</p>
+    <p>The request URL:</p>
+    <ul>
+        <li>Scheme: {{.URL.Scheme}}</li>
+        <li>Opaque: {{.URL.Opaque}}</li>
+        <li>Host: {{.URL.Host}}</li>
+        <li>Path: {{.URL.Path}}</li>
+        <li>RawPath: {{.URL.RawPath}}</li>
+        <li>ForceQuery: {{.URL.ForceQuery}}</li>
+        <li>RawQuery: {{.URL.RawQuery}}</li>
+        <li>Fragment: {{.URL.Fragment}}</li>
+    </ul>
 </body>
 </html>
