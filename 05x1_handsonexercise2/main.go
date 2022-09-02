@@ -37,7 +37,7 @@ func init() {
 
 func main() {
 	mux := http.DefaultServeMux
-	mux.HandleFunc("/dog", dog)
+	mux.HandleFunc("/dog/", dog)
 	mux.HandleFunc("/", index)
 	
 	mux.HandleFunc("/me/", me)
