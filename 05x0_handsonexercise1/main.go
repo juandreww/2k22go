@@ -13,15 +13,15 @@ func (p handler1) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "here is the index")
+	io.WriteString(w, "<h1>here is the index</h1>")
 }
 
 func dog(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "here is the dog")
+	io.WriteString(w, "<h1>here is the dog</h1>")
 }
 
 func me(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "my name is Andrew")
+	io.WriteString(w, "<h1>my name is Andrew</h1>")
 }
 
 func main() {
