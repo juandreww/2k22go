@@ -12,6 +12,9 @@ func (p handler1) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	var p handler1
-	http.ListenAndServe(":8080", p)
+	mux := http.DefaultServeMux
+	mux.HandleFunc("/", index())
+	mux.HandleFunc("/dog/", dog())
+	mux.HandleFunc("/me/", me())
+	http.ListenAndServe(":8080", mux)
 }
