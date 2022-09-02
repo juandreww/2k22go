@@ -37,8 +37,9 @@ func init() {
 
 func main() {
 	mux := http.DefaultServeMux
-	mux.HandleFunc("/", index)
 	mux.HandleFunc("/dog", dog)
+	mux.HandleFunc("/", index)
+	
 	mux.HandleFunc("/me/", me)
 	http.ListenAndServe(":8080", mux)
 }
