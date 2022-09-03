@@ -71,8 +71,8 @@ func handleGet(conn net.Conn) {
 		</head>
 		<body>
 			<h1>"CHECK LEMON STOCK"</h1>
-			<a href="/openicebox">index</a><br>
-			<a href="/squeezelemon">apply</a><br>
+			<a href="/openicebox">Lemon Remaining</a><br>
+			<a href="/squeezelemon">Squeeze some lemons</a><br>
 			<form action="/squeezelemon" method="POST">
 			<input type="hidden" value="squeeze the lemon please">
 			<input type="submit" value="submit">
