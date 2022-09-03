@@ -56,6 +56,8 @@ func serve(conn net.Conn) {
 		handleGet(conn)
 	case rMethod == "POST" && rURL == "/squeezelemon":
 		handlePost(conn)
+	case rMethod == "GET" && rURL == "/squeezelemon":
+		handleGetJuicer(conn)
 	default:
 		handleDefault(conn)
 	}
@@ -70,8 +72,32 @@ func handleGet(conn net.Conn) {
 			<title>CHECK LEMON STOCK</title>
 		</head>
 		<body>
-			<h1>"CHECK LEMON STOCK"</h1>
+			<h1>"YOU HAVE 8 LEMONS IN ICE BOX"</h1>
 			<a href="/">Home</a><br>
+		</body>
+		</html>
+	`
+	io.WriteString(conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint(conn, "Content-Type: text/html\r\n")
+	io.WriteString(conn, "\r\n")
+	io.WriteString(conn, body)
+}
+
+func handleGetJuicer(conn net.Conn) {
+	body := `
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<title>I HAVE THE JUICER</title>
+		</head>
+		<body>
+			<h1>"I HAVE THE JUICER"</h1>
+			<form action="/squeezelemon" method="POST">
+			<input type="hidden" value="squeeze the lemon please">
+			<input type="submit" value="Squeeze Lemon">
+			</form>
 		</body>
 		</html>
 	`
@@ -117,7 +143,7 @@ func handleDefault(conn net.Conn) {
 			<a href="/squeezelemon">Squeeze some lemons</a><br>
 			<form action="/squeezelemon" method="POST">
 			<input type="hidden" value="squeeze the lemon please">
-			<input type="submit" value="submit">
+			<input type="submit" value="Squeeze Lemon">
 			</form>
 		</body>
 		</html>
