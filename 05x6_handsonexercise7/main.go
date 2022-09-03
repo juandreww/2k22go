@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"net/http"
+	"net"
 	"log"
 )
 
@@ -13,4 +13,19 @@ func main() {
 	}
 
 	defer li.Close()
+
+	for {
+		conn, err := li.Accept()
+		if err != nil {
+			log.Println(err)
+			continue
+		}
+
+		go serve(conn)
+	}
+	fmt.Println("oke")
+}
+
+func serve(conn net.Conn) {
+	defer conn.Close()
 }
