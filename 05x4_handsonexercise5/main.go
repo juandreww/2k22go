@@ -50,6 +50,12 @@ func serve(conn net.Conn) {
 		}
 		i++
 	}
+
+	if (rMethod == "GET") {
+		get()
+	} else if (rMethod == "POST") {
+		apply()
+	}
 	
 	body := "<h1>HOLY COW THIS IS LOW LEVEL</h1>"
 	io.WriteString(conn, "HTTP/1.1 200 OK\r\n")
@@ -57,4 +63,12 @@ func serve(conn net.Conn) {
 	fmt.Fprint(conn, "Content-Type: text/html\r\n")
 	io.WriteString(conn, "\r\n")
 	io.WriteString(conn, body)
+}
+
+func get() {
+	fmt.Println("this is using GET")
+}
+
+func apply() {
+	fmt.Println("this is using POST")
 }
