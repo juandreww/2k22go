@@ -51,11 +51,7 @@ func serve(conn net.Conn) {
 		i++
 	}
 	
-	body := "CHECK OUT THE RESPONSE BODY PAYLOAD"
-	body += "\n"
-	body += rMethod
-	body += "\n"
-	body += rURI
+	body := "<h1>HOLY COW THIS IS LOW LEVEL</h1>"
 	io.WriteString(conn, "HTTP/1.1 200 OK\r\n")
 	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
 	fmt.Fprint(conn, "Content-Type: text/html\r\n")
