@@ -32,7 +32,7 @@ func serve(conn net.Conn) {
 	defer conn.Close()
 	var i int
 	var rMethod, rURL string
-	scanner := bufio.newScanner(conn)
+	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
 		ln := scanner.Text()
 		fmt.Println(ln)
@@ -44,7 +44,26 @@ func serve(conn net.Conn) {
 			fmt.Println("URL:", rURL)
 		}
 		if ln == "" {
-
+			fmt.Println("THIS IS THE END OF HTTP REQUEST HEADERS")
+			break
 		}
+		i++
 	}
+
+	switch {
+	case rMethod == "GET":
+		handleGet(conn)
+	case rMethod == "POST":
+		handlePost(conn)
+	default:
+		handleGet(conn)
+	}
+}
+
+func handleGet(conn net.Conn) {
+
+}
+
+func handlePost(conn net.Conn) {
+	
 }
