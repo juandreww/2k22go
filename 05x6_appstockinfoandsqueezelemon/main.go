@@ -71,7 +71,49 @@ func handleGet(conn net.Conn) {
 		</head>
 		<body>
 			<h1>"CHECK LEMON STOCK"</h1>
-			<a href="/openicebox">Lemon Remaining</a><br>
+			<a href="/">Home</a><br>
+		</body>
+		</html>
+	`
+	io.WriteString(conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint(conn, "Content-Type: text/html\r\n")
+	io.WriteString(conn, "\r\n")
+	io.WriteString(conn, body)
+}
+
+func handlePost(conn net.Conn) {
+	body := `
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<title>SQUEEZED SOME LEMONS</title>
+		</head>
+		<body>
+			<h1>"SQUEEZED SOME LEMONS"</h1>
+			<a href="/">Home</a><br>
+		</body>
+		</html>
+	`
+	io.WriteString(conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint(conn, "Content-Type: text/html\r\n")
+	io.WriteString(conn, "\r\n")
+	io.WriteString(conn, body)
+}
+
+func handleDefault(conn net.Conn) {
+	body := `
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<title>CHECK LEMON STOCK</title>
+		</head>
+		<body>
+			<h1>"CHECK LEMON STOCK"</h1>
+			<a href="/">Home</a><br>
 			<a href="/squeezelemon">Squeeze some lemons</a><br>
 			<form action="/squeezelemon" method="POST">
 			<input type="hidden" value="squeeze the lemon please">
@@ -85,12 +127,4 @@ func handleGet(conn net.Conn) {
 	fmt.Fprint(conn, "Content-Type: text/html\r\n")
 	io.WriteString(conn, "\r\n")
 	io.WriteString(conn, body)
-}
-
-func handlePost(conn net.Conn) {
-	
-}
-
-func handleDefault(conn net.Conn) {
-	
 }
