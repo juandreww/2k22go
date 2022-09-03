@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"net/http"
 	"html/template"
+	"log"
 )
 
 func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/", http.HandlerFunc(minilemon))
-	mux.Handle("/dog/", http.HandlerFunc(dog))
+	mux.HandleFunc("/dog/", dog)
 	mux.HandleFunc("/snoopy1", ServeSnoopy)
 	fmt.Println("hello")
 
@@ -20,12 +21,11 @@ func minilemon(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Mini Lemon toy found here")
 }
 
-func dog(w http.ResponseWriter, r *http.Request) {
+func dog(w http.ResponseWriter, req *http.Request) {
 	tpl, err := template.ParseFiles("dog.gohtml")
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
-
 	tpl.ExecuteTemplate(w, "dog.gohtml", nil)
 }
 
