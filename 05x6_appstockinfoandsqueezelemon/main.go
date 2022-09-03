@@ -26,7 +26,7 @@ func main() {
 
 		go serve(conn)
 	}
-	fmt.Println("oke")
+	// fmt.Println("oke")
 }
 
 func serve(conn net.Conn) {
