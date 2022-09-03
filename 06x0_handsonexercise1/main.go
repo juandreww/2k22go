@@ -7,8 +7,8 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
-	mux.Handle("/", minilemon())
-	mux.Handle("/dog/", dog())
+	mux.Handle("/", http.HandlerFunc(minilemon))
+	mux.Handle("/dog/", http.HandlerFunc(dog))
 	fmt.Println("hello")
 
 	http.ListenAndServe(":8080", mux)
@@ -19,5 +19,5 @@ func minilemon(w http.ResponseWriter, r *http.Request) {
 }
 
 func dog(w http.ResponseWriter, r *http.Request) {
-	
+
 }
