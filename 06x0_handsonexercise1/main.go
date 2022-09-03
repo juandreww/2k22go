@@ -28,8 +28,8 @@ func minilemon(w http.ResponseWriter, r *http.Request) {
 
 func dog(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, "<h1>Here is the index</h1>")
-
 	data := "here is the dog"
 
 	tpl.ExecuteTemplate(w, "dog.gohtml", data)
+	http.ServeFile(w, r, "snoopy1.jpg")
 }
