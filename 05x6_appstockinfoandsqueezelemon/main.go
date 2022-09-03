@@ -109,11 +109,11 @@ func handleDefault(conn net.Conn) {
 		<html lang="en">
 		<head>
 			<meta charset="UTF-8">
-			<title>CHECK LEMON STOCK</title>
+			<title>WELCOME TO LEMONADE STAND 1819</title>
 		</head>
 		<body>
-			<h1>"CHECK LEMON STOCK"</h1>
-			<a href="/">Home</a><br>
+			<h1>"HI ANDREW, WHAT ACTIVITY YOU WANT TO DO?"</h1>
+			<a href="/openicebox">Open Ice Box</a><br>
 			<a href="/squeezelemon">Squeeze some lemons</a><br>
 			<form action="/squeezelemon" method="POST">
 			<input type="hidden" value="squeeze the lemon please">
