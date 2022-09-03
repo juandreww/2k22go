@@ -52,12 +52,12 @@ func serve(conn net.Conn) {
 	}
 
 	switch {
-	case rMethod == "GET":
+	case rMethod == "GET" && rURL == "/openicebox":
 		handleGet(conn)
-	case rMethod == "POST":
+	case rMethod == "POST" && rURL == "/squeezelemon":
 		handlePost(conn)
 	default:
-		handleGet(conn)
+		handleDefault(conn)
 	}
 }
 
@@ -88,5 +88,9 @@ func handleGet(conn net.Conn) {
 }
 
 func handlePost(conn net.Conn) {
+	
+}
+
+func handleDefault(conn net.Conn) {
 	
 }
