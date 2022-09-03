@@ -6,6 +6,7 @@ import (
 	"log"
 	"bufio"
 	"strings"
+	"io"
 )
 
 func main() {
@@ -61,7 +62,25 @@ func serve(conn net.Conn) {
 }
 
 func handleGet(conn net.Conn) {
-
+	body := `
+		<!DOCTYPE html>
+		<html lang="en">
+		<head>
+			<meta charset="UTF-8">
+			<title>CHECK LEMON STOCK</title>
+		</head>
+		<body>
+			<h1>"CHECK LEMON STOCK"</h1>
+			<a href="/openicebox">index</a><br>
+			<a href="/squeezelemon">apply</a><br>
+			<form action="/squeezelemon" method="POST">
+			<input type="hidden" value="squeeze the lemon please">
+			<input type="submit" value="submit">
+			</form>
+		</body>
+		</html>
+	`
+	io.WriteString(conn, )
 }
 
 func handlePost(conn net.Conn) {
