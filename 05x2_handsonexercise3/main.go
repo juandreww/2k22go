@@ -15,19 +15,3 @@ func main() {
 
 	http.ListenAndServe(":8080", mux)
 }
-
-func warehouse(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hi, youre in our warehouse.")
-}
-
-func factory(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hi, youre in our factory.")
-}
-
-func shop(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hi, youre in our shop.")
-}
-
-func home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hi, youre in our home.")
-}
