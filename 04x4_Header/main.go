@@ -14,7 +14,6 @@ func (m hotdog) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 	data := struct {
 		Method      string
 		URL         *url.URL
