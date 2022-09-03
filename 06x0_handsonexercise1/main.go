@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/http"
 	"html/template"
-	"io"
 )
 
 var tpl *template.Template
@@ -17,6 +16,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/", http.HandlerFunc(minilemon))
 	mux.Handle("/dog/", http.HandlerFunc(dog))
+	mux.HandleFunc("/snoopy1", ServeSnoopy)
 	fmt.Println("hello")
 
 	http.ListenAndServe(":8080", mux)
@@ -27,9 +27,15 @@ func minilemon(w http.ResponseWriter, r *http.Request) {
 }
 
 func dog(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "<h1>Here is the index</h1>")
+	tpl, err := template.ParseFiles("dog.gohtml")
+	if err != nil {
+		panic(err)
+	}
 	data := "here is the dog"
 
 	tpl.ExecuteTemplate(w, "dog.gohtml", data)
+}
+
+func ServeSnoopy(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "snoopy1.jpg")
 }
