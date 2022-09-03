@@ -6,12 +6,6 @@ import (
 	"html/template"
 )
 
-var tpl *template.Template
-
-func init() {
-	tpl = template.Must(template.ParseFiles("dog.gohtml"))
-}
-
 func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/", http.HandlerFunc(minilemon))
@@ -31,9 +25,8 @@ func dog(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
-	data := "here is the dog"
 
-	tpl.ExecuteTemplate(w, "dog.gohtml", data)
+	tpl.ExecuteTemplate(w, "dog.gohtml", nil)
 }
 
 func ServeSnoopy(w http.ResponseWriter, r *http.Request) {
