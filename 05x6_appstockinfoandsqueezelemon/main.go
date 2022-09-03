@@ -80,7 +80,11 @@ func handleGet(conn net.Conn) {
 		</body>
 		</html>
 	`
-	io.WriteString(conn, )
+	io.WriteString(conn, "HTTP/1.1 200 OK\r\n")
+	fmt.Fprintf(conn, "Content-Length: %d\r\n", len(body))
+	fmt.Fprint(conn, "Content-Type: text/html\r\n")
+	io.WriteString(conn, "\r\n")
+	io.WriteString(conn, body)
 }
 
 func handlePost(conn net.Conn) {
