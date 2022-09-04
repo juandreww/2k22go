@@ -13,6 +13,11 @@ func init() {
 }
 
 func main() {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", index)
+	mux.HandleFunc("/about", about)
+	mux.HandleFunc("/contact", contact)
+	mux.HandleFunc("/apply", apply)
 	http.ListenAndServe(":8080", nil)
 }
 
