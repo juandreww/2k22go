@@ -8,5 +8,6 @@ import (
 
 func main() {
 	fmt.Println("abc")
-	log.Fatal(http.ListenAndServe(":8080", http.FileServer(http.Dir("."))))
+	fs := http.FileServer(http.Dir("public"))
+	log.Fatal(http.ListenAndServe(":8080", fs))
 }
