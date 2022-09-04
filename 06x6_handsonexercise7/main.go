@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"html/template"
@@ -13,25 +14,26 @@ func init() {
 }
 
 func main() {
+	fmt.Println("hi")
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", index)
-	mux.HandleFunc("/about", about)
-	mux.HandleFunc("/contact", contact)
-	mux.HandleFunc("/apply", apply)
+	mux.HandleFunc("/about/", about)
+	mux.HandleFunc("/contact/", contact)
+	mux.HandleFunc("/apply/", apply)
 	http.ListenAndServe(":8080", nil)
 }
 
-func index(w http.ResponseWriter, req *http.Request) {
+func index(w http.ResponseWriter, _ *http.Request) {
 	err := tpl.ExecuteTemplate(w, "index.gohtml", nil)
 	HandleError(w, err)
 }
 
-func about(w http.ResponseWriter, req *http.Request) {
+func about(w http.ResponseWriter, _ *http.Request) {
 	err := tpl.ExecuteTemplate(w, "about.gohtml", nil)
 	HandleError(w, err)
 }
 
-func contact(w http.ResponseWriter, req *http.Request) {
+func contact(w http.ResponseWriter, _ *http.Request) {
 	err := tpl.ExecuteTemplate(w, "contact.gohtml", nil)
 	HandleError(w, err)
 }
