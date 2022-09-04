@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"html/template"
 	"log"
 	"net/http"
-	"html/template"
 )
 
 var tpl *template.Template
@@ -14,12 +13,11 @@ func init() {
 }
 
 func main() {
-	fmt.Println("hi")
-	mux := http.NewServeMux()
+	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/about/", about)
 	mux.HandleFunc("/contact/", contact)
-	mux.HandleFunc("/apply/", apply)
+	mux.HandleFunc("/apply", apply)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -39,20 +37,14 @@ func contact(w http.ResponseWriter, _ *http.Request) {
 }
 
 func apply(w http.ResponseWriter, req *http.Request) {
-	if (req.Method == "GET") {
-		err := tpl.ExecuteTemplate(w, "apply.gohtml", nil)
-		HandleError(w, err)
-	} else if (req.Method == "POST") {
+
+	if req.Method == http.MethodPost {
 		err := tpl.ExecuteTemplate(w, "applyProcess.gohtml", nil)
 		HandleError(w, err)
-	} else {
-		log.Fatalln("Method not found")
+		return
 	}
-	
-}
 
-func applyProcess(w http.ResponseWriter, req *http.Request) {
-	err := tpl.ExecuteTemplate(w, "applyProcess.gohtml", nil)
+	err := tpl.ExecuteTemplate(w, "apply.gohtml", nil)
 	HandleError(w, err)
 }
 
