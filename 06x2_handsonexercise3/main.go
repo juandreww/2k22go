@@ -12,6 +12,7 @@ func main() {
 	mux.Handle("/", http.HandlerFunc(minilemon))
 	mux.HandleFunc("/dog/", dog)
 	mux.HandleFunc("/snoopy1", ServeSnoopy)
+	mux.Handle("/resources/", http.StripPrefix("/resources", http.FileServer(http.Dir("./assets"))))
 	fmt.Println("hello")
 
 	http.ListenAndServe(":8080", mux)
