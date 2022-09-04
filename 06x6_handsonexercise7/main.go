@@ -37,8 +37,16 @@ func contact(w http.ResponseWriter, req *http.Request) {
 }
 
 func apply(w http.ResponseWriter, req *http.Request) {
-	err := tpl.ExecuteTemplate(w, "apply.gohtml", nil)
-	HandleError(w, err)
+	if (req.Method == "GET") {
+		err := tpl.ExecuteTemplate(w, "apply.gohtml", nil)
+		HandleError(w, err)
+	} else if (req.Method == "POST") {
+		err := tpl.ExecuteTemplate(w, "applyProcess.gohtml", nil)
+		HandleError(w, err)
+	} else {
+		log.Fatalln("Method not found")
+	}
+	
 }
 
 func applyProcess(w http.ResponseWriter, req *http.Request) {
