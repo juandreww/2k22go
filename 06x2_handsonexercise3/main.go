@@ -30,8 +30,6 @@ func minilemon(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Mini Lemon toy found here")
 }
 
-
-
 func ServeSnoopy(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "snoopy1.jpg")
 }
