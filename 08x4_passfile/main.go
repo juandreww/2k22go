@@ -33,6 +33,7 @@ func foo(w http.ResponseWriter, req *http.Request) {
 			return
 		}
 		defer f.Close()
+		
 
 		// for your information
 		fmt.Println("\nfile:", f, "\nheader:", h, "\nerr", err)
