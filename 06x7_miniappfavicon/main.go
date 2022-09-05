@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"fmt"
 )
 
 var tpl *template.Template
@@ -19,8 +20,8 @@ func main() {
 	http.ListenAndServe(":8080", nil)
 }
 
-func index(w http.ResponseWriter, _ *http.Request) {
-	err := tpl.ExecuteTemplate(w, "index.gohtml", nil)
+func index(w http.ResponseWriter, req *http.Request) {
+	fmt.Println(req.URL)
 	HandleError(w, err)
 }
 
