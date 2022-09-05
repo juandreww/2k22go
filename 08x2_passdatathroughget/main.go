@@ -2,6 +2,7 @@ package main
 
 import (
 	"io"
+	// "fmt"
 	"net/http"
 
 )
@@ -16,7 +17,7 @@ func first(w http.ResponseWriter, r *http.Request) {
 	v := r.FormValue("try")
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(w, `
-	<form method="GET">
+	<form method="POST">
 	 <input type="text" name="try">
 	 <input type="submit">
 	</form>
