@@ -22,7 +22,9 @@ func main() {
 
 func index(w http.ResponseWriter, req *http.Request) {
 	fmt.Println(req.URL)
-	HandleError(w, err)
+
+	fmt.Fprintln(w, "go look at your terminal")
+	// HandleError(w, err)
 }
 
 func HandleError(w http.ResponseWriter, err error) {
