@@ -1,17 +1,11 @@
 package main
 
 import (
-	"html/template"
+	// "html/template"
 	"log"
 	"net/http"
 	"fmt"
 )
-
-var tpl *template.Template
-
-func init() {
-	tpl = template.Must(template.ParseGlob("templates/*"))
-}
 
 func main() {
 	mux := http.DefaultServeMux
