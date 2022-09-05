@@ -45,4 +45,14 @@ func lebegin(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	defer dst.Close()
+
+	_, err = dst.Write(bs)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	tpl.ExecuteTemplate(w, "index.gohtml", s)
 }
