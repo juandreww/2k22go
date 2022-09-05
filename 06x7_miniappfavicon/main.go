@@ -10,7 +10,7 @@ import (
 func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
-	// mux.Handle("/favicon.ico", http.NotFoundHandler())
+	mux.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
 
