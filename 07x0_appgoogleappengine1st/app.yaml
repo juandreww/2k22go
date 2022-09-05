@@ -1,4 +1,7 @@
-runtime: go118
+runtime: go
+application: lemonvirtualworld
+version: 1
+api_version: go1
 
 handlers:
 - url: /.*
