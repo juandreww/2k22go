@@ -1,25 +1,38 @@
 package main
 
 import (
-	"io"
-	// "fmt"
+	"html/template"
+	"log"
 	"net/http"
-
 )
 
+var tpl *template.Template
+
+func init() {
+	tpl = template.Must(template.ParseGlob("templates/*"))
+}
+
+type person struct {
+	FirstName  string
+	LastName   string
+	Subscribed bool
+}
+
 func main() {
-	http.HandleFunc("/", first)
+	http.HandleFunc("/", foo)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
 
-func first(w http.ResponseWriter, r *http.Request) {
-	v := r.FormValue("try")
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	io.WriteString(w, `
-	<form method="POST">
-	 <input type="text" name="try">
-	 <input type="submit">
-	</form>
-	<br>`+v)
+func foo(w http.ResponseWriter, req *http.Request) {
+
+	f := req.FormValue("first")
+	l := req.FormValue("last")
+	s := req.FormValue("subscribe") == "on"
+
+	err := tpl.ExecuteTemplate(w, "index.gohtml", person{f, l, s})
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		log.Fatalln(err)
+	}
 }
