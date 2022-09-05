@@ -1,10 +1,10 @@
 package main
 
 import (
-	"html/template"
-	"net/http"
 	"fmt"
-	"ioutil"
+	"html/template"
+	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 )
@@ -16,41 +16,48 @@ func init() {
 }
 
 func main() {
-	http.HandleFunc("/", lebegin)
+	http.HandleFunc("/", foo)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
 
-func lebegin(w http.ResponseWriter, r *http.Request) {
+func foo(w http.ResponseWriter, req *http.Request) {
+
 	var s string
-	if r.Method == http.MethodPost {
-		f, h, err := r.FormFile("q")
+	if req.Method == http.MethodPost {
+
+		// open
+		f, h, err := req.FormFile("q")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		defer f.Close()
-	}
 
-	fmt.Println("\nfile:", f, "\nheader", h, "\nerr", err)
-	bs, err := ioutil.ReadAll(f)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	s = string(bs)
+		// for your information
+		fmt.Println("\nfile:", f, "\nheader:", h, "\nerr", err)
 
-	dst, err := os.Create(filepath.Join("./user/", h.Filename))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	defer dst.Close()
+		// read
+		bs, err := ioutil.ReadAll(f)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		s = string(bs)
 
-	_, err = dst.Write(bs)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		// store on server
+		dst, err := os.Create(filepath.Join("./user/", h.Filename))
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		defer dst.Close()
+
+		_, err = dst.Write(bs)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
