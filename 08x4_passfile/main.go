@@ -4,6 +4,9 @@ import (
 	"html/template"
 	"net/http"
 	"fmt"
+	"ioutil"
+	"os"
+	"path/filepath"
 )
 
 var tpl *template.Template
@@ -20,8 +23,8 @@ func main() {
 
 func lebegin(w http.ResponseWriter, r *http.Request) {
 	var s string
-	if req.Method == http.MethodPost {
-		f, h, err := req.FormFile("q")
+	if r.Method == http.MethodPost {
+		f, h, err := r.FormFile("q")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -30,4 +33,16 @@ func lebegin(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("\nfile:", f, "\nheader", h, "\nerr", err)
+	bs, err := ioutil.ReadAll(f)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	s = string(bs)
+
+	dst, err := os.Create(filepath.Join("./user/", h.Filename))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
