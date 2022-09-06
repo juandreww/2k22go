@@ -15,7 +15,7 @@ func init() {
 func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/submitarrival", submitarrival)
-	mux.HandleFunc("/bar", bar)
+	mux.HandleFunc("/submitted", submitted)
 	mux.HandleFunc("/thankyou", thankyou)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
@@ -25,9 +25,10 @@ func foo(w http.ResponseWriter, req *http.Request) {
 	fmt.Print("Your request method at foo: ", req.Method, "\n\n")
 }
 
-func bar(w http.ResponseWriter, req *http.Request) {
-	fmt.Println("Your request method at bar:", req.Method)
+func submitted(w http.ResponseWriter, req *http.Request) {
+	fmt.Println("Your request method at submitted:", req.Method)
 	// process form submission here
+	tpl.ExecuteTemplate(w, "thankyou.gohtml", nil)
 	http.Redirect(w, req, "/thankyou", http.StatusSeeOther)
 }
 
