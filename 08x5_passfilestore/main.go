@@ -41,9 +41,9 @@ func foo(w http.ResponseWriter, req *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(w, `
-	<form method="POST" enctype="multipart/form-data">
-	<input type="file" name="q">
-	<input type="submit">
-	</form>
+		<form method="POST" enctype="multipart/form-data">
+		<input type="file" name="q">
+		<input type="submit">
+		</form>
 	<br>`+s)
 }
