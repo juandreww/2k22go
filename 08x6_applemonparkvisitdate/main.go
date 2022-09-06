@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"fmt"
+	"io"
 	"io/ioutil"
 )
 
@@ -28,6 +29,13 @@ func submitarrival(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(s)
 	}
 
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	io.WriteString(w, `
+		<form method="POST" enctype="multipart/form-data">
+		<input type="file" name="q">
+		<input type="submit">
+		</form>
+	<br>`+s)
 }
 
 func HandleError(w http.ResponseWriter,  err error) {
