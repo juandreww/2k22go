@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"fmt"
 )
 
 var tpl *template.Template
@@ -29,6 +30,7 @@ func foo(w http.ResponseWriter, req *http.Request) {
 	bs := make([]byte, req.ContentLength)
 	req.Body.Read(bs)
 	body := string(bs)
+	fmt.Println(body)
 
 	err := tpl.ExecuteTemplate(w, "index.gohtml", body)
 	if err != nil {
