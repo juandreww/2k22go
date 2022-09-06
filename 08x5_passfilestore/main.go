@@ -21,10 +21,7 @@ func foo(w http.ResponseWriter, req *http.Request) {
 
 		// open
 		f, h, err := req.FormFile("q")
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
+		
 		defer f.Close()
 
 		// for your information
