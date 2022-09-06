@@ -18,15 +18,18 @@ func submitarrival(w http.ResponseWriter, r *http.Request) {
 	var s string
 	if r.Method == "POST" {
 		f, h, err := r.FormFile("file")
+		if f == nil {
+			http.Error(w, "Sorry but file is nil", http.StatusInternalServerError)
+			return
+		}
 		HandleError(w, err)
 
 		fmt.Println("\nfile:", f, "\nheader:", h, "\nerr", err)
 		str, err := ioutil.ReadAll(f)
 		HandleError(w, err)
-		fmt.Println(str)
+		// fmt.Println(str)
 
-		s = "abc"
-		fmt.Println(s)
+		s = string(str)
 	}
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
