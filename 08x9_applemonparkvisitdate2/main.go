@@ -13,9 +13,9 @@ func init() {
 }
 
 func main() {
-	http.HandleFunc("/submitarrival", submitarrival)
-	http.HandleFunc("/bar", bar)
-	http.HandleFunc("/barred", barred)
+	mux := http.DefaultServeMux
+	mux.HandleFunc("/submitarrival", submitarrival)
+	mux.HandleFunc("/bar", bar)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
