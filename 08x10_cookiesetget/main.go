@@ -23,7 +23,6 @@ func set(w http.ResponseWriter, req *http.Request) {
 }
 
 func read(w http.ResponseWriter, req *http.Request) {
-
 	c, err := req.Cookie("my-cookie")
 	if err != nil {
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
