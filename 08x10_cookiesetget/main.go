@@ -14,8 +14,8 @@ func main() {
 
 func set(w http.ResponseWriter, req *http.Request) {
 	http.SetCookie(w, &http.Cookie{
-		Name:  "my-cookie",
-		Value: "some value",
+		Name:  "my-cookie2",
+		Value: "some value2",
 		Path: "/",
 	})
 	fmt.Fprintln(w, "COOKIE WRITTEN - CHECK YOUR BROWSER")
