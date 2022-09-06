@@ -37,11 +37,16 @@ func setmultiple(w http.ResponseWriter, req *http.Request) {
 		fmt.Fprintln(w, "You have logged in ", c1.Value, " times")
 	}
 
-	val := strconv.Atoi(c1.Value)
+	count, err := strconv.Atoi(c1.Value)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	count++
+	c1.Value = strconv.Itoa(count)
 
 	http.SetCookie(w, &http.Cookie{
 		Name:  "my-logincount",
-		Value: "1",
+		Value: c1.Value,
 	})
 
 	fmt.Fprintln(w, "COOKIE WRITTEN - CHECK YOUR BROWSER")
