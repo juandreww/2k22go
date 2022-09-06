@@ -1,25 +1,15 @@
-{{template "header"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
 
-<form method="POST" enctype="text/plain">
-    <label for="firstName">First Name</label>
-    <input type="text" id="firstName" name="first">
-    <br>
-    <label for="lastName">Last Name</label>
-    <input type="text" id="lastName" name="last">
-    <br>
-    <label for="sub">Subscribe</label>
-    <input type="checkbox" id="sub" name="subscribe">
-    <br>
-    <input type="file" name="file">
+<form method="POST" action="/bar">
+    <input type="text" name="fname">
     <input type="submit">
 </form>
 
-<br>
-
-{{if .}}
-    <h1>Body: {{.}}</h1>
-{{end}}
-
-
-
-{{template "footer"}}
+</body>
+</html>
