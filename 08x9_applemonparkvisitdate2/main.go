@@ -28,13 +28,17 @@ func foo(w http.ResponseWriter, req *http.Request) {
 func submitted(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("Your request method at submitted:", req.Method)
 	// process form submission here
-	tpl.ExecuteTemplate(w, "thankyou.gohtml", nil)
-	http.Redirect(w, req, "/thankyou", http.StatusSeeOther)
+	http.Redirect(w, req, "/thankyou", http.StatusTemporaryRedirect)
 }
 
 func thankyou(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("Your request method at thankyou:", req.Method)
-	tpl.ExecuteTemplate(w, "thanyou.gohtml", nil)
+	bs := make([]byte, req.ContentLength)
+	req.Body.Read(bs)
+	
+	body := string(bs)
+	fmt.Println(body)
+	tpl.ExecuteTemplate(w, "thankyou.gohtml", body)
 }
 
 func submitarrival(w http.ResponseWriter, req *http.Request) {

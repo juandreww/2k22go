@@ -6,11 +6,11 @@
 </head>
 <body>
 
-<form method="POST" action="/submitted" enctype="multipart/form-data">
-    <input type="text" name="fname" >
-    <input type="file" name="file">
-    <input type="submit">
-</form>
+<h1> Thank you. We have received your submission ! </h1>
+
+{{if .}}
+    <h1>Body: {{.}}</h1>
+{{end}}
 
 </body>
 </html>
