@@ -6,18 +6,28 @@ import (
 )
 
 func main() {
-	http.HandleFunc("/", set)
+	http.HandleFunc("/", setmultiple)
 	http.HandleFunc("/read", read)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
 
-func set(w http.ResponseWriter, req *http.Request) {
+func setmultiple(w http.ResponseWriter, req *http.Request) {
 	http.SetCookie(w, &http.Cookie{
-		Name:  "my-cookie2",
-		Value: "some value2",
-		Path: "/",
+		Name:  "my-name",
+		Value: "David McGregor",
 	})
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  "my-order",
+		Value: "Avalon Lemon ",
+	})
+
+	http.SetCookie(w, &http.Cookie{
+		Name:  "my-quantity",
+		Value: "1",
+	})
+
 	fmt.Fprintln(w, "COOKIE WRITTEN - CHECK YOUR BROWSER")
 	fmt.Fprintln(w, "in chrome go to: dev tools / application / cookies")
 }
