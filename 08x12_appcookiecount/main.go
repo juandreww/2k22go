@@ -31,10 +31,12 @@ func setmultiple(w http.ResponseWriter, req *http.Request) {
 	})
 
 	c1, err := req.Cookie("my-logincount")
-	if err != nil {
-		log.Println(err)
-	} else {
-		fmt.Fprintln(w, "You have logged in ", c1.Value, " times")
+	if err == http.ErrNoCookie {
+		c1 = &http.Cookie{
+			Name:  "my-cookie",
+			Value: "0",
+			Path: "/",
+		}
 	}
 
 	count, err := strconv.Atoi(c1.Value)
@@ -51,6 +53,7 @@ func setmultiple(w http.ResponseWriter, req *http.Request) {
 
 	fmt.Fprintln(w, "COOKIE WRITTEN - CHECK YOUR BROWSER")
 	fmt.Fprintln(w, "in chrome go to: dev tools / application / cookies")
+	fmt.Fprintln(w, "You have logged into this website ", c1.Value, " times")
 }
 
 func read(w http.ResponseWriter, req *http.Request) {
