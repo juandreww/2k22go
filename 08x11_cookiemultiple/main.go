@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"log"
 )
 
 func main() {
@@ -33,11 +34,24 @@ func setmultiple(w http.ResponseWriter, req *http.Request) {
 }
 
 func read(w http.ResponseWriter, req *http.Request) {
-	c, err := req.Cookie("my-cookie")
+	c1, err := req.Cookie("my-name")
 	if err != nil {
-		http.Error(w, http.StatusText(400), http.StatusBadRequest)
-		return
+		log.Println(err)
+	} else {
+		fmt.Fprintln(w, "YOUR COOKIE #1:", c1)
 	}
 
-	fmt.Fprintln(w, "YOUR COOKIE:", c)
+	c2, err := req.Cookie("my-order")
+	if err != nil {
+		log.Println(err)
+	} else {
+		fmt.Fprintln(w, "YOUR COOKIE #2:", c2)
+	}
+
+	c3, err := req.Cookie("my-quantity")
+	if err != nil {
+		log.Println(err)
+	} else {
+		fmt.Fprintln(w, "YOUR COOKIE #3:", c3)
+	}
 }
