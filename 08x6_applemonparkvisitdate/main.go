@@ -31,8 +31,9 @@ func submitarrival(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(w, `
+		<h2>Please submit your arrival datetime at our Lemon Park ! </h2>
 		<form method="POST" enctype="multipart/form-data">
-		<input type="file" name="q">
+		<input type="file" name="file">
 		<input type="submit">
 		</form>
 	<br>`+s)
