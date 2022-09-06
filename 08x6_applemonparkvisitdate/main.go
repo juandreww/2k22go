@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 	"fmt"
+	"io/ioutil"
 )
 
 func main() {
@@ -19,8 +20,14 @@ func submitarrival(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, err)
 
 		fmt.Println("\nfile:", f, "\nheader:", h, "\nerr", err)
+		str, err := ioutil.ReadAll(f)
+		HandleError(w, err)
+		fmt.Println(str)
 
+		s = "abc"
+		fmt.Println(s)
 	}
+
 }
 
 func HandleError(w http.ResponseWriter,  err error) {
