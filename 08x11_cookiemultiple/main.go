@@ -21,7 +21,7 @@ func setmultiple(w http.ResponseWriter, req *http.Request) {
 
 	http.SetCookie(w, &http.Cookie{
 		Name:  "my-order",
-		Value: "Avalon Lemon ",
+		Value: "Avalon Lemon",
 	})
 
 	http.SetCookie(w, &http.Cookie{
@@ -46,6 +46,7 @@ func read(w http.ResponseWriter, req *http.Request) {
 		log.Println(err)
 	} else {
 		fmt.Fprintln(w, "YOUR COOKIE #2:", c2)
+		fmt.Println(c2.Value)
 	}
 
 	c3, err := req.Cookie("my-quantity")
