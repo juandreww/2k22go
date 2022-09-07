@@ -13,6 +13,7 @@ var tpl *template.Template
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
+
 }
 
 type user struct {
@@ -122,14 +123,15 @@ func login(w http.ResponseWriter, r *http.Request) {
 		fmt.Println()
 
 		u, ok := dbUser[email]
+		fmt.Println(u)
+		fmt.Println()
+		fmt.Println(ok)
 		if !ok {
 			http.Error(w, "Username and/or password do not match", http.StatusForbidden)
 			return
 		}
 
-		fmt.Println(u)
-		fmt.Println()
-		fmt.Println(ok)
+		
 
 		err := bcrypt.CompareHashAndPassword(u.Password, []byte(password))
 		if err != nil {
