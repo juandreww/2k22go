@@ -40,6 +40,7 @@ func main() {
 	mux.HandleFunc("/atthebar", atthebar)
 	mux.HandleFunc("/signup", signup)
 	mux.HandleFunc("/login", login)
+	mux.HandleFunc("/logout", logout)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
@@ -67,12 +68,14 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func atthebar(w http.ResponseWriter, r *http.Request) {
-	cookie, err := r.Cookie("session-id")
-	if err != nil {
+	cookie, _ := r.Cookie("session-id")
+
+	if (!alreadySignup(r))  {
 		fmt.Println("here")
 		http.Redirect(w, r, "/signup", http.StatusSeeOther)
 		return
 	}
+
 	un, ok := dbSessions[cookie.Value]
 	if !ok {
 		fmt.Println("here2")
@@ -153,6 +156,25 @@ func login(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/atthebar", http.StatusSeeOther)
 	}
 	tpl.ExecuteTemplate(w, "login.gohtml", nil)
+}
+
+func logout(w http.ResponseWriter, r *http.Request) {
+	cookie, _ := r.Cookie("session-id")
+	if (!alreadySignup(r))  {
+		fmt.Println("here")
+		http.Redirect(w, r, "/signup", http.StatusSeeOther)
+		return
+	}
+
+	delete(dbSessions, cookie.Value)
+	cookie = &http.Cookie{
+		Name:   "session-id",
+		Value:  "",
+		MaxAge: -1,
+	}
+	http.SetCookie(w, cookie)
+
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
 func HandleError(w http.ResponseWriter, err error) {
