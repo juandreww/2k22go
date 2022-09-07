@@ -27,3 +27,4 @@ func session(w http.ResponseWriter, req *http.Request) {
 	}
 	fmt.Println(cookie)
 }
+
