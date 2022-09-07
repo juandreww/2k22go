@@ -107,7 +107,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.SetCookie(w, cookie)
-		dbSessions[cookie.Value] = fname
+		dbSessions[cookie.Value] = email
 		dbUser[email] = u
 	}
 
