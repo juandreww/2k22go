@@ -12,10 +12,17 @@ func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 }
 
+type user struct {
+	"firstname" string
+	"lastname" string
+	"email" string
+}
+var dbSessions = map[string]string{}
+
 func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/welcome", welcome)
-	// mux.HandleFunc("/submit", submit)
+	mux.HandleFunc("/submit", submit)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
@@ -23,4 +30,10 @@ func main() {
 func welcome(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Welcome to The Lemon Bar. Your used method: ", r.Method)
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
+}
+
+func submit(w http.ResponseWriter, r *http.Request) {
+	fname :=  r.FormValue("firstname")
+	lname := r.FormValue("lastname")
+	email := r.FormValue("email")
 }
