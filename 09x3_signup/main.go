@@ -52,8 +52,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 		u = dbUser[un]
 	}
 
-	
-
 	tpl.ExecuteTemplate(w, "index.gohtml", u)
 }
 
