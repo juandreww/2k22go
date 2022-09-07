@@ -162,7 +162,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("session-id")
 	if (!alreadySignup(r))  {
 		fmt.Println("here")
-		http.Redirect(w, r, "/signup", http.StatusSeeOther)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
 
