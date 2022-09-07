@@ -13,10 +13,12 @@ func init() {
 }
 
 type user struct {
-	"firstname" string
-	"lastname" string
-	"email" string
+	FirstName string
+	LastName string
+	Email string
 }
+
+var dbUser = map[string]user{}
 var dbSessions = map[string]string{}
 
 func main() {
