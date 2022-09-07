@@ -63,8 +63,8 @@ func atthebar(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		HandleError(w, err)
 	}
-
 	u := dbUser[cookie.Value]
+	
 	if u == (user{}) {
 		http.Redirect(w, r, "/welcome", http.StatusSeeOther)
 	}
