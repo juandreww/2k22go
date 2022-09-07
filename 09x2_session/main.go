@@ -25,7 +25,7 @@ var dbSessions = map[string]string{}
 
 func main() {
 	mux := http.DefaultServeMux
-	mux.HandleFunc("/welcome", index)
+	mux.HandleFunc("/index", index)
 	mux.HandleFunc("/atthebar", atthebar)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
@@ -57,20 +57,23 @@ func index(w http.ResponseWriter, r *http.Request) {
 		email := r.FormValue("email")
 		u = user{fname, lname, email}
 		uuid := uuid.New()
+		dbSessions[cookie.Value] = fname
 		dbUser[uuid.String()] = u
 	}
 
-	tpl.ExecuteTemplate(w, "index.gohtml", nil)
+	tpl.ExecuteTemplate(w, "index.gohtml", u)
 }
 
 func atthebar(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session-id")
 	if err != nil {
+		fmt.Println("here")
 		http.Redirect(w, r, "/index", http.StatusSeeOther)
 		return
 	}
 	un, ok := dbSessions[cookie.Value]
 	if !ok {
+		fmt.Println("here2")
 		http.Redirect(w, r, "/index", http.StatusSeeOther)
 		return
 	}
