@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 	"log"
 )
 
@@ -18,7 +19,7 @@ type user struct {
 	FirstName string
 	LastName string
 	Email string
-	Password string
+	Password []byte
 }
 
 /*
@@ -87,7 +88,15 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		lname := r.FormValue("lastname")
 		email := r.FormValue("email")
 		password := r.FormValue("password")
-		u := user{fname, lname, email, password,}
+		
+
+		bs, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
+		if err != nil {
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+
+		u := user{fname, lname, email, bs,}
 
 		uuid := uuid.New()
 		cookie := &http.Cookie {
@@ -98,9 +107,8 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.SetCookie(w, cookie)
-
 		dbSessions[cookie.Value] = fname
-		dbUser[fname] = u
+		dbUser[email] = u
 	}
 
 	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
