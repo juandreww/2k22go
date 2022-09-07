@@ -21,6 +21,13 @@ type user struct {
 	Password string
 }
 
+/*
+	1. user bisa signup
+	2. apabila masuk ke signup, isi email, password, firstname, dan lastname
+	3. di function signup yang sama, gunakan post dan simpan cookie, serta session
+	4. cek apabila sudah signup, maka redirect ke the bar
+*/
+
 var dbUser = map[string]user{}
 var dbSessions = map[string]string{}
 
