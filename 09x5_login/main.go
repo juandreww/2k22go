@@ -14,7 +14,7 @@ var tpl *template.Template
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	bs, _ := bcrypt.GenerateFromPassword([]byte("jackywhacky"), bcrypt.MinCost)
-	dbUser["jackywhacky"] = user{"jacky","whacky","jackywhacky@gmail.com",bs,}
+	dbUser["jackywhacky@gmail.com"] = user{"jacky","whacky","jackywhacky@gmail.com",bs,}
 }
 
 type user struct {
