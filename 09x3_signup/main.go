@@ -84,13 +84,16 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		password := r.FormValue("password")
 		u := user{fname, lname, email, password,}
 
+		uuid := uuid.New()
 		cookie := &http.Cookie {
 			Name:  "session-id",
 			Value: uuid.String(),
 			HttpOnly: true,
 			// Secure: true,
 		}
-		uuid := uuid.New()
+
+		http.SetCookie(w, cookie)
+
 		dbSessions[cookie.Value] = fname
 		dbUser[uuid.String()] = u
 	}
@@ -103,4 +106,8 @@ func HandleError(w http.ResponseWriter, err error) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		log.Fatalln(err)
 	}
+}
+
+func alreadySignup(req *http.Request) bool {
+	return true
 }
