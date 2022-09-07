@@ -8,8 +8,8 @@
 </head>
 <body>
     <h3>Hi ! Thank you for coming ..</h3>
-    {{.FirstName}}
-        {{.FirstName}}{{.LastName}}
+    {{if .FirstName}}
+        {{.FirstName}} {{.LastName}}
         <br>
         Your email is: {{.Email}}
     {{end}}

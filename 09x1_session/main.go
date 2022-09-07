@@ -69,7 +69,7 @@ func atthebar(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/welcome", http.StatusSeeOther)
 	}
 	
-	tpl.ExecuteTemplate(w, "thebar.gohtml", nil)
+	tpl.ExecuteTemplate(w, "atthebar.gohtml", u)
 }
 
 func HandleError(w http.ResponseWriter, err error) {
