@@ -25,15 +25,26 @@ var dbSessions = map[string]string{}
 
 func main() {
 	mux := http.DefaultServeMux
-	mux.HandleFunc("/welcome", welcome)
-	mux.HandleFunc("/submit", submit)
+	mux.HandleFunc("/welcome", index)
 	mux.HandleFunc("/atthebar", atthebar)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
 
-func welcome(w http.ResponseWriter, r *http.Request) {
+func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Welcome to The Lemon Bar. Your used method: ", r.Method)
+	cookie, err := r.Cookie("session-id")
+	if err != nil {
+		uuid := uuid.New()
+		cookie = &http.Cookie {
+			Name:  "session-id",
+			Value: uuid.String(),
+			HttpOnly: true,
+			// Secure: true,
+		}
+		http.SetCookie(w, cookie)
+	}
+
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
 
