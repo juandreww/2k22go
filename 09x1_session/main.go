@@ -13,7 +13,16 @@ var tpl *template.Template
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 }
+/*----------------------------------------------------------------
+	1. template mau bisa panggil semua template - ok
+	2. ada input email, firstname,dan last name - ok
+	3. bisa submit - ok
+	3b. apabila submit, maka register user ke dalam 1 map
+	4. apabila submit maka register cookies
+	5. apabila refresh maka akan auto redirect ke lemonbar
+	6. di lemonbar beri info nama, welcome dst
 
+*/
 type user struct {
 	FirstName string
 	LastName string
