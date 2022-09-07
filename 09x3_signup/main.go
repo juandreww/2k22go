@@ -93,7 +93,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, cookie)
 
 		dbSessions[cookie.Value] = fname
-		dbUser[uuid.String()] = u
+		dbUser[fname] = u
 	}
 
 	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
