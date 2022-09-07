@@ -23,10 +23,7 @@ type user struct {
 }
 
 /*
-	1. user bisa signup
-	2. apabila masuk ke signup, isi email, password, firstname, dan lastname
-	3. di function signup yang sama, gunakan post dan simpan cookie, serta session
-	4. cek apabila sudah signup, maka redirect ke the bar
+	
 */
 
 var dbUser = map[string]user{}
@@ -37,6 +34,7 @@ func main() {
 	// mux.HandleFunc("/index", index)
 	mux.HandleFunc("/atthebar", atthebar)
 	mux.HandleFunc("/signup", signup)
+	mux.HandleFunc("/login", login)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
@@ -116,7 +114,17 @@ func signup(w http.ResponseWriter, r *http.Request) {
 
 func login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Login page: ", r.Method)
+	if r.Method == http.MethodPost {
+		email := r.FormValue("email")
+		password := r.FormValue("password")
+		
 
+		bs, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
+		if err != nil {
+			http.Error(w, "Internal server error", http.StatusInternalServerError)
+			return
+		}
+	}
 	tpl.ExecuteTemplate(w, "login.gohtml", nil)
 }
 
