@@ -66,15 +66,16 @@ func index(w http.ResponseWriter, r *http.Request) {
 func atthebar(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session-id")
 	if err != nil {
-		HandleError(w, err)
+		http.Redirect(w, r, "/index", http.StatusSeeOther)
+		return
 	}
-	u := dbUser[cookie.Value]
-	
-	if u == (user{}) {
-		http.Redirect(w, r, "/welcome", http.StatusSeeOther)
+	un, ok := dbSessions[cookie.Value]
+	if !ok {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
 	}
-	
-	tpl.ExecuteTemplate(w, "atthebar.gohtml", u)
+	u := dbUser[un]
+	tpl.ExecuteTemplate(w, "bar.gohtml", u)
 }
 
 func HandleError(w http.ResponseWriter, err error) {
