@@ -71,11 +71,11 @@ func atthebar(w http.ResponseWriter, r *http.Request) {
 	}
 	un, ok := dbSessions[cookie.Value]
 	if !ok {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
+		http.Redirect(w, r, "/index", http.StatusSeeOther)
 		return
 	}
 	u := dbUser[un]
-	tpl.ExecuteTemplate(w, "bar.gohtml", u)
+	tpl.ExecuteTemplate(w, "atthebar.gohtml", u)
 }
 
 func HandleError(w http.ResponseWriter, err error) {
