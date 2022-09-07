@@ -45,33 +45,22 @@ func index(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, cookie)
 	}
 
+
 	var u user
 	if un, ok := dbSessions[cookie.Value]; ok {
 		u = dbUser[un]
 	}
 
+	if r.Method == http.MethodPost {
+		fname :=  r.FormValue("firstname")
+		lname := r.FormValue("lastname")
+		email := r.FormValue("email")
+		u = user{fname, lname, email}
+		uuid := uuid.New()
+		dbUser[uuid.String()] = u
+	}
+
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
-}
-
-func submit(w http.ResponseWriter, r *http.Request) {
-	fname :=  r.FormValue("firstname")
-	lname := r.FormValue("lastname")
-	email := r.FormValue("email")
-	uuid := uuid.New()
-	dbUser[uuid.String()] = user {
-		fname,
-		lname,
-		email,
-	}
-
-	cookie := &http.Cookie {
-		Name:  "session-id",
-		Value: uuid.String(),
-		HttpOnly: true,
-		// Secure: true,
-	}
-	http.SetCookie(w, cookie)
-	http.Redirect(w, r, "/atthebar", http.StatusSeeOther)
 }
 
 func atthebar(w http.ResponseWriter, r *http.Request) {
