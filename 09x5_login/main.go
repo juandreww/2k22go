@@ -117,7 +117,9 @@ func login(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		email := r.FormValue("email")
 		password := r.FormValue("password")
-		
+		fmt.Println("password")
+		fmt.Println(password)
+		fmt.Println()
 
 		u, ok := dbUser[email]
 		if !ok {
