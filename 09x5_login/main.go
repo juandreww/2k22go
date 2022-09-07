@@ -25,7 +25,10 @@ type user struct {
 }
 
 /*
-	
+	1. inisialisasi user baru
+	2. buat page login, ada field username dan password
+	3. apabila post, maka pakai func login juga
+	4. compare password dengan password yang diketik
 */
 
 var dbUser = map[string]user{}
