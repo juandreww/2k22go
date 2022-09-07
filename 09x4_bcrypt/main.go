@@ -114,6 +114,12 @@ func signup(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
 }
 
+func login(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Login page: ", r.Method)
+
+	tpl.ExecuteTemplate(w, "login.gohtml", nil)
+}
+
 func HandleError(w http.ResponseWriter, err error) {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
