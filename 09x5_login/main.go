@@ -132,14 +132,22 @@ func login(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		
-
 		err := bcrypt.CompareHashAndPassword(u.Password, []byte(password))
 		if err != nil {
 			http.Error(w, "Username and/or password do not match", http.StatusForbidden)
 			return
 		}
-	
+
+		uuid := uuid.New()
+		cookie := &http.Cookie {
+			Name:  "session-id",
+			Value: uuid.String(),
+			HttpOnly: true,
+			// Secure: true,
+		}
+		http.SetCookie(w, cookie)
+		dbSessions[cookie.Value] = email
+		http.Redirect(w, r, "/atthebar", http.StatusSeeOther)
 	}
 	tpl.ExecuteTemplate(w, "login.gohtml", nil)
 }
