@@ -26,7 +26,7 @@ var dbSessions = map[string]string{}
 
 func main() {
 	mux := http.DefaultServeMux
-	mux.HandleFunc("/index", index)
+	// mux.HandleFunc("/index", index)
 	mux.HandleFunc("/atthebar", atthebar)
 	mux.HandleFunc("/signup", signup)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
@@ -59,13 +59,13 @@ func atthebar(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session-id")
 	if err != nil {
 		fmt.Println("here")
-		http.Redirect(w, r, "/index", http.StatusSeeOther)
+		http.Redirect(w, r, "/signup", http.StatusSeeOther)
 		return
 	}
 	un, ok := dbSessions[cookie.Value]
 	if !ok {
 		fmt.Println("here2")
-		http.Redirect(w, r, "/index", http.StatusSeeOther)
+		http.Redirect(w, r, "/signup", http.StatusSeeOther)
 		return
 	}
 	u := dbUser[un]
