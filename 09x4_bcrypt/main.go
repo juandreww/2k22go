@@ -119,11 +119,22 @@ func login(w http.ResponseWriter, r *http.Request) {
 		password := r.FormValue("password")
 		
 
-		bs, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
-		if err != nil {
-			http.Error(w, "Internal server error", http.StatusInternalServerError)
+		u, ok := dbUser[email]
+		if !ok {
+			http.Error(w, "Username and/or password do not match", http.StatusForbidden)
 			return
 		}
+
+		fmt.Println(u)
+		fmt.Println()
+		fmt.Println(ok)
+
+		err := bcrypt.CompareHashAndPassword(u.Password, []byte(password))
+		if err != nil {
+			http.Error(w, "Username and/or password do not match", http.StatusForbidden)
+			return
+		}
+	
 	}
 	tpl.ExecuteTemplate(w, "login.gohtml", nil)
 }
