@@ -18,6 +18,7 @@ type user struct {
 	FirstName string
 	LastName string
 	Email string
+	Password string
 }
 
 var dbUser = map[string]user{}
@@ -51,15 +52,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		u = dbUser[un]
 	}
 
-	if r.Method == http.MethodPost {
-		fname :=  r.FormValue("firstname")
-		lname := r.FormValue("lastname")
-		email := r.FormValue("email")
-		u = user{fname, lname, email}
-		uuid := uuid.New()
-		dbSessions[cookie.Value] = fname
-		dbUser[uuid.String()] = u
-	}
+	
 
 	tpl.ExecuteTemplate(w, "index.gohtml", u)
 }
@@ -83,7 +76,25 @@ func atthebar(w http.ResponseWriter, r *http.Request) {
 
 func signup(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Signup page: ", r.Method)
-	
+
+	if r.Method == http.MethodPost {
+		fname :=  r.FormValue("firstname")
+		lname := r.FormValue("lastname")
+		email := r.FormValue("email")
+		password := r.FormValue("password")
+		u := user{fname, lname, email, password,}
+
+		cookie := &http.Cookie {
+			Name:  "session-id",
+			Value: uuid.String(),
+			HttpOnly: true,
+			// Secure: true,
+		}
+		uuid := uuid.New()
+		dbSessions[cookie.Value] = fname
+		dbUser[uuid.String()] = u
+	}
+
 	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
 }
 
