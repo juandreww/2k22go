@@ -15,3 +15,12 @@ func alreadySignup(req *http.Request) bool {
 	_, ok := dbUser[un]
 	return ok
 }
+
+func getUser(req *http.Request) user {
+	cookie, err := req.Cookie("session-id")
+	if err != nil {
+		return user{}
+	}
+
+	
+}
