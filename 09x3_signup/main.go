@@ -105,7 +105,3 @@ func HandleError(w http.ResponseWriter, err error) {
 		log.Fatalln(err)
 	}
 }
-
-func alreadySignup(req *http.Request) bool {
-	return true
-}
