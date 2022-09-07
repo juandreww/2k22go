@@ -45,6 +45,11 @@ func index(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, cookie)
 	}
 
+	var u user
+	if un, ok := dbSessions[cookie.Value]; ok {
+		u = dbUser[un]
+	}
+
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
 
