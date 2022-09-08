@@ -84,6 +84,10 @@ func atthebar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	u := dbUser[un]
+	if u.Role == "007" {
+		http.Error(w, "007, please dont come to this bar", http.StatusForbidden)
+		return
+	}
 	tpl.ExecuteTemplate(w, "atthebar.gohtml", u)
 }
 
