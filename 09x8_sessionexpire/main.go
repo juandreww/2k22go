@@ -14,6 +14,7 @@ var tpl *template.Template
 var dbSessionsCleaned time.Time
 var dbUser = map[string]user{}
 var dbSessions = map[string]session{}
+const sessionLength int = 30
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
@@ -112,8 +113,9 @@ func signup(w http.ResponseWriter, r *http.Request) {
 			// Secure: true,
 		}
 
+		cookie.MaxAge = sessionLength
 		http.SetCookie(w, cookie)
-		dbSessions[cookie.Value] = email
+		dbSessions[cookie.Value] = session{email, time.Now(),}
 		dbUser[email] = u
 	}
 
@@ -153,7 +155,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 			// Secure: true,
 		}
 		http.SetCookie(w, cookie)
-		dbSessions[cookie.Value] = email
+		dbSessions[cookie.Value] = session{email, time.Now(),}
 		http.Redirect(w, r, "/atthebar", http.StatusSeeOther)
 	}
 	tpl.ExecuteTemplate(w, "login.gohtml", nil)
