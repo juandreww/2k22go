@@ -14,7 +14,7 @@ var tpl *template.Template
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	bs, _ := bcrypt.GenerateFromPassword([]byte("jackywhacky"), bcrypt.MinCost)
-	dbUser["jackywhacky@gmail.com"] = user{"jacky","whacky","jackywhacky@gmail.com",bs,}
+	dbUser["jackywhacky@gmail.com"] = user{"jacky","whacky","jackywhacky@gmail.com",bs, "admin"}
 }
 
 type user struct {
@@ -22,6 +22,7 @@ type user struct {
 	LastName string
 	Email string
 	Password []byte
+	Role string
 }
 
 /*
@@ -94,6 +95,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		lname := r.FormValue("lastname")
 		email := r.FormValue("email")
 		password := r.FormValue("password")
+		role := r.FormValue("role")
 		
 
 		bs, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
@@ -102,7 +104,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		u := user{fname, lname, email, bs,}
+		u := user{fname, lname, email, bs, role,}
 
 		uuid := uuid.New()
 		cookie := &http.Cookie {
