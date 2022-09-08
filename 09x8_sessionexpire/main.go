@@ -13,7 +13,7 @@ import (
 var tpl *template.Template
 var dbSessionsCleaned time.Time
 var dbUser = map[string]user{}
-var dbSessions = map[string]string{}
+var dbSessions = map[string]session{}
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
@@ -23,7 +23,7 @@ func init() {
 }
 
 type session struct {
-	un           string
+	email           string
 	lastActivity time.Time
 }
 
@@ -34,15 +34,6 @@ type user struct {
 	Password []byte
 	Role string
 }
-
-/*
-	1. inisialisasi user baru
-	2. buat page login, ada field username dan password
-	3. apabila post, maka pakai func login juga
-	4. compare password dengan password yang diketik
-*/
-
-
 
 func main() {
 	mux := http.DefaultServeMux
@@ -70,29 +61,23 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var u user
-	if un, ok := dbSessions[cookie.Value]; ok {
-		u = dbUser[un]
-	}
+	// if un, ok := dbSessions[cookie.Value]; ok {
+	// 	u = dbUser[un]
+	// }
 
 	tpl.ExecuteTemplate(w, "index.gohtml", u)
 }
 
 func atthebar(w http.ResponseWriter, r *http.Request) {
-	cookie, _ := r.Cookie("session-id")
-
-	if (!alreadySignup(r))  {
+	// cookie, _ := r.Cookie("session-id")
+	showSessions()
+	if (!alreadySignup(w, r))  {
 		fmt.Println("here")
 		http.Redirect(w, r, "/signup", http.StatusSeeOther)
 		return
 	}
 
-	un, ok := dbSessions[cookie.Value]
-	if !ok {
-		fmt.Println("here2")
-		http.Redirect(w, r, "/signup", http.StatusSeeOther)
-		return
-	}
-	u := dbUser[un]
+	u := getUser(w, r)
 	if u.Role == "007" {
 		http.Error(w, "007, please dont come to this bar", http.StatusForbidden)
 		return
@@ -102,7 +87,7 @@ func atthebar(w http.ResponseWriter, r *http.Request) {
 
 func signup(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Signup page: ", r.Method)
-
+	showSessions()
 	if r.Method == http.MethodPost {
 		fname :=  r.FormValue("firstname")
 		lname := r.FormValue("lastname")
@@ -137,6 +122,7 @@ func signup(w http.ResponseWriter, r *http.Request) {
 
 func login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Login page: ", r.Method)
+	showSessions()
 	if r.Method == http.MethodPost {
 		email := r.FormValue("email")
 		password := r.FormValue("password")
@@ -175,7 +161,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 func logout(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("session-id")
-	if (!alreadySignup(r))  {
+	showSessions()
+	if (!alreadySignup(w, r))  {
 		fmt.Println("here")
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
