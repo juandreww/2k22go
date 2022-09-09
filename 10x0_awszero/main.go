@@ -9,6 +9,8 @@ import (
 	"log"
 	"os"
 	"io"
+	"embed"
+	"io/fs"
 	// "github.com/gobuffalo/packr/v2"/sss
 )
 
@@ -24,15 +26,24 @@ type user struct {
 	Role string
 }
 
+
 func init() {
 	// tpl = template.Must(template.ParseGlob("../templates/*.gohtml"))
 	// tpl = packr.New("myBox", "./templates")
-	wd, err := os.Getwd()
-	if err != nil {
-	log.Fatal(err)
-	}
+	// wd, err := os.Getwd()
+	// if err != nil {
+	// log.Fatal(err)
+	// }
 
-	tmpl, err := template.ParseGlob(wd +  "/templates/*.gohtml")
+	//go:embed templates/*
+	// var content embed.FS
+	var files embed.FS
+    templates, _ := fs.ReadDir(files, "templates")
+    for _, template := range templates {
+        fmt.Printf("%q\n", template.Name())
+    }
+
+	tmpl, err := template.ParseGlob("templates/*.gohtml")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -40,6 +51,8 @@ func init() {
 	bs, _ := bcrypt.GenerateFromPassword([]byte("jackywhacky"), bcrypt.MinCost)
 	dbUser["jackywhacky@gmail.com"] = user{"jacky","whacky","jackywhacky@gmail.com",bs, "admin"}
 }
+
+
 
 func main() {
 	file, err := os.Open("main.go")
