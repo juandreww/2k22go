@@ -31,8 +31,8 @@ func init() {
 	if err != nil {
 	log.Fatal(err)
 	}
-	
-	tmpl, err := template.ParseGlob("templates/*.gohtml")
+
+	tmpl, err := template.ParseGlob(wd +  "/templates/*.gohtml")
 	if err != nil {
 		log.Fatal(err)
 	}
