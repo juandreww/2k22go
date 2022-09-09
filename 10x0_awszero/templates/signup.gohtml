@@ -82,11 +82,24 @@
         <div class="card">
             <div class="card-body">
                 <h3>Welcome! Please register your name here</h3>
+                <div class="spacing10"></div>
                 <form method="post" action="/signup">
-                    <input type="email" name="email" placeholder="email"><br>
-                    <input type="text" name="firstname" placeholder="first name"><br>
-                    <input type="text" name="lastname" placeholder="last name"><br>
-                    <input type="password" name="password" placeholder="password"><br>
+                    <label>
+                        Email
+                        <input type="email" name="email" placeholder="Email">
+                    </label>
+                    <label>
+                        First Name
+                        <input type="text" name="firstname" placeholder="First Name">
+                    </label>
+                    <label>
+                        Last Name
+                        <input type="text" name="lastname" placeholder="Last Name">
+                    </label>
+                    <label>
+                        Password
+                        <input type="password" name="password" placeholder="Password">
+                    </label>
                     <label for="role">Role</label>
                     <select name="role" id="role">
                         <option value="user">user</option>
