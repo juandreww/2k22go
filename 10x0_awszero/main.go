@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 	"io"
-	_ "embed"
+	"embed"
 	// "github.com/gobuffalo/packr/v2"/sss
 )
 
@@ -25,14 +25,19 @@ type user struct {
 	Role string
 }
 
-//go:embed templates/*.gohtml
+var (
+    //go:embed templates/*.gohtml
+    res embed.FS
+    pages = map[string]string{
+        "/index": "templates/index.gohtml",
+		"/signup": "templates/signup.gohtml",
+		"/login": "templates/login.gohtml",
+		"/logout": "templates/logout.gohtml",
+		"/atthebar": "templates/atthebar.gohtml",
+    }
+)
 
 func init() {
-	tmpl, err := template.ParseGlob("templates/*.gohtml")
-	if err != nil {
-		log.Fatal(err)
-	}
-	tpl = tmpl
 	bs, _ := bcrypt.GenerateFromPassword([]byte("jackywhacky"), bcrypt.MinCost)
 	dbUser["jackywhacky@gmail.com"] = user{"jacky","whacky","jackywhacky@gmail.com",bs, "admin"}
 }
@@ -94,6 +99,22 @@ func atthebar(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "007, please dont come to this bar", http.StatusForbidden)
 		return
 	}
+
+	page, ok := pages[r.URL.Path]
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	tpl, err := template.ParseFS(res, page)
+	if err != nil {
+		log.Printf("page %s not found in pages cache...", r.RequestURI)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusOK)
+
+	http.FileServer(http.FS(res))
 	tpl.ExecuteTemplate(w, "atthebar.gohtml", u)
 }
 
@@ -128,6 +149,22 @@ func signup(w http.ResponseWriter, r *http.Request) {
 		dbSessions[cookie.Value] = email
 		dbUser[email] = u
 	}
+
+	page, ok := pages[r.URL.Path]
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	tpl, err := template.ParseFS(res, page)
+	if err != nil {
+		log.Printf("page %s not found in pages cache...", r.RequestURI)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusOK)
+
+	http.FileServer(http.FS(res))
 
 	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
 }
@@ -167,6 +204,22 @@ func login(w http.ResponseWriter, r *http.Request) {
 		dbSessions[cookie.Value] = email
 		http.Redirect(w, r, "/atthebar", http.StatusSeeOther)
 	}
+
+	page, ok := pages[r.URL.Path]
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	tpl, err := template.ParseFS(res, page)
+	if err != nil {
+		log.Printf("page %s not found in pages cache...", r.RequestURI)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusOK)
+
+	http.FileServer(http.FS(res))
 	tpl.ExecuteTemplate(w, "login.gohtml", nil)
 }
 
