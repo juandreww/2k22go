@@ -5,13 +5,26 @@ import (
 	"html/template"
 	"net/http"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 	"log"
 )
 
 var tpl *template.Template
+var dbUser = map[string]user{}
+var dbSessions = map[string]string{}
+
+type user struct {
+	FirstName string
+	LastName string
+	Email string
+	Password []byte
+	Role string
+}
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
+	bs, _ := bcrypt.GenerateFromPassword([]byte("jackywhacky"), bcrypt.MinCost)
+	dbUser["jackywhacky@gmail.com"] = user{"jacky","whacky","jackywhacky@gmail.com",bs, "admin"}
 }
 
 func main() {
