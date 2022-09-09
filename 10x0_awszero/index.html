@@ -8,12 +8,22 @@
 
 
     <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+        
+        body {
+            background: rgb(144,202,249) !important;
+            background: linear-gradient(0deg, rgba(144,202,249,1) 2%, rgba(175,217,251,1) 26%, rgba(195,226,252,1) 40%, rgba(207,232,253,1) 53%, rgba(218,237,253,1) 58%, rgba(255,255,255,1) 71%) !important;
+        }
+        
         label, input {
-            display: block;
+            display: block !important;
         }
 
         label {
-            margin-bottom: 0px;
+            margin-bottom: 10px;
         }
 
         input[type=text], input[type=email], input[type=password], select {
@@ -26,7 +36,9 @@
             box-sizing: border-box;
         }
 
+
         input[type=submit] {
+            margin-top: 25px;
             width: 100%;
             background-color: #1e88e5;
             color: white;
@@ -41,8 +53,17 @@
             margin-bottom: 40px;
         }
 
-        .container {
+        .container-sm {
             margin-top: 40px;
+            margin-left: 20px !important;
+            max-width: 50%;
+            width: 540px !important;
+        }
+
+        @media (min-width: 1200px) {
+            .container{
+                max-width: 540px !important;
+            }
         }
     </style>
 
@@ -52,28 +73,28 @@
 
 
 <body>
-    <div class="container">
+    <div class="container-sm">
         <div class="card">
             <div class="card-body">
-                <h3>Welcome to the Lemon Bar! Please register here</h3>
+                <h3>Welcome to the Lemon Bar!<br>Please register here</h3>
                 <div class="spacing10"></div>
                 <div>
                     <form method="post" action="/signup">
                         <label>
                             Email
-                            <input type="email" name="email" placeholder="Email"><br>
+                            <input type="email" name="email" placeholder="Email">
                         </label>
                         <label>
                             First Name
-                            <input type="text" name="firstname" placeholder="First Name"><br>
+                            <input type="text" name="firstname" placeholder="First Name">
                         </label>
                         <label>
                             Last Name
-                            <input type="text" name="lastname" placeholder="Last Name"><br>
+                            <input type="text" name="lastname" placeholder="Last Name">
                         </label>
                         <label>
                             Password
-                            <input type="password" name="password" placeholder="Password"><br>
+                            <input type="password" name="password" placeholder="Password">
                         </label>
                         <label>
                             Role
