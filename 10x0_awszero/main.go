@@ -25,10 +25,7 @@ type user struct {
 	Role string
 }
 
-var (
-	
-)
-
+//go:embed templates/*.gohtml
 
 func init() {
 	tmpl, err := template.ParseGlob("templates/*.gohtml")
