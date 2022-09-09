@@ -53,10 +53,10 @@ func main() {
 
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/index", index)
-	// mux.HandleFunc("/atthebar", atthebar)
-	// mux.HandleFunc("/signup", signup)
-	// mux.HandleFunc("/login", login)
-	// mux.HandleFunc("/logout", logout)
+	mux.HandleFunc("/atthebar", atthebar)
+	mux.HandleFunc("/signup", signup)
+	mux.HandleFunc("/login", login)
+	mux.HandleFunc("/logout", logout)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
@@ -74,6 +74,22 @@ func index(w http.ResponseWriter, r *http.Request) {
 		}
 		http.SetCookie(w, cookie)
 	}
+
+	page, ok := pages[r.URL.Path]
+	if !ok {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	tpl, err := template.ParseFS(res, page)
+	if err != nil {
+		log.Printf("page %s not found in pages cache...", r.RequestURI)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusOK)
+
+	http.FileServer(http.FS(res))
 
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
