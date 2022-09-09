@@ -7,6 +7,8 @@ import (
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"log"
+	"os"
+	"io"
 )
 
 var tpl *template.Template
@@ -28,6 +30,12 @@ func init() {
 }
 
 func main() {
+	file, err := os.Open("main.go")
+	if err != nil {
+		log.Fatal(err)
+	}
+	io.Copy(os.Stdout, file)
+
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/index", index)
 	mux.HandleFunc("/atthebar", atthebar)
