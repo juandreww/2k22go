@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"io"
+	// "github.com/gobuffalo/packr/v2"/sss
 )
 
 var tpl *template.Template
@@ -24,7 +25,18 @@ type user struct {
 }
 
 func init() {
-	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
+	// tpl = template.Must(template.ParseGlob("../templates/*.gohtml"))
+	// tpl = packr.New("myBox", "./templates")
+	wd, err := os.Getwd()
+	if err != nil {
+	log.Fatal(err)
+	}
+	
+	tmpl, err := template.ParseGlob("templates/*.gohtml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	tpl = tmpl
 	bs, _ := bcrypt.GenerateFromPassword([]byte("jackywhacky"), bcrypt.MinCost)
 	dbUser["jackywhacky@gmail.com"] = user{"jacky","whacky","jackywhacky@gmail.com",bs, "admin"}
 }
