@@ -9,8 +9,7 @@ import (
 	"log"
 	"os"
 	"io"
-	"embed"
-	"io/fs"
+	_ "embed"
 	// "github.com/gobuffalo/packr/v2"/sss
 )
 
@@ -26,23 +25,12 @@ type user struct {
 	Role string
 }
 
+var (
+	
+)
+
 
 func init() {
-	// tpl = template.Must(template.ParseGlob("../templates/*.gohtml"))
-	// tpl = packr.New("myBox", "./templates")
-	// wd, err := os.Getwd()
-	// if err != nil {
-	// log.Fatal(err)
-	// }
-
-	//go:embed templates/*
-	// var content embed.FS
-	var files embed.FS
-    templates, _ := fs.ReadDir(files, "templates")
-    for _, template := range templates {
-        fmt.Printf("%q\n", template.Name())
-    }
-
 	tmpl, err := template.ParseGlob("templates/*.gohtml")
 	if err != nil {
 		log.Fatal(err)
@@ -55,6 +43,7 @@ func init() {
 
 
 func main() {
+	//go:embed templates/*.gohtml
 	file, err := os.Open("main.go")
 	if err != nil {
 		log.Fatal(err)
