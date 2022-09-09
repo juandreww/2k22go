@@ -45,7 +45,6 @@ func init() {
 
 
 func main() {
-	//go:embed templates/*.gohtml
 	file, err := os.Open("main.go")
 	if err != nil {
 		log.Fatal(err)
@@ -54,10 +53,10 @@ func main() {
 
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/index", index)
-	mux.HandleFunc("/atthebar", atthebar)
-	mux.HandleFunc("/signup", signup)
-	mux.HandleFunc("/login", login)
-	mux.HandleFunc("/logout", logout)
+	// mux.HandleFunc("/atthebar", atthebar)
+	// mux.HandleFunc("/signup", signup)
+	// mux.HandleFunc("/login", login)
+	// mux.HandleFunc("/logout", logout)
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
 }
