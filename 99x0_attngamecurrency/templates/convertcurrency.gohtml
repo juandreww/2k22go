@@ -25,7 +25,7 @@
             margin-bottom: 10px;
         }
 
-        input[type=text], input[type=email], input[type=password], select {
+        input[type=text], input[type=number], input[type=email], input[type=password], select {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -117,15 +117,15 @@
                 <form method="post" action="/convertcurrency">
                     <label>
                         <strong><i>CurrencyID From</i></strong>
-                        <input type="text" name="currencyfrom" placeholder="CurrencyID From" required>
+                        <input type="number" name="currencyfrom" placeholder="CurrencyID From" required>
                     </label>
                     <label>
                         <strong><i>CurrencyID To</i></strong>
-                        <input type="text" name="currencyto" placeholder="CurrencyID To" required>
+                        <input type="number" name="currencyto" placeholder="CurrencyID To" required>
                     </label>
                     <label>
                         <strong><i>Amount</i></strong>
-                        <input type="text" name="amount" placeholder="amount" required>
+                        <input type="number" name="amount" placeholder="amount" required>
                     </label>
                 <input type="submit">
                 </form>
