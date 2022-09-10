@@ -109,6 +109,15 @@
         <div class="card">
             <div class="card-body">
                 <h3>Game Currency, Add Conversion Rate</h3>
+                {{if .Name}}
+                    {{if eq .Name "error"}}
+                        <div class="red">
+                            <strong><i>
+                                Currency is not found in the database!
+                            </i></strong>
+                        </div>
+                    {{end}}
+                {{end}}
                 <form method="post" action="/addconversionrate">
                     <label>
                         <strong><i>CurrencyID From</i></strong>
