@@ -162,7 +162,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		if (isError == true) {
 			tmp := currency{
 				"error",
-				"error",
+				"Currency is not found in database",
 			}
 			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
 			return
@@ -175,18 +175,18 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		err = row.Scan(&value)
-		intval, err = strconv.Atoi(value)
-		intval++
 		isError = HandleErrorOfSelect(w, err)
 		if (isError == true) {
 			tmp := currency{
 				"error",
-				"error",
+				"CurrencyRate is not found in database",
 			}
 			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
 			return
 		}
 
+		intval, err = strconv.Atoi(value)
+		intval++
 		sqlStatement = `
 			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
 			VALUES ($1, $2, $3, $4)`

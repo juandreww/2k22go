@@ -109,11 +109,11 @@
         <div class="card">
             <div class="card-body">
                 <h3>Game Currency, Add Conversion Rate</h3>
-                {{if .Name}}
-                    {{if eq .Name "error"}}
+                {{if .ID}}
+                    {{if eq .ID "error"}}
                         <div class="red">
                             <strong><i>
-                                Currency is not found in the database!
+                                .Name
                             </i></strong>
                         </div>
                     {{end}}
