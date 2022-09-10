@@ -41,6 +41,14 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 		r.FormValue("id"),
 		r.FormValue("name"),
 	}
-	
+
+	sqlStatement := `
+		INSERT INTO currency (ID, Name)
+		VALUES ($1, $2, $3, $4)`
+	_, err = db.Exec(sqlStatement, data.ID, data.Name)
+	if err != nil {
+		panic(err)
+	}
+
 	tpl.ExecuteTemplate(w, "index.gohtml", data)
 }
