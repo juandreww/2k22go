@@ -70,20 +70,35 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(data)
 
 	value := currency{}
+	isexist := false
 	sqlStatement := `SELECT id, name FROM currency WHERE id=$1;`
 	row := con.QueryRow(sqlStatement, data.ID)
 	err := row.Scan(&value.ID, &value.Name,)
-	fmt.Println(row)
-	fmt.Println(value.ID, value.Name,)
-	fmt.Println(err)
+	switch err {
+	case sql.ErrNoRows:
+		isexist = false
+	case nil:
+		isexist = true
+	default:
+	  	panic(err)
+	}
 	
-	// sqlStatement = `
-	// 	INSERT INTO currency (id, name)
-	// 	VALUES ($1, $2)`
-	// _, err := con.Exec(sqlStatement, data.ID, data.Name)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	if isexist == false {
+		sqlStatement = `
+			INSERT INTO currency (id, name)
+			VALUES ($1, $2)`
+		_, err := con.Exec(sqlStatement, data.ID, data.Name)
+		if err != nil {
+			panic(err)
+		}
+		tpl.ExecuteTemplate(w, "index.gohtml", data)
+	} else {
+		data = currency{
+			"error",
+			"error",
+		}
+	}
+	
 
-	tpl.ExecuteTemplate(w, "index.gohtml", data)
+	
 }
