@@ -336,7 +336,12 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 
 		floatval, err = strconv.ParseFloat(value, 64)
 		amount, err = strconv.ParseFloat(data.Rate, 64)
-		amount = floatval * amount
+		if data.CurrencyFrom == val1 {
+			amount = amount * floatval
+		} else {
+			amount = amount / floatval
+		}
+		
 		value = fmt.Sprintf("%.2f", amount)
 		
 		tmp := currency{
