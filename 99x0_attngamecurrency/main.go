@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"log"
+	// "log"
 )
 
 var tpl *template.Template
