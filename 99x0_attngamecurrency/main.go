@@ -15,11 +15,15 @@ func init() {
 
 func main() {
 	mux := http.DefaultServeMux
-	mux.HandleFunc("/index", index)
+	mux.HandleFunc("/", index)
+
+
+	http.Handle("/favicon.ico", http.NotFoundHandler())
+	http.ListenAndServe(":8080", nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("This is index: ", r.Method)
+	fmt.Println("This is index api: ", r.Method)
 
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
