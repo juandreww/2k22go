@@ -8,7 +8,7 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 	"strconv"
-	"os"
+	// "os"
 )
 
 const (
@@ -152,6 +152,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(data)
 
 		var value string
+		var max string
 		var intval int
 		check1 := currency{}
 
@@ -178,10 +179,10 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		sqlStatement = `SELECT count(id) id FROM currencyrate 
+		sqlStatement = `SELECT count(id) id, max(id) max FROM currencyrate 
 						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$2 AND currencyto=$1))`
 		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
-		err = row.Scan(&value)
+		err = row.Scan(&value,&max)
 		isError = HandleErrorOfSelect(w, err)
 		if (isError == true) {
 			tmp := currency{
@@ -192,7 +193,6 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 			return
 		} else {
 			intval, err = strconv.Atoi(value)
-			fmt.Println(intval)
 			if intval >  0 {
 				tmp := currency{
 					"error",
@@ -201,9 +201,16 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
 				return
 			}
+			fmt.Println(max)
+			if max == "" {
+				tmp := currency{
+					"error",
+					"CurrencyRate is not exist in the database",
+				}
+				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+				return
+			}
 		}
-
-		intval, err = strconv.Atoi(value)
 
 		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
 		row = con.QueryRow(sqlStatement)
@@ -240,12 +247,7 @@ func HandleErrorOfSelect(w http.ResponseWriter, err error) bool {
 	case nil:
 		data = false
 	default:
-		tmp := currency{
-			"error",
-			"Error",
-		}
-		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
-		os.Exit(1)
+		data = true
 	}
 
 	return data
