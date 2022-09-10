@@ -269,7 +269,7 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 		data := configconvertrate{
 			r.FormValue("currencyfrom"),
 			r.FormValue("currencyto"),
-			r.FormValue("rate"),
+			r.FormValue("amount"),
 		}
 
 		var value string
@@ -313,19 +313,11 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
 				return
 			}
-		} else {
-			intval, err = strconv.Atoi(value)
-			if intval >  0 {
-				tmp := currency{
-					"error",
-					"CurrencyRate already exist in the database",
-				}
-				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
-				return
-			}
 		}
 
-		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
+		sqlStatement = `SELECT rate FROM currencyrate 
+					WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))
+					LIMIT 1`
 		row = con.QueryRow(sqlStatement)
 		err = row.Scan(&value)
 		isError = HandleErrorOfSelect(w, err)
