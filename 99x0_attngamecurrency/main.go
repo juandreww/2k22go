@@ -70,10 +70,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 func savecurrency(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is savecurrency api: ", r.Method)
 
-	data := configconvertrate{
-		r.FormValue("currencyfrom"),
-		r.FormValue("currencyto"),
-		r.FormValue("currencyto"),
+	data := currency{
+		r.FormValue("id"),
+		r.FormValue("name"),
 	}
 
 	fmt.Println(data)
@@ -152,13 +151,13 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 
 		sqlStatement := `
 			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
-			VALUES ($1, $2)`
-		_, err := con.Exec(sqlStatement, 1, data.Name)
+			VALUES ($1, $2, $3, $4)`
+		_, err := con.Exec(sqlStatement, 1, data.CurrencyFrom, data.CurrencyTo, data.Rate)
 		if err != nil {
 			panic(err)
 		}
 
-		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", nil)
+		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", data)
 	} else {
 		fmt.Println("This is add conversion rate api: ", r.Method)
 
