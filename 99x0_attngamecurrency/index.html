@@ -87,11 +87,19 @@
             <div class="card-body">
                 <h3>Game Currency, Add Currency</h3>
                 {{if .Name}}
-                    <div class="red">
-                        <strong><i>
-                        Added Currency {{.Name}} with ID {{.ID}}
-                        </i></strong>
-                    </div>
+                    {{if eq .Name "error"}}
+                        <div class="red">
+                            <strong><i>
+                            Currency {{.Name}} with ID {{.ID}} already Exist!
+                            </i></strong>
+                        </div>
+                    {{else}}
+                        <div class="red">
+                            <strong><i>
+                            Added Currency {{.Name}} with ID {{.ID}}
+                            </i></strong>
+                        </div>
+                    {{end}}
                 {{end}}
                 <form method="post" action="/savecurrency">
                     <label>
