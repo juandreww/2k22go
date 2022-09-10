@@ -64,7 +64,7 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 
 	sqlStatement := `
 		INSERT INTO currency (ID, Name)
-		VALUES ($1, $2, $3, $4)`
+		VALUES ($1, $2)`
 	_, err := con.Exec(sqlStatement, data.ID, data.Name)
 	if err != nil {
 		panic(err)
