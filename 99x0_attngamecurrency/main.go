@@ -69,13 +69,21 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(data)
 
-	sqlStatement := `
-		INSERT INTO currency (id, name)
-		VALUES ($1, $2)`
-	_, err := con.Exec(sqlStatement, data.ID, data.Name)
-	if err != nil {
-		panic(err)
-	}
+	value := currency{}
+	sqlStatement := `SELECT id, name FROM currency WHERE id=$1;`
+	row := con.QueryRow(sqlStatement, data.ID)
+	err := row.Scan(&value.ID, &value.Name,)
+	fmt.Println(row)
+	fmt.Println(value.ID, value.Name,)
+	fmt.Println(err)
+	
+	// sqlStatement = `
+	// 	INSERT INTO currency (id, name)
+	// 	VALUES ($1, $2)`
+	// _, err := con.Exec(sqlStatement, data.ID, data.Name)
+	// if err != nil {
+	// 	panic(err)
+	// }
 
 	tpl.ExecuteTemplate(w, "index.gohtml", data)
 }
