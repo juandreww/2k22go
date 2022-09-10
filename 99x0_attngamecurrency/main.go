@@ -91,14 +91,13 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err)
 		}
-		tpl.ExecuteTemplate(w, "index.gohtml", data)
 	} else {
 		data = currency{
 			"error",
 			"error",
 		}
 	}
-	
 
+	tpl.ExecuteTemplate(w, "index.gohtml", data)
 	
 }
