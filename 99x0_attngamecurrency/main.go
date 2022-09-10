@@ -14,5 +14,12 @@ func init() {
 }
 
 func main() {
-	fmt.Println("hello")
+	mux := http.DefaultServeMux
+	mux.HandleFunc("/index", index)
+}
+
+func index(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("This is index: ", r.Method)
+
+	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
