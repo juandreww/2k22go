@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	_ "github.com/lib/pq"
 	"log"
+	"strconv"
 )
 
 const (
@@ -150,24 +151,26 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(data)
 
 		var value string
-		sqlStatement := `SELECT MAX(id) FROM currencyrate`
-		row := con.QueryRow(sqlStatement)
-		err := row.Scan(&value)
-		fmt.Println("value is", value)
-		
-		switch err {
-		case sql.ErrNoRows:
-			// isexist = false
-		case nil:
-			// isexist = true
-		default:
-			panic(err)
-		}
+		var intval int
+		check1 := currency{}
+
+		sqlStatement := `SELECT id, name FROM currency WHERE (id=$1);`
+		row := con.QueryRow(sqlStatement, data.CurrencyFrom)
+		err := row.Scan(&check1.ID, &check1.Name)
+		HandleErrorOfSelect(w, err)
+
+		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
+		row = con.QueryRow(sqlStatement)
+		err = row.Scan(&value)
+		intval, err = strconv.Atoi(value)
+		intval++
+		HandleErrorOfSelect(w, err)
+		// fmt.Println("value is", intval)
 
 		sqlStatement = `
 			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
 			VALUES ($1, $2, $3, $4)`
-		_, err = con.Exec(sqlStatement, 1, data.CurrencyFrom, data.CurrencyTo, data.Rate)
+		_, err = con.Exec(sqlStatement, intval, data.CurrencyFrom, data.CurrencyTo, data.Rate)
 		if err != nil {
 			panic(err)
 		}
@@ -179,4 +182,20 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", nil)
 	}
 	
+}
+
+func HandleErrorOfSelect(w http.ResponseWriter, err error) {
+	switch err {
+	case sql.ErrNoRows:
+		data := currency{
+			"nodata",
+			"nodata",
+		}
+		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", data)
+		return
+	case nil:
+		
+	default:
+		panic(err)
+	}
 }
