@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"database/sql"
 	_ "github.com/lib/pq"
-	// "log"
+	"log"
 )
 
 const (
@@ -104,6 +104,35 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 
 func listcurrency(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is listcurrency api: ", r.Method)
+	var list []currency
+
+	rows, err := con.Query("SELECT id, name FROM currency")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	i := 0;
+	for rows.Next() {
+		value := currency{}
+		err := rows.Scan(&value.ID, &value.Name,)
+		switch err {
+		case sql.ErrNoRows:
+			fmt.Println("row is not exist")
+			return
+		case nil:
+			fmt.Println(value.ID, value.Name)
+		default:
+			panic(err)
+		}
+
+		list[i] = currency{
+			value.ID,
+			value.Name,
+		}
+		i++
+	}
+	fmt.Println(list)
 
 	tpl.ExecuteTemplate(w, "listcurrency.gohtml", nil)
 }
