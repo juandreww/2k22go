@@ -8,6 +8,7 @@ import (
 func main() {
     mux := http.DefaultServeMux
     mux.HandleFunc("/index", index)
+    mux.HandleFunc("/", index)
     err := http.ListenAndServe(":80", nil)
     if err != nil {
         panic(err)
