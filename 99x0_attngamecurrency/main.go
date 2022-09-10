@@ -57,6 +57,7 @@ func main() {
 	mux.HandleFunc("/listcurrency", listcurrency)
 	mux.HandleFunc("/listcurrencyrate", listcurrencyrate)
 	mux.HandleFunc("/addconversionrate", addconversionrate)
+	mux.HandleFunc("/convertcurrency", convertcurrency)
 	db := ConnectDB()
 	defer db.Close()
 
@@ -259,6 +260,98 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("This is add conversion rate api: ", r.Method)
 
 		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", nil)
+	}
+}
+
+func convertcurrency(w http.ResponseWriter, r *http.Request) {
+	if (r.Method == http.MethodPost) {
+		fmt.Println("This is add conversion rate api: ", r.Method)
+		data := configconvertrate{
+			r.FormValue("currencyfrom"),
+			r.FormValue("currencyto"),
+			r.FormValue("rate"),
+		}
+
+		var value string
+		var intval int
+		check1 := currency{}
+
+		sqlStatement := `SELECT count(id) id FROM currency WHERE (id=$1 OR id=$2);`
+		row := con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
+		err := row.Scan(&check1.ID)
+		isError := HandleErrorOfSelect(w, err)
+		if (isError == true) {
+			tmp := currency{
+				"error",
+				"All CurrencyID is not found in database",
+			}
+			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+			return
+		} else {
+			intval, err = strconv.Atoi(check1.ID)
+			if intval < 2 {
+				tmp := currency{
+					"error",
+					"One of the CurrencyID is not found in database",
+				}
+				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+				return
+			}
+		}
+		
+		sqlStatement = `SELECT count(id) id FROM currencyrate 
+						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
+		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
+		err = row.Scan(&value)
+		isError = HandleErrorOfSelect(w, err)
+		if (isError == true) {
+			if value != "0" {
+				tmp := currency{
+					"error",
+					"CurrencyRate is not exist in the database",
+				}
+				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+				return
+			}
+		} else {
+			intval, err = strconv.Atoi(value)
+			if intval >  0 {
+				tmp := currency{
+					"error",
+					"CurrencyRate already exist in the database",
+				}
+				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+				return
+			}
+		}
+
+		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
+		row = con.QueryRow(sqlStatement)
+		err = row.Scan(&value)
+		isError = HandleErrorOfSelect(w, err)
+		if (isError == true) {
+			value = "0"
+		}
+
+		intval, err = strconv.Atoi(value)
+		intval++
+		sqlStatement = `
+			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
+			VALUES ($1, $2, $3, $4)`
+		_, err = con.Exec(sqlStatement, intval, data.CurrencyFrom, data.CurrencyTo, data.Rate)
+		if err != nil {
+			panic(err)
+		}
+		
+		tmp := currency{
+			"succeed",
+			"Currency Rate added",
+		}
+		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+	} else {
+		fmt.Println("This is add convertcurrency api: ", r.Method)
+
+		tpl.ExecuteTemplate(w, "listcurrencyrate.gohtml", nil)
 	}
 }
 
