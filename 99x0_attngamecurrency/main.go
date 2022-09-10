@@ -115,7 +115,7 @@ func listcurrency(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is listcurrency api: ", r.Method)
 	var list []currency
 
-	rows, err := con.Query("SELECT id, name FROM currency")
+	rows, err := con.Query("SELECT id, name FROM currency ORDER BY id ASC")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -184,8 +184,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		err = row.Scan(&value)
 		isError = HandleErrorOfSelect(w, err)
 		if (isError == true) {
-			if value != "" {
-				fmt.Println("result", value)
+			if value != "0" {
 				tmp := currency{
 					"error",
 					"CurrencyRate is not exist in the database",
@@ -222,14 +221,14 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			panic(err)
 		}
-
+		
+		fmt.Println("Validation finished")
 		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", data)
 	} else {
 		fmt.Println("This is add conversion rate api: ", r.Method)
 
 		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", nil)
 	}
-	
 }
 
 func HandleErrorOfSelect(w http.ResponseWriter, err error) bool {
