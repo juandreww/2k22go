@@ -83,9 +83,15 @@
             <div class="card-body">
                 <h3>Game Currency, Add Currency</h3>
                 <form method="post" action="/savecurrency">
-                    <input type="text" name="id" placeholder="ID"><br>
-                    <input type="text" name="name" placeholder="Name"><br>
-                    <input type="submit">
+                    <label>
+                        ID
+                        <input type="text" name="id" placeholder="ID">
+                    </label>
+                    <label>
+                        Name
+                        <input type="text" name="name" placeholder="Name">
+                    </label>
+                <input type="submit">
                 </form>
                 <br>
                 <h4>Go to <a href="/listcurrency">List Currency</a></h4>
