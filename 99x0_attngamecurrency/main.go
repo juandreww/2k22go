@@ -23,12 +23,10 @@ type currency struct {
 }
 
 var tpl *template.Template
+var con *sql.DB
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
-}
-
-func main() {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=require",
     		host, port, user, password, dbname)
 	db, err := sql.Open("postgres", psqlInfo)
@@ -37,6 +35,10 @@ func main() {
 	}
 	defer db.Close()
 
+	con = db
+}
+
+func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/savecurrency", savecurrency)
@@ -63,7 +65,7 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 	sqlStatement := `
 		INSERT INTO currency (ID, Name)
 		VALUES ($1, $2, $3, $4)`
-	_, err := db.Exec(sqlStatement, data.ID, data.Name)
+	_, err := con.Exec(sqlStatement, data.ID, data.Name)
 	if err != nil {
 		panic(err)
 	}
