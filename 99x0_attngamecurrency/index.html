@@ -111,33 +111,16 @@
                 <h3>Game Currency, List Currency</h3>
                 <table style="width: 100%" class="currency">
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
+                        <th>ID</th>
                     </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>SGD</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>IDR</td>
-                    </tr>
-                </table>
-                <!-- {{range .}}}
-                    {{if eq .Name "error"}}
-                        <div class="red">
-                            <strong><i>
-                            Currency already exist in database!
-                            </i></strong>
-                        </div>
-                    {{else}}
-                        <div class="red">
-                            <strong><i>
-                            Added Currency {{.Name}} with ID {{.ID}}
-                            </i></strong>
-                        </div>
+                    {{range .}}}
+                        <tr>
+                            <td>{{.Name}}</td>
+                            <td>{{.ID}}</td>
+                        </tr>
                     {{end}}
-                {{end}} -->
+                </table>
                 <br>
                 <h4>Go to <a href="/">Add Currency</a></h4>
                 <h4>Go to <a href="/">Add Conversion Rate</a></h4>
