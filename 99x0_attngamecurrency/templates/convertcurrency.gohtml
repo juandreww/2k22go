@@ -129,6 +129,21 @@
                     </label>
                 <input type="submit">
                 </form>
+                {{if .ID}}
+                    {{if eq .ID "error"}}
+                        <div class="red">
+                            <strong><i>
+                                {{.Name}}
+                            </i></strong>
+                        </div>
+                    {{else if eq .ID "succeed"}}
+                        <div class="green">
+                            <strong><i>
+                                {{.Name}}
+                            </i></strong>
+                        </div>
+                    {{end}}
+                {{end}}
                 <br>
                 <h4>Go to <a href="/listcurrency">List Currency</a></h4>
                 <h4>Go to <a href="/listcurrencyrate">List Currency Rate</a></h4>
