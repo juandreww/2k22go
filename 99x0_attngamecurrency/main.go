@@ -71,8 +71,8 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 
 	value := currency{}
 	isexist := false
-	sqlStatement := `SELECT id, name FROM currency WHERE id=$1;`
-	row := con.QueryRow(sqlStatement, data.ID)
+	sqlStatement := `SELECT id, name FROM currency WHERE (id=$1 OR name=$2);`
+	row := con.QueryRow(sqlStatement, data.ID, data.Name)
 	err := row.Scan(&value.ID, &value.Name,)
 	switch err {
 	case sql.ErrNoRows:
