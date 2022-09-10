@@ -135,5 +135,5 @@ func listcurrency(w http.ResponseWriter, r *http.Request) {
 func addconversionrate(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is add conversion rate api: ", r.Method)
 
-	tpl.ExecuteTemplate(w, "conversionrate.gohtml", nil)
+	tpl.ExecuteTemplate(w, "convertrate.gohtml", nil)
 }

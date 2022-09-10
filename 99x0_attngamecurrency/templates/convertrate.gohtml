@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Currency, List Currency</title>
+    <title>Game Currency, Add Conversion Rate</title>
 
     <style>
         html, body {
@@ -108,22 +108,25 @@
     <div class="container-sm">
         <div class="card">
             <div class="card-body">
-                <h3>Game Currency, List Currency</h3>
-                <table style="width: 100%" class="currency">
-                    <tr>
-                        <th>Name</th>
-                        <th>ID</th>
-                    </tr>
-                    {{range .}}
-                        <tr>
-                            <td>{{.Name}}</td>
-                            <td>{{.ID}}</td>
-                        </tr>
-                    {{end}}
-                </table>
+                <h3>Game Currency, Add Conversion Rate</h3>
+                <form method="post" action="/savecurrency">
+                    <label>
+                        <strong><i>CurrencyID From</i></strong>
+                        <input type="text" name="currencyfrom" placeholder="CurrencyID From" required>
+                    </label>
+                    <label>
+                        <strong><i>CurrencyID To</i></strong>
+                        <input type="text" name="currencyto" placeholder="CurrencyID To" required>
+                    </label>
+                    <label>
+                        <strong><i>Rate</i></strong>
+                        <input type="text" name="rate" placeholder="Rate" required>
+                    </label>
+                <input type="submit">
+                </form>
                 <br>
+                <h4>Go to <a href="/listcurrency">List Currency</a></h4>
                 <h4>Go to <a href="/">Add Currency</a></h4>
-                <h4>Go to <a href="/">Add Conversion Rate</a></h4>
                 <h4>Go to <a href="/">Convert Currency</a></h4>
             </div>
         </div>
