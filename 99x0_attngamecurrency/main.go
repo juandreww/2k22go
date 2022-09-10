@@ -252,9 +252,11 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 		
-		fmt.Println("Validation finished")
-		fmt.Println(data)
-		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", data)
+		tmp := currency{
+			"succeed",
+			"Currency Rate added",
+		}
+		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
 	} else {
 		fmt.Println("This is add conversion rate api: ", r.Method)
 
