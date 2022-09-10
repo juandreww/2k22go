@@ -46,6 +46,7 @@ func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/savecurrency", savecurrency)
+	mux.HandleFunc("/listcurrency", listcurrency)
 	db := ConnectDB()
 	defer db.Close()
 
@@ -99,5 +100,8 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tpl.ExecuteTemplate(w, "index.gohtml", data)
+}
+
+func listcurrency(w http.ResponseWriter, r *http.Request) {
 	
 }
