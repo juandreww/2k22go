@@ -360,13 +360,10 @@ func HandleErrorOfSelect(w http.ResponseWriter, err error) bool {
 	data := false
 	switch err {
 	case sql.ErrNoRows:
-		fmt.Println(11)
 		data = true
 	case nil:
-		fmt.Println(22)
 		data = false
 	default:
-		fmt.Println(33)
 		data = true
 	}
 
