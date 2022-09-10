@@ -7,6 +7,11 @@ import (
 	// "log"
 )
 
+type currency struct {
+	ID string
+	Name string
+}
+
 var tpl *template.Template
 
 func init() {
@@ -16,6 +21,7 @@ func init() {
 func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
+	mux.HandleFunc("/savecurrency", savecurrency)
 
 
 	http.Handle("/favicon.ico", http.NotFoundHandler())
@@ -25,5 +31,11 @@ func main() {
 func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is index api: ", r.Method)
 
+	tpl.ExecuteTemplate(w, "index.gohtml", nil)
+}
+
+func savecurrency(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("This is savecurrency api: ", r.Method)
+	
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
