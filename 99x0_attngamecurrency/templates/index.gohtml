@@ -82,6 +82,9 @@
         <div class="card">
             <div class="card-body">
                 <h3>Game Currency, Add Currency</h3>
+                {{if .Name}}
+                    Added Currency {{.Name}} with ID {{.ID}}
+                {{end}}
                 <form method="post" action="/savecurrency">
                     <label>
                         <strong><i>ID</i></strong>
