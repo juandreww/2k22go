@@ -180,8 +180,8 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		}
 
 		sqlStatement = `SELECT count(id) id FROM currencyrate 
-						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$2 AND currencyto=$1))`
-		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
+						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
+		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
 		err = row.Scan(&value,&max)
 		isError = HandleErrorOfSelect(w, err)
 		if (isError == true) {
