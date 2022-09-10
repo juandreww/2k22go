@@ -8,6 +8,7 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 	"strconv"
+	// "os"
 )
 
 const (
@@ -157,15 +158,34 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		sqlStatement := `SELECT id, name FROM currency WHERE (id=$1);`
 		row := con.QueryRow(sqlStatement, data.CurrencyFrom)
 		err := row.Scan(&check1.ID, &check1.Name)
-		HandleErrorOfSelect(w, err)
+		isError := HandleErrorOfSelect(w, err)
+		if (isError == true) {
+			tmp := currency{
+				"error",
+				"error",
+			}
+			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+			return
+		}
 
 		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
 		row = con.QueryRow(sqlStatement)
+		if row == nil {
+			fmt.Println("Row is nil")
+			return
+		}
 		err = row.Scan(&value)
 		intval, err = strconv.Atoi(value)
 		intval++
-		HandleErrorOfSelect(w, err)
-		// fmt.Println("value is", intval)
+		isError = HandleErrorOfSelect(w, err)
+		if (isError == true) {
+			tmp := currency{
+				"error",
+				"error",
+			}
+			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+			return
+		}
 
 		sqlStatement = `
 			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
@@ -184,18 +204,16 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 	
 }
 
-func HandleErrorOfSelect(w http.ResponseWriter, err error) {
+func HandleErrorOfSelect(w http.ResponseWriter, err error) bool {
+	data := false
 	switch err {
 	case sql.ErrNoRows:
-		data := currency{
-			"nodata",
-			"nodata",
-		}
-		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", data)
-		return
+		data = true
 	case nil:
-		
+		data = false
 	default:
-		panic(err)
+		data = true
 	}
+
+	return data
 }

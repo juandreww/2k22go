@@ -109,7 +109,16 @@
         <div class="card">
             <div class="card-body">
                 <h3>Game Currency, Add Conversion Rate</h3>
-                <form method="post" action="/savecurrency">
+                {{if .Name}}
+                    {{if eq .Name "error"}}
+                        <div class="red">
+                            <strong><i>
+                                Currency is not found in the database!
+                            </i></strong>
+                        </div>
+                    {{end}}
+                {{end}}
+                <form method="post" action="/addconversionrate">
                     <label>
                         <strong><i>CurrencyID From</i></strong>
                         <input type="text" name="currencyfrom" placeholder="CurrencyID From" required>
