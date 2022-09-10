@@ -155,7 +155,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		var intval int
 		check1 := currency{}
 
-		sqlStatement := `SELECT id, name FROM currency WHERE (id=$1);`
+		sqlStatement := `SELECT count(id) id FROM currency WHERE (id=$1 OR id=$2);`
 		row := con.QueryRow(sqlStatement, data.CurrencyFrom)
 		err := row.Scan(&check1.ID, &check1.Name)
 		isError := HandleErrorOfSelect(w, err)
