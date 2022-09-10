@@ -27,22 +27,27 @@ var con *sql.DB
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
+}
+
+func ConnectDB() *sql.DB {
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=require",
-    		host, port, user, password, dbname)
+	host, port, user, password, dbname)
 	db, err := sql.Open("postgres", psqlInfo)
+
 	if err != nil {
 		panic(err)
 	}
-	defer db.Close()
 
 	con = db
+	return db
 }
 
 func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/savecurrency", savecurrency)
-
+	db := ConnectDB()
+	defer db.Close()
 
 	http.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", nil)
@@ -62,8 +67,10 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 		r.FormValue("name"),
 	}
 
+	fmt.Println(data)
+
 	sqlStatement := `
-		INSERT INTO currency (ID, Name)
+		INSERT INTO currency (id, name)
 		VALUES ($1, $2)`
 	_, err := con.Exec(sqlStatement, data.ID, data.Name)
 	if err != nil {
