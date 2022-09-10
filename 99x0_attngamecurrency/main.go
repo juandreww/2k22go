@@ -4,7 +4,17 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"database/sql"
+	_ "github.com/lib/pq"
 	// "log"
+)
+
+const (
+	host = "ec2-52-73-155-171.compute-1.amazonaws.com"
+	port = 5432
+	user = "'awtpbzyctlpydm'"
+	password = "a7bf40c39496f73a03e7412befbc787d29138445d7fce2a34bf31df40cf07d96"
+	dbname = "d4ehughfapgq0k"
 )
 
 type currency struct {
@@ -19,6 +29,14 @@ func init() {
 }
 
 func main() {
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=require",
+    		host, port, user, password, dbname)
+	db, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/savecurrency", savecurrency)
@@ -45,7 +63,7 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 	sqlStatement := `
 		INSERT INTO currency (ID, Name)
 		VALUES ($1, $2, $3, $4)`
-	_, err = db.Exec(sqlStatement, data.ID, data.Name)
+	_, err := db.Exec(sqlStatement, data.ID, data.Name)
 	if err != nil {
 		panic(err)
 	}
