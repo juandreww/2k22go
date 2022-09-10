@@ -47,6 +47,7 @@ func main() {
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/savecurrency", savecurrency)
 	mux.HandleFunc("/listcurrency", listcurrency)
+	mux.HandleFunc("/addconversionrate", addconversionrate)
 	db := ConnectDB()
 	defer db.Close()
 
@@ -129,4 +130,9 @@ func listcurrency(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tpl.ExecuteTemplate(w, "listcurrency.gohtml", list)
+}
+
+func addconversionrate(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("This is add conversion rate api: ", r.Method)
+	tpl.ExecuteTemplate(w, "conversionrate.gohtml", nil)
 }
