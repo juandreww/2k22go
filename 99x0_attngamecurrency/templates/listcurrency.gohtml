@@ -86,7 +86,21 @@
         <div class="card">
             <div class="card-body">
                 <h3>Game Currency, List Currency</h3>
-                {{if .Name}}
+                <table style="width: 100%">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>SGD</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>IDR</td>
+                    </tr>
+                </table>
+                <!-- {{range .}}}
                     {{if eq .Name "error"}}
                         <div class="red">
                             <strong><i>
@@ -100,7 +114,7 @@
                             </i></strong>
                         </div>
                     {{end}}
-                {{end}}
+                {{end}} -->
                 <br>
                 <h4>Go to <a href="/">Add Currency</a></h4>
                 <h4>Go to <a href="/">Add Conversion Rate</a></h4>
