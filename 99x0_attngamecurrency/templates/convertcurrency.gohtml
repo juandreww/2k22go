@@ -117,15 +117,15 @@
                 <form method="post" action="/convertcurrency">
                     <label>
                         <strong><i>CurrencyID From</i></strong>
-                        <input type="number" name="currencyfrom" placeholder="CurrencyID From" required>
+                        <input type="number" min="1" name="currencyfrom" placeholder="CurrencyID From" required>
                     </label>
                     <label>
                         <strong><i>CurrencyID To</i></strong>
-                        <input type="number" name="currencyto" placeholder="CurrencyID To" required>
+                        <input type="number" min="1" name="currencyto" placeholder="CurrencyID To" required>
                     </label>
                     <label>
                         <strong><i>Amount</i></strong>
-                        <input type="number" name="amount" placeholder="amount" required>
+                        <input type="number" min="0.0001" name="amount" placeholder="amount" required>
                     </label>
                 <input type="submit">
                 </form>

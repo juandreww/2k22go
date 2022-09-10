@@ -132,15 +132,15 @@
                 <form method="post" action="/addconversionrate">
                     <label>
                         <strong><i>CurrencyID From</i></strong>
-                        <input type="text" name="currencyfrom" placeholder="CurrencyID From" required>
+                        <input type="number" min="1" name="currencyfrom" placeholder="CurrencyID From" required>
                     </label>
                     <label>
                         <strong><i>CurrencyID To</i></strong>
-                        <input type="text" name="currencyto" placeholder="CurrencyID To" required>
+                        <input type="number" min="1" name="currencyto" placeholder="CurrencyID To" required>
                     </label>
                     <label>
                         <strong><i>Rate</i></strong>
-                        <input type="text" name="rate" placeholder="Rate" required>
+                        <input type="number" min="0.0001" name="rate" placeholder="Rate" required>
                     </label>
                 <input type="submit">
                 </form>
