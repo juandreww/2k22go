@@ -145,7 +145,7 @@ func listcurrencyrate(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is listcurrencyrate api: ", r.Method)
 	var list []configconvertrate
 
-	rows, err := con.Query("SELECT cf.name currencyfrom, ct.name currencyto, p.rate FROM currencyrate p LEFT JOIN currency cf ON cf.id = p.currencyfrom LEFT JOIN currency ct ON ct.id = p.currencyto ORDER BY p.id ASC")
+	rows, err := con.Query("SELECT cf.name currencyfrom, ct.name currencyto, round(p.rate,2) rate FROM currencyrate p LEFT JOIN currency cf ON cf.id = p.currencyfrom LEFT JOIN currency ct ON ct.id = p.currencyto ORDER BY p.id ASC")
 	if err != nil {
 		log.Fatal(err)
 	}

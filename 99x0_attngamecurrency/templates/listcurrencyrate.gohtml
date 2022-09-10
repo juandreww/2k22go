@@ -113,18 +113,20 @@
                     <tr>
                         <th>CurrencyFrom</th>
                         <th>CurrencyTo</th>
+                        <th>Rate</th>
                     </tr>
                     {{range .}}
                         <tr>
                             <td>{{.CurrencyFrom}}</td>
                             <td>{{.CurrencyTo}}</td>
+                            <td>{{.Rate}}</td>
                         </tr>
                     {{end}}
                 </table>
                 <br>
+                <h4>Go to <a href="/listcurrency">List Currency</a></h4>
                 <h4>Go to <a href="/">Add Currency</a></h4>
                 <h4>Go to <a href="/addconversionrate">Add Conversion Rate</a></h4>
-                <h4>Go to <a href="/listcurrency">List Currency</a></h4>
                 <h4>Go to <a href="/">Convert Currency</a></h4>
             </div>
         </div>
