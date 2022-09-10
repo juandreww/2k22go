@@ -265,7 +265,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 
 func convertcurrency(w http.ResponseWriter, r *http.Request) {
 	if (r.Method == http.MethodPost) {
-		fmt.Println("This is add conversion rate api: ", r.Method)
+		fmt.Println("This is add convertcurrency api: ", r.Method)
 		data := configconvertrate{
 			r.FormValue("currencyfrom"),
 			r.FormValue("currencyto"),
@@ -336,13 +336,14 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 
 		floatval, err = strconv.ParseFloat(value, 64)
 		amount, err = strconv.ParseFloat(data.Rate, 64)
-		fmt.Println("value is",floatval * amount)
+		amount = floatval * amount
+		value = fmt.Sprintf("%.2f", amount)
 		
-		// tmp := currency{
-		// 	"succeed",
-		// 	"Currency Rate added",
-		// }
-		// tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+		tmp := currency{
+			"succeed",
+			"Converted rate is " + value,
+		}
+		tpl.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
 	} else {
 		fmt.Println("This is add convertcurrency api: ", r.Method)
 
