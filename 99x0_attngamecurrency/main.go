@@ -152,7 +152,6 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(data)
 
 		var value string
-		var max string
 		var intval int
 		check1 := currency{}
 
@@ -178,20 +177,22 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		}
-
+		
 		sqlStatement = `SELECT count(id) id FROM currencyrate 
 						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
 		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
-		err = row.Scan(&value,&max)
+		err = row.Scan(&value)
 		isError = HandleErrorOfSelect(w, err)
 		if (isError == true) {
-			fmt.Println("result", value, max)
-			tmp := currency{
-				"error",
-				"CurrencyRate is not exist in the database (1)",
+			if value != "" {
+				fmt.Println("result", value)
+				tmp := currency{
+					"error",
+					"CurrencyRate is not exist in the database",
+				}
+				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+				return
 			}
-			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
-			return
 		} else {
 			intval, err = strconv.Atoi(value)
 			if intval >  0 {
