@@ -178,12 +178,19 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
+		sqlStatement = `SELECT count(id) id FROM currencyrate 
+						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$1 AND currencyto=$2))`
+		row = con.QueryRow(sqlStatement)
+		err = row.Scan(&value)
+		isError = HandleErrorOfSelect(w, err)
+		if (isError == true) {
+			value = "2"
+		}
+
+		intval, err = strconv.Atoi(value)
+
 		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
 		row = con.QueryRow(sqlStatement)
-		if row == nil {
-			fmt.Println("Row is nil")
-			return
-		}
 		err = row.Scan(&value)
 		isError = HandleErrorOfSelect(w, err)
 		if (isError == true) {
