@@ -178,8 +178,6 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 			r.FormValue("currencyto"),
 			r.FormValue("rate"),
 		}
-	
-		fmt.Println(data)
 
 		var value string
 		var intval int
