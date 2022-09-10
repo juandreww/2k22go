@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Currency, List Currency</title>
+    <title>Game Currency, List Currency Conversion Rate</title>
 
     <style>
         html, body {
@@ -108,16 +108,16 @@
     <div class="container-sm">
         <div class="card">
             <div class="card-body">
-                <h3>Game Currency, List Currency</h3>
+                <h3>Game Currency, List Currency Conversion Rate</h3>
                 <table style="width: 100%" class="currency">
                     <tr>
-                        <th>Name</th>
-                        <th>ID</th>
+                        <th>CurrencyFrom</th>
+                        <th>CurrencyTo</th>
                     </tr>
                     {{range .}}
                         <tr>
-                            <td>{{.Name}}</td>
-                            <td>{{.ID}}</td>
+                            <td>{{.CurrencyFrom}}</td>
+                            <td>{{.CurrencyTo}}</td>
                         </tr>
                     {{end}}
                 </table>
