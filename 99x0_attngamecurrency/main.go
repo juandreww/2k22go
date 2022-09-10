@@ -223,6 +223,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		}
 		
 		fmt.Println("Validation finished")
+		fmt.Println(data)
 		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", data)
 	} else {
 		fmt.Println("This is add conversion rate api: ", r.Method)
