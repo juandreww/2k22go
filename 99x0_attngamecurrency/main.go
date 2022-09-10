@@ -274,6 +274,7 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 
 		var value string
 		var intval int
+		var floatval float64
 		check1 := currency{}
 
 		sqlStatement := `SELECT count(id) id FROM currency WHERE (id=$1 OR id=$2);`
@@ -315,31 +316,30 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		sqlStatement = `SELECT rate FROM currencyrate 
+		var val1, val2 string
+		sqlStatement = `SELECT currencyfrom, currencyto,rate FROM currencyrate 
 					WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))
 					LIMIT 1`
 		row = con.QueryRow(sqlStatement)
-		err = row.Scan(&value)
+		err = row.Scan(&val1, &val2, &value)
 		isError = HandleErrorOfSelect(w, err)
 		if (isError == true) {
-			value = "0"
+			tmp := currency{
+				"error",
+				"CurrencyRate is not exist in the database",
+			}
+			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+			return 
 		}
 
-		intval, err = strconv.Atoi(value)
-		intval++
-		sqlStatement = `
-			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
-			VALUES ($1, $2, $3, $4)`
-		_, err = con.Exec(sqlStatement, intval, data.CurrencyFrom, data.CurrencyTo, data.Rate)
-		if err != nil {
-			panic(err)
-		}
+		floatval, err = strconv.ParseFloat(value, 64)
+		fmt.Println(floatval * 2)
 		
-		tmp := currency{
-			"succeed",
-			"Currency Rate added",
-		}
-		tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+		// tmp := currency{
+		// 	"succeed",
+		// 	"Currency Rate added",
+		// }
+		// tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
 	} else {
 		fmt.Println("This is add convertcurrency api: ", r.Method)
 
