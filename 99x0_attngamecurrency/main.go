@@ -351,7 +351,7 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Println("This is add convertcurrency api: ", r.Method)
 
-		tpl.ExecuteTemplate(w, "listcurrencyrate.gohtml", nil)
+		tpl.ExecuteTemplate(w, "convertcurrency.gohtml", nil)
 	}
 }
 

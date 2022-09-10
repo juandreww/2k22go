@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Currency, Add Conversion Rate</title>
+    <title>Game Currency, Convert Currency Rate</title>
 
     <style>
         html, body {
@@ -113,23 +113,8 @@
     <div class="container-sm">
         <div class="card">
             <div class="card-body">
-                <h3>Game Currency, Add Conversion Rate</h3>
-                {{if .ID}}
-                    {{if eq .ID "error"}}
-                        <div class="red">
-                            <strong><i>
-                                {{.Name}}
-                            </i></strong>
-                        </div>
-                    {{else if eq .ID "succeed"}}
-                        <div class="green">
-                            <strong><i>
-                                {{.Name}}
-                            </i></strong>
-                        </div>
-                    {{end}}
-                {{end}}
-                <form method="post" action="/addconversionrate">
+                <h3>Game Currency, Convert Currency Rate</h3>
+                <form method="post" action="/convertcurrency">
                     <label>
                         <strong><i>CurrencyID From</i></strong>
                         <input type="text" name="currencyfrom" placeholder="CurrencyID From" required>
@@ -139,8 +124,8 @@
                         <input type="text" name="currencyto" placeholder="CurrencyID To" required>
                     </label>
                     <label>
-                        <strong><i>Rate</i></strong>
-                        <input type="text" name="rate" placeholder="Rate" required>
+                        <strong><i>Amount</i></strong>
+                        <input type="text" name="amount" placeholder="amount" required>
                     </label>
                 <input type="submit">
                 </form>
