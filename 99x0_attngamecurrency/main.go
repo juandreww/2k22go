@@ -346,7 +346,7 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 		
 		tmp := currency{
 			"succeed",
-			"Converted rate is " + value,
+			"Congrats! You converted rate to " + value,
 		}
 		tpl.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
 	} else {
