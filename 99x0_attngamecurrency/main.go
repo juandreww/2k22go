@@ -149,10 +149,25 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 	
 		fmt.Println(data)
 
-		sqlStatement := `
+		var value string
+		sqlStatement := `SELECT MAX(id) FROM currencyrate`
+		row := con.QueryRow(sqlStatement)
+		err := row.Scan(&value)
+		fmt.Println("value is", value)
+		
+		switch err {
+		case sql.ErrNoRows:
+			// isexist = false
+		case nil:
+			// isexist = true
+		default:
+			panic(err)
+		}
+
+		sqlStatement = `
 			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
 			VALUES ($1, $2, $3, $4)`
-		_, err := con.Exec(sqlStatement, 1, data.CurrencyFrom, data.CurrencyTo, data.Rate)
+		_, err = con.Exec(sqlStatement, 1, data.CurrencyFrom, data.CurrencyTo, data.Rate)
 		if err != nil {
 			panic(err)
 		}
