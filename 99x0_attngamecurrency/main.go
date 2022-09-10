@@ -160,6 +160,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		err := row.Scan(&check1.ID)
 		isError := HandleErrorOfSelect(w, err)
 		if (isError == true) {
+			fmt.Println(123)
 			tmp := currency{
 				"error",
 				"Currency is not found in database",
@@ -167,6 +168,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
 			return
 		} else {
+			fmt.Println(777)
 			intval, err = strconv.Atoi(check1.ID)
 			if intval < 2 {
 				tmp := currency{
@@ -176,6 +178,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
 			}
 		}
+		fmt.Println(566)
 
 		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
 		row = con.QueryRow(sqlStatement)
