@@ -55,6 +55,7 @@ func main() {
 	mux.HandleFunc("/", index)
 	mux.HandleFunc("/savecurrency", savecurrency)
 	mux.HandleFunc("/listcurrency", listcurrency)
+	mux.HandleFunc("/listcurrencyrate", listcurrencyrate)
 	mux.HandleFunc("/addconversionrate", addconversionrate)
 	db := ConnectDB()
 	defer db.Close()
@@ -138,6 +139,35 @@ func listcurrency(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tpl.ExecuteTemplate(w, "listcurrency.gohtml", list)
+}
+
+func listcurrencyrate(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("This is listcurrencyrate api: ", r.Method)
+	var list []configconvertrate
+
+	rows, err := con.Query("SELECT cf.name currencyfrom, ct.name currencyto FROM currencyrate p LEFT JOIN currency cf ON cf.id = p.currencyfrom LEFT JOIN currency ct ON ct.id = p.currencyto ORDER BY id ASC")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		value := configconvertrate{}
+		err := rows.Scan(&value.CurrencyFrom, &value.CurrencyTo,)
+		switch err {
+		case sql.ErrNoRows:
+			fmt.Println("row is not exist")
+			return
+		case nil:
+			fmt.Println(value.CurrencyFrom, value.CurrencyTo)
+		default:
+			panic(err)
+		}
+
+		list = append(list, value)
+	}
+
+	tpl.ExecuteTemplate(w, "listcurrencyrate.gohtml", list)
 }
 
 func addconversionrate(w http.ResponseWriter, r *http.Request) {
