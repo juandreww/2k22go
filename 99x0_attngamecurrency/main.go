@@ -36,6 +36,11 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func savecurrency(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is savecurrency api: ", r.Method)
+
+	data := currency{
+		r.FormValue("id"),
+		r.FormValue("name"),
+	}
 	
-	tpl.ExecuteTemplate(w, "index.gohtml", nil)
+	tpl.ExecuteTemplate(w, "index.gohtml", data)
 }
