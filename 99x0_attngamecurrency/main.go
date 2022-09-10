@@ -103,5 +103,7 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 }
 
 func listcurrency(w http.ResponseWriter, r *http.Request) {
-	
+	fmt.Println("This is listcurrency api: ", r.Method)
+
+	tpl.ExecuteTemplate(w, "listcurrency.gohtml", nil)
 }
