@@ -286,7 +286,7 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 				"error",
 				"All CurrencyID is not found in database",
 			}
-			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+			tpl.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
 			return
 		} else {
 			intval, err = strconv.Atoi(check1.ID)
@@ -295,7 +295,7 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 					"error",
 					"One of the CurrencyID is not found in database",
 				}
-				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+				tpl.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
 				return
 			}
 		}
@@ -311,7 +311,7 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 					"error",
 					"CurrencyRate is not exist in the database",
 				}
-				tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+				tpl.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
 				return
 			}
 		}
@@ -328,7 +328,7 @@ func convertcurrency(w http.ResponseWriter, r *http.Request) {
 				"error",
 				"CurrencyRate is not exist in the database",
 			}
-			tpl.ExecuteTemplate(w, "addconversionrate.gohtml", tmp)
+			tpl.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
 			return 
 		}
 
