@@ -112,7 +112,6 @@ func listcurrency(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	i := 0;
 	for rows.Next() {
 		value := currency{}
 		err := rows.Scan(&value.ID, &value.Name,)
@@ -126,13 +125,8 @@ func listcurrency(w http.ResponseWriter, r *http.Request) {
 			panic(err)
 		}
 
-		list[i] = currency{
-			value.ID,
-			value.Name,
-		}
-		i++
+		list = append(list, value)
 	}
-	fmt.Println(list)
 
-	tpl.ExecuteTemplate(w, "listcurrency.gohtml", nil)
+	tpl.ExecuteTemplate(w, "listcurrency.gohtml", list)
 }
