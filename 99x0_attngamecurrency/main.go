@@ -70,7 +70,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
 
-func savecurrency(w http.ResponseWriter, r *http.Request) {
+func saveCurrency(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is savecurrency api: ", r.Method)
 
 	data := currency{
@@ -259,7 +259,7 @@ func addConversionRate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func convertcurrency(w http.ResponseWriter, r *http.Request) {
+func convertCurrency(w http.ResponseWriter, r *http.Request) {
 	if (r.Method == http.MethodPost) {
 		fmt.Println("This is add convertcurrency api: ", r.Method)
 		data := configconvertrate{
