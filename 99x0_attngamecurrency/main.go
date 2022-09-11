@@ -269,7 +269,7 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Println(data)
 
-		var value string
+		var str string
 		var intval int
 		var floatval, amount float64
 		check1 := currency{}
@@ -300,10 +300,10 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 		sqlStatement = `SELECT count(id) id FROM currencyrate 
 						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
 		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
-		err = row.Scan(&value)
+		err = row.Scan(&str)
 		IsError = HandleErrorOfSelect(w, err)
 		if (IsError == true) {
-			if value != "0" {
+			if str != "0" {
 				tmp := currency{
 					"error",
 					"CurrencyRate is not exist in the database (1)",
@@ -318,7 +318,7 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 					WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))
 					LIMIT 1`
 		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
-		err = row.Scan(&val1, &val2, &value)
+		err = row.Scan(&val1, &val2, &str)
 		IsError = HandleErrorOfSelect(w, err)
 		if (IsError == true) {
 			tmp := currency{
@@ -329,7 +329,7 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 			return 
 		}
 
-		floatval, err = strconv.ParseFloat(value, 64)
+		floatval, err = strconv.ParseFloat(str, 64)
 		amount, err = strconv.ParseFloat(data.Rate, 64)
 		if data.CurrencyFrom == val1 {
 			amount = amount * floatval
@@ -337,11 +337,11 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 			amount = amount / floatval
 		}
 		
-		value = fmt.Sprintf("%.2f", amount)
+		str = fmt.Sprintf("%.2f", amount)
 		
 		tmp := currency{
 			"succeed",
-			"Congrats! You converted rate to " + value,
+			"Congrats! You converted rate to " + str,
 		}
 		tpl.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
 	} else {
