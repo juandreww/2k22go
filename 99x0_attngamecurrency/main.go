@@ -53,11 +53,11 @@ func ConnectDB() *sql.DB {
 func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
-	mux.HandleFunc("/savecurrency", savecurrency)
-	mux.HandleFunc("/listcurrency", listcurrency)
-	mux.HandleFunc("/listcurrencyrate", listcurrencyrate)
-	mux.HandleFunc("/addconversionrate", addconversionrate)
-	mux.HandleFunc("/convertcurrency", convertcurrency)
+	mux.HandleFunc("/savecurrency", saveCurrency)
+	mux.HandleFunc("/listcurrency", listCurrency)
+	mux.HandleFunc("/listcurrencyrate", listCurrencyRate)
+	mux.HandleFunc("/addconversionrate", addConversionRate)
+	mux.HandleFunc("/convertcurrency", convertCurrency)
 	db := ConnectDB()
 	defer db.Close()
 
@@ -67,7 +67,6 @@ func main() {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is index api: ", r.Method)
-
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
 
@@ -81,21 +80,21 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println(data)
 
-	value := currency{}
-	isexist := false
+	cur := currency{}
+	IsExist := false
 	sqlStatement := `SELECT id, name FROM currency WHERE (id=$1 OR name=$2);`
 	row := con.QueryRow(sqlStatement, data.ID, data.Name)
-	err := row.Scan(&value.ID, &value.Name,)
+	err := row.Scan(&cur.ID, &cur.Name,)
 	switch err {
 	case sql.ErrNoRows:
-		isexist = false
+		IsExist = false
 	case nil:
-		isexist = true
+		IsExist = true
 	default:
 	  	panic(err)
 	}
 	
-	if isexist == false {
+	if IsExist == false {
 		sqlStatement = `
 			INSERT INTO currency (id, name)
 			VALUES ($1, $2)`
@@ -113,7 +112,7 @@ func savecurrency(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "index.gohtml", data)
 }
 
-func listcurrency(w http.ResponseWriter, r *http.Request) {
+func listCurrency(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is listcurrency api: ", r.Method)
 	var list []currency
 
@@ -124,25 +123,25 @@ func listcurrency(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		value := currency{}
-		err := rows.Scan(&value.ID, &value.Name,)
+		cur := currency{}
+		err := rows.Scan(&cur.ID, &cur.Name,)
 		switch err {
 		case sql.ErrNoRows:
 			fmt.Println("row is not exist")
 			return
 		case nil:
-			fmt.Println(value.ID, value.Name)
+			fmt.Println(cur.ID, cur.Name)
 		default:
 			panic(err)
 		}
 
-		list = append(list, value)
+		list = append(list, cur)
 	}
 
 	tpl.ExecuteTemplate(w, "listcurrency.gohtml", list)
 }
 
-func listcurrencyrate(w http.ResponseWriter, r *http.Request) {
+func listCurrencyRate(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is listcurrencyrate api: ", r.Method)
 	var list []configconvertrate
 
@@ -153,25 +152,22 @@ func listcurrencyrate(w http.ResponseWriter, r *http.Request) {
 	defer rows.Close()
 
 	for rows.Next() {
-		value := configconvertrate{}
-		err := rows.Scan(&value.CurrencyFrom, &value.CurrencyTo, &value.Rate)
-		switch err {
-		case sql.ErrNoRows:
+		cur := configconvertrate{}
+		err := rows.Scan(&cur.CurrencyFrom, &cur.CurrencyTo, &cur.Rate)
+
+		IsError := HandleErrorOfSelect(w, err)
+		if (IsError == true) {
 			fmt.Println("row is not exist")
 			return
-		case nil:
-			fmt.Println(value.CurrencyFrom, value.CurrencyTo, value.Rate)
-		default:
-			panic(err)
 		}
 
-		list = append(list, value)
+		list = append(list, cur)
 	}
 
 	tpl.ExecuteTemplate(w, "listcurrencyrate.gohtml", list)
 }
 
-func addconversionrate(w http.ResponseWriter, r *http.Request) {
+func addConversionRate(w http.ResponseWriter, r *http.Request) {
 	if (r.Method == http.MethodPost) {
 		fmt.Println("This is add conversion rate api: ", r.Method)
 		data := configconvertrate{
@@ -180,15 +176,15 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 			r.FormValue("rate"),
 		}
 
-		var value string
+		var str string
 		var intval int
 		check1 := currency{}
 
 		sqlStatement := `SELECT count(id) id FROM currency WHERE (id=$1 OR id=$2);`
 		row := con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
 		err := row.Scan(&check1.ID)
-		isError := HandleErrorOfSelect(w, err)
-		if (isError == true) {
+		IsError := HandleErrorOfSelect(w, err)
+		if (IsError == true) {
 			tmp := currency{
 				"error",
 				"All CurrencyID is not found in database",
@@ -210,10 +206,10 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 		sqlStatement = `SELECT count(id) id FROM currencyrate 
 						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
 		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
-		err = row.Scan(&value)
-		isError = HandleErrorOfSelect(w, err)
-		if (isError == true) {
-			if value != "0" {
+		err = row.Scan(&str)
+		IsError = HandleErrorOfSelect(w, err)
+		if (IsError == true) {
+			if str != "0" {
 				tmp := currency{
 					"error",
 					"CurrencyRate is not exist in the database",
@@ -222,7 +218,7 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		} else {
-			intval, err = strconv.Atoi(value)
+			intval, err = strconv.Atoi(str)
 			if intval >  0 {
 				tmp := currency{
 					"error",
@@ -235,13 +231,13 @@ func addconversionrate(w http.ResponseWriter, r *http.Request) {
 
 		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
 		row = con.QueryRow(sqlStatement)
-		err = row.Scan(&value)
-		isError = HandleErrorOfSelect(w, err)
-		if (isError == true) {
-			value = "0"
+		err = row.Scan(&str)
+		IsError = HandleErrorOfSelect(w, err)
+		if (IsError == true) {
+			str = "0"
 		}
 
-		intval, err = strconv.Atoi(value)
+		intval, err = strconv.Atoi(str)
 		intval++
 		sqlStatement = `
 			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
