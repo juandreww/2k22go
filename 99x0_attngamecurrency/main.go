@@ -271,15 +271,14 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 
 		var value string
 		var intval int
-		var floatval float64
-		var amount float64
+		var floatval, amount float64
 		check1 := currency{}
 
 		sqlStatement := `SELECT count(id) id FROM currency WHERE (id=$1 OR id=$2);`
 		row := con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
 		err := row.Scan(&check1.ID)
-		isError := HandleErrorOfSelect(w, err)
-		if (isError == true) {
+		IsError := HandleErrorOfSelect(w, err)
+		if (IsError == true) {
 			tmp := currency{
 				"error",
 				"All CurrencyID is not found in database",
@@ -302,8 +301,8 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
 		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
 		err = row.Scan(&value)
-		isError = HandleErrorOfSelect(w, err)
-		if (isError == true) {
+		IsError = HandleErrorOfSelect(w, err)
+		if (IsError == true) {
 			if value != "0" {
 				tmp := currency{
 					"error",
@@ -320,8 +319,8 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 					LIMIT 1`
 		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
 		err = row.Scan(&val1, &val2, &value)
-		isError = HandleErrorOfSelect(w, err)
-		if (isError == true) {
+		IsError = HandleErrorOfSelect(w, err)
+		if (IsError == true) {
 			tmp := currency{
 				"error",
 				"CurrencyRate is not exist in the database (2)",
