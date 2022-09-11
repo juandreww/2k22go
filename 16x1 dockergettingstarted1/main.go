@@ -1,27 +1,20 @@
 package main
 
 import (
-    "net/http"
-    "io"
+	"io"
+	"net/http"
 )
 
 func main() {
-    mux := http.DefaultServeMux
-    mux.HandleFunc("/index", index)
-    mux.HandleFunc("/index2", index2)
-    mux.HandleFunc("/", index)
-    err := http.ListenAndServe(":80", nil)
-    if err != nil {
-        panic(err)
-    }
+	http.HandleFunc("/", index)
+	http.HandleFunc("/index2", index2)
+	http.ListenAndServe(":80", nil)
 }
 
-func index(w http.ResponseWriter, req *http.Request) {
-	io.WriteString(w, "Oh yeah, I'm running on AWS.")
+func index(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "hello from a docker container")
 }
 
-func index2(w http.ResponseWriter, req *http.Request) {
-	io.WriteString(w, "warm greeting from aws")
+func index2(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "aaa hello from a docker container")
 }
-
-
