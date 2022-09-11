@@ -1,2 +1,2 @@
-FROM ubuntu:latest
-RUN apt-get -y update && apt-get install -y curl
+FROM golang:1.18-onbuild
+MAINTAINER juandreww108@gmail.com
