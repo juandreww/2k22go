@@ -21,6 +21,6 @@ func index(w http.ResponseWriter, req *http.Request) {
 }
 
 func index2(w http.ResponseWriter, req *http.Request) {
-	io.WriteString(w, "Oh yeah, I'm running on AWS.")
+	io.WriteString(w, "Oh yeah, I'm running so fast on AWS.")
 }
 
