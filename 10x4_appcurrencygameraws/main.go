@@ -8,6 +8,7 @@ import (
 	_ "github.com/lib/pq"
 	"log"
 	"strconv"
+	"io"
 	// "os"
 )
 
@@ -53,6 +54,7 @@ func ConnectDB() *sql.DB {
 func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/", index)
+	mux.HandleFunc("/hello", hello)
 	mux.HandleFunc("/savecurrency", saveCurrency)
 	mux.HandleFunc("/listcurrency", listCurrency)
 	mux.HandleFunc("/listcurrencyrate", listCurrencyRate)
@@ -67,6 +69,11 @@ func main() {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is index api: ", r.Method)
+	tpl.ExecuteTemplate(w, "index.gohtml", nil)
+}
+
+func hello(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "yesss hello world")
 	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 }
 
