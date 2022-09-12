@@ -62,7 +62,7 @@ func main() {
 	defer db.Close()
 
 	http.Handle("/favicon.ico", http.NotFoundHandler())
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":80", nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
