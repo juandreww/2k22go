@@ -24,6 +24,7 @@ func main() {
     mux.HandleFunc("/", index)
     mux.HandleFunc("/whatshouldiwear", whatshouldiwear)
     mux.HandleFunc("/create", create)
+    mux.HandleFunc("/insert", insert)
     mux.HandleFunc("/read", read)
     mux.HandleFunc("/update", update)
     mux.HandleFunc("/delete", delete)
