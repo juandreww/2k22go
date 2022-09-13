@@ -72,7 +72,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 }
 
 func insert(w http.ResponseWriter, r *http.Request) {
-    stmt, err := db.Prepare(`INSERT INTO customer VALUES ("Hayabusa"), ("Doris Doe");`)
+    stmt, err := db.Prepare(`INSERT INTO customer VALUES (1, "Hayabusa"), (2, "Doris Doe");`)
     check(err)
     defer stmt.Close()
 
@@ -90,9 +90,9 @@ func read(w http.ResponseWriter, r *http.Request) {
     check(err)
     defer rows.Close()
 
-    var name string
+    var name, id string
     for rows.Next() {
-        err = rows.Scan(&name)
+        err = rows.Scan(&id, &name)
         check(err)
         fmt.Fprintln(w, "RETRIEVED RECORD:", name)
     }
