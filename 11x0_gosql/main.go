@@ -122,6 +122,17 @@ func del(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "DELETED RECORD:", n)
 }
 
+func drop(w http.ResponseWriter, r *http.Request) {
+    stmt, err := db.Prepare(`DROP TABLE customer;`)
+    check(err)
+    defer stmt.Close()
+
+    _, err = stmt.Exec()
+    check(err)
+
+    fmt.Fprintln(w, "DROPPED TABLE customer")
+}
+
 func check(err error) {
     if err != nil {
         panic(err)
