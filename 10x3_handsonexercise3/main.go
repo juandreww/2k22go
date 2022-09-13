@@ -12,11 +12,21 @@ var db *sql.DB
 var err error
 
 func main() {
+    db, err = sql.Open("mysql", "aws_procube1:aws_procube1@tcp(aws-procube1.chjuuutofqif.ap-southeast-3.rds.amazonaws.com:3306)/default?charset=utf8")
+    check(err)
+    defer db.Close()
+
+    err = db.Ping()
+    check(err)
+
+    
     mux := http.DefaultServeMux
     mux.HandleFunc("/index", index)
-    err := http.ListenAndServe(":8080", nil)
-
+    mux.Handle("/favicon.ico", http.NotFoundHandler())
+    err = http.ListenAndServe(":8080", nil)
     check(err)
+
+    
     
 }
 
