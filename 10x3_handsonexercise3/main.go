@@ -1,9 +1,15 @@
 package main
 
 import (
+    "database/sql"
+    "fmt"
+    _ "github.com/go-sql-driver/mysql"
+    "io"
     "net/http"
-    // "io"
 )
+
+var db *sql.DB
+var err error
 
 func main() {
     mux := http.DefaultServeMux
