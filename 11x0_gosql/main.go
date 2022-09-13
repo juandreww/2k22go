@@ -108,6 +108,20 @@ func update(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "UPDATED RECORD:", n)
 }
 
+func del(w http.ResponseWriter, r *http.Request) {
+    stmt, err := db.Prepare(`DELETE FROM customer WHERE name="Jack Whales";`)
+    check(err)
+    defer stmt.Close()
+
+    row, err := stmt.Exec()
+    check(err)
+
+    n, err := row.RowsAffected()
+    check(err)
+
+    fmt.Fprintln(w, "DELETED RECORD:", n)
+}
+
 func check(err error) {
     if err != nil {
         panic(err)
