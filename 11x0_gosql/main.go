@@ -79,7 +79,19 @@ func insert(w http.ResponseWriter, r *http.Request) {
     check(err)
 
     fmt.Println(w, "INSERTED NEW RECORD", n)
+}
 
+func read(w http.ResponseWriter, r *http.Request) {
+    rows, err := db.Query(`SELECT * FROM customer;`)
+    check(err)
+    defer rows.Close()
+
+    var name string
+    for rows.Next() {
+        err = rows.Scan(&name)
+        check(err)
+        fmt.Fprintln(w, "RETRIEVED RECORD:", name)
+    }
 }
 
 func check(err error) {
