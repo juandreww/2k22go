@@ -29,7 +29,8 @@ func main() {
     mux.HandleFunc("/delete", delete)
     mux.HandleFunc("/drop", drop)
     mux.Handle("/favicon.ico", http.NotFoundHandler())
-    err = http.ListenAndServe(":8080", nil)
+    fmt.Println("Ready to serve..")
+    err = http.ListenAndServe(":8080", mux)
     check(err)
 }
 
@@ -39,18 +40,20 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func whatshouldiwear(w http.ResponseWriter, r *http.Request) {
+    fmt.Println("yes")
     rows, err := db.Query("SELECT id, name FROM default.basicdata;")
     check(err)
     defer rows.Close()
 
-    var s, name string
+    var s, name, id string
     s = "RETRIEVED RECORDS:\n"
 
     for rows.Next() {
-        err = rows.Scan(&name)
+        err = rows.Scan(&id, &name)
         check(err)
-        s += name + "\n"
+        s += name + " with id " + id + "\n"
     }
+    fmt.Fprintln(w, s)
 }
 
 func create(w http.ResponseWriter, r *http.Request) {
