@@ -2,7 +2,7 @@ package main
 
 import (
     "database/sql"
-    // "fmt"
+    "fmt"
     _ "github.com/go-sql-driver/mysql"
     "io"
     "net/http"
@@ -21,7 +21,13 @@ func main() {
 
     
     mux := http.DefaultServeMux
-    mux.HandleFunc("/index", index)
+    mux.HandleFunc("/", index)
+    mux.HandleFunc("/whatshouldiwear", whatshouldiwear)
+    mux.HandleFunc("/create", create)
+    mux.HandleFunc("/read", read)
+    mux.HandleFunc("/update", update)
+    mux.HandleFunc("/delete", delete)
+    mux.HandleFunc("/drop", drop)
     mux.Handle("/favicon.ico", http.NotFoundHandler())
     err = http.ListenAndServe(":8080", nil)
     check(err)
