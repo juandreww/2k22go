@@ -108,7 +108,7 @@ func update(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintln(w, "UPDATED RECORD:", n)
 }
 
-func del(w http.ResponseWriter, r *http.Request) {
+func delete(w http.ResponseWriter, r *http.Request) {
     stmt, err := db.Prepare(`DELETE FROM customer WHERE name="Jack Whales";`)
     check(err)
     defer stmt.Close()
