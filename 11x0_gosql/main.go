@@ -94,6 +94,20 @@ func read(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+func update(w http.ResponseWriter, r *http.Request) {
+    stmt, err := db.Prepare(`UPDATE customer SET name="Jack Whales" WHERE name="Hayabusa"`)
+    check(err)
+    defer stmt.Close()
+
+    row, err := stmt.Exec()
+    check(err)
+
+    n, err := row.RowsAffected()
+    check(err)
+
+    fmt.Fprintln(w, "UPDATED RECORD:", n)
+}
+
 func check(err error) {
     if err != nil {
         panic(err)
