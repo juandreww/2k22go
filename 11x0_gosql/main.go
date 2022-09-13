@@ -53,6 +53,35 @@ func whatshouldiwear(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+func create(w http.ResponseWriter, r *http.Request) {
+    stmt, err := db.Prepare(`CREATE TABLE customer(id int, name varchar(20));`)
+    check(err)
+    defer stmt.Close()
+
+    row, err := stmt.Exec()
+    check(err)
+
+    n, err := row.RowsAffected()
+    check(err)
+
+    fmt.Fprintln(w, "CREATED TABLE customer", n)
+}
+
+func insert(w http.ResponseWriter, r *http.Request) {
+    stmt, err := db.Prepare(`INSERT INTO customer VALUES ("Hayabusa"), ("Doris Doe");`)
+    check(err)
+    defer stmt.Close()
+
+    row, err := stmt.Exec()
+    check(err)
+
+    n, err := row.RowsAffected()
+    check(err)
+
+    fmt.Println(w, "INSERTED NEW RECORD", n)
+
+}
+
 func check(err error) {
     if err != nil {
         panic(err)
