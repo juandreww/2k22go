@@ -38,6 +38,21 @@ func index(w http.ResponseWriter, r *http.Request) {
     check(err)
 }
 
+func whatshouldiwear(w http.ResponseWriter, r *http.Request) {
+    rows, err := db.Query("SELECT id, name FROM default.basicdata;")
+    check(err)
+    defer rows.Close()
+
+    var s, name string
+    s = "RETRIEVED RECORDS:\n"
+
+    for rows.Next() {
+        err = rows.Scan(&name)
+        check(err)
+        s += name + "\n"
+    }
+}
+
 func check(err error) {
     if err != nil {
         panic(err)
