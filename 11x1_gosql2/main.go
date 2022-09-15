@@ -40,6 +40,7 @@ func index(w http.ResponseWriter, r *http.Request) {
     check(err)
 }
 
+
 func whatshouldiwear(w http.ResponseWriter, r *http.Request) {
     fmt.Println("yes")
     rows, err := db.Query("SELECT id, name FROM default.basicdata;")
