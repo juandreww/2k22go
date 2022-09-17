@@ -54,7 +54,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 	
 	xs := strings.Split(c.Value, "|")
-	tpl.ExecuteTemplate(w, "index.gohtml", xs)
+	tpl.ExecuteTemplate(w, "index.gohtml", xs[1:])
 
 	// tpl.ExecuteTemplate(w, "index.gohtml", cookie)
 }
