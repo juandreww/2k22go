@@ -35,24 +35,28 @@ func ping(w http.ResponseWriter, req *http.Request) {
 	io.WriteString(w, "OK")
 }
 
-func amigos(w http.ResponseWriter, req *http.Request) {
-	rows, err := db.Query(`SELECT aName FROM amigos;`)
+func retrieveData(w http.ResponseWriter, req *http.Request) {
+	rows, err := db.Query(`SELECT id, name FROM default.basicdata;`)
 	check(err)
 
 	// data to be used in query
 	s := getInstance()
 	s += "\nRETRIEVED RECORDS:\n"
-	var name string
+	var id, name string
 
 	// query
 	for rows.Next() {
-		err = rows.Scan(&name)
+		err = rows.Scan(&id, &name)
 		check(err)
 		s += name + "\n"
 	}
 	fmt.Fprintln(w, s)
 }
 
+func instance(w http.ResponseWriter, req *http.Request) {
+	s := getInstance()
+	io.WriteString(w, s)
+}
 
 
 func getInstance() string {
