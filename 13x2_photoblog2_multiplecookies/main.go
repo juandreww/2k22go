@@ -28,8 +28,12 @@ func index(w http.ResponseWriter, r *http.Request) {
 	xs := strings.Split(c.Value, "|")
 	tpl.ExecuteTemplate(w, "index.gohtml", xs)
 
+	// tpl.ExecuteTemplate(w, "index.gohtml", cookie)
+}
+
+func getCookie(w http.ResponseWriter, r *http.Request) *http.Cookie {
 	cookie, err := r.Cookie("user-data")
-	if (err != nil) {
+	if err != nil {
 		uuid := uuid.New()
 		cookie = &http.Cookie{
 			Name:	"user-data",
@@ -40,6 +44,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 		http.SetCookie(w, cookie)
 		fmt.Println("added new cookie")
 	}
-	tpl.ExecuteTemplate(w, "index.gohtml", cookie)
+	
+	return cookie
 }
-
