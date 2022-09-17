@@ -18,3 +18,7 @@ func main() {
 	mux.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", mux)
 }
+
+func index(w http.ResponseWriter, r *http.Request) {
+	tpl.ExecuteTemplate(w, "index.html", nil)
+}
