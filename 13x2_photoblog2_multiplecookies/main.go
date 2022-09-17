@@ -48,22 +48,11 @@ func getCookie(w http.ResponseWriter, r *http.Request) *http.Cookie {
 	return cookie
 }
 
-func appendValue(w http.ResponseWriter, c *http.Cookie) *http.Cookie {
-	p1 := "profpic.jpg"
-	p2 := "banner.jpg"
-	p3 := "idcard.jpg"
-
+func appendValue(w http.ResponseWriter, c *http.Cookie, fname string) *http.Cookie {
 	str := c.Value
-	if !strings.Contains(str, p1) {
-		str += "|" + p1
-	}
 
-	if !strings.Contains(str, p2) {
-		str += "|" + p2
-	}
-
-	if !strings.Contains(str, p3) {
-		str += "|" + p3
+	if !strings.Contains(str, fname) {
+		str += "|" + fname
 	}
 
 	c.Value = str
