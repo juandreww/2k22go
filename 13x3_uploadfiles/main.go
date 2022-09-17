@@ -6,6 +6,10 @@ import (
 	"net/http"
 	"github.com/google/uuid"
 	"strings"
+	"crypto/sha1"
+	"io"
+	"os"
+	"path/filepath"
 )
 
 var tpl *template.Template
@@ -24,7 +28,31 @@ func main() {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	c := getCookie(w, r)
-	c = appendValue(w, c)
+	if r.Method == http.MethodPost {
+		mf, fh, err := r.FormFile("nf")
+
+		check(err)
+		defer mf.Close()
+
+		ext := strings.Split(fh.Filename, ".")[1]
+		h := sha1.New()
+		io.Copy(h, mf)
+
+		fname := fmt.Sprintf("%x", h.Sum(nil)) + "." + ext
+		wd, err := os.Getwd()
+		check(err)
+
+		path := filepath.Join(wd, "public", "pics", fname)
+		nf, err := os.Create(path)
+		check(err)
+		defer nf.Close()
+
+		mf.Seek(0, 0)
+		io.Copy(nf, mf)
+
+		c = appendValue(w, c, fname)
+	}
+	
 	xs := strings.Split(c.Value, "|")
 	tpl.ExecuteTemplate(w, "index.gohtml", xs)
 
@@ -38,8 +66,6 @@ func getCookie(w http.ResponseWriter, r *http.Request) *http.Cookie {
 		cookie = &http.Cookie{
 			Name:	"user-data",
 			Value:	uuid.String(),
-			HttpOnly: true,
-			// Secure: true,
 		}
 		http.SetCookie(w, cookie)
 		fmt.Println("added new cookie")
@@ -48,25 +74,20 @@ func getCookie(w http.ResponseWriter, r *http.Request) *http.Cookie {
 	return cookie
 }
 
-func appendValue(w http.ResponseWriter, c *http.Cookie) *http.Cookie {
-	p1 := "profpic.jpg"
-	p2 := "banner.jpg"
-	p3 := "idcard.jpg"
-
+func appendValue(w http.ResponseWriter, c *http.Cookie, fname string) *http.Cookie {
 	str := c.Value
-	if !strings.Contains(str, p1) {
-		str += "|" + p1
-	}
 
-	if !strings.Contains(str, p2) {
-		str += "|" + p2
-	}
-
-	if !strings.Contains(str, p3) {
-		str += "|" + p3
+	if !strings.Contains(str, fname) {
+		str += "|" + fname
 	}
 
 	c.Value = str
 	http.SetCookie(w, c)
 	return c
+}
+
+func check(err error) {
+    if err != nil {
+        panic(err)
+    } 
 }
