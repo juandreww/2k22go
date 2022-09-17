@@ -21,4 +21,5 @@ func main() {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "index.html", nil)
+	fmt.Println("yayaya")
 }
