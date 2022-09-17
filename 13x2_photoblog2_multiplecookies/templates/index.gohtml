@@ -15,7 +15,10 @@
 </head>
 <body>
 
-Hello from index, your user data is: {{.Value}}
+<h1>Cookie Values:</h1>
+{{range .}}
+    <h2>{{.}}</h2>
+{{end}}
 
 </body>
 </html>
