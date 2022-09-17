@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"github.com/google/uuid"
+	"strings"
 )
 
 var tpl *template.Template
@@ -22,6 +23,11 @@ func main() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
+	c := getCookie(w, r)
+	c = appendValue(w, c)
+	xs := strings.Split(c.Value, "|")
+	tpl.ExecuteTemplate(w, "index.gohtml", xs)
+
 	cookie, err := r.Cookie("user-data")
 	if (err != nil) {
 		uuid := uuid.New()
@@ -36,3 +42,4 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 	tpl.ExecuteTemplate(w, "index.gohtml", cookie)
 }
+
