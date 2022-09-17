@@ -22,6 +22,7 @@ func main() {
 	mux := http.DefaultServeMux
 	mux.HandleFunc("/index", index)
 	// mux.HandleFunc("/read", read)
+	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("./public"))))
 	mux.Handle("/favicon.ico", http.NotFoundHandler())
 	http.ListenAndServe(":8080", mux)
 }
