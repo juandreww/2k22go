@@ -13,6 +13,8 @@ func init() {
 }
 
 func main() {
-	mux := http.DefaultServeMux;
-
+	mux := http.DefaultServeMux
+	mux.HandleFunc("/index", index)
+	mux.Handle("/favicon.ico", http.NotFoundHandler())
+	http.ListenAndServe(":8080", mux)
 }
