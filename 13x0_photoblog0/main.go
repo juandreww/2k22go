@@ -20,6 +20,6 @@ func main() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	tpl.ExecuteTemplate(w, "index.html", nil)
+	tpl.ExecuteTemplate(w, "index.gohtml", nil)
 	fmt.Println("yayaya")
 }
