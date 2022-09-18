@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 )
 
 func main() {
@@ -53,6 +54,26 @@ func auth(w http.ResponseWriter, req *http.Request) {
 		http.Redirect(w, req, "/", http.StatusSeeOther)
 		return
 	}
+
+	xs := strings.Split(c.Value, "|")
+	email := xs[0]
+	codeRcvd := xs[1]
+	codeCheck := getCode(email + "s")
+	if codeRcvd != codeCheck {
+		fmt.Println("HMAC codes didn't match")
+		fmt.Println(codeRcvd)
+		fmt.Println(codeCheck)
+		http.Redirect(w, req, "/", http.StatusSeeOther)
+		return
+	}
+
+	io.WriteString(w, `<!DOCTYPE html>
+	<html>
+	  <body>
+	  	<h1>`+codeRcvd+` - RECEIVED </h1>
+	  	<h1>`+codeCheck+` - RECALCULATED </h1>
+	  </body>
+	</html>`)
 }
 
 func getCode(str string) string {
