@@ -7,7 +7,7 @@ import (
 
 func main() {
 	for n := range gen() {
-		fmt.Fprintln(n)
+		fmt.Println(n)
 		if n == 5 {
 			break
 		}
