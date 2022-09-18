@@ -42,6 +42,19 @@ func index(w http.ResponseWriter, req *http.Request) {
 	</html>`)
 }
 
+func auth(w http.ResponseWriter, req *http.Request) {
+	c, err := req.Cookie("session-id")
+	if err != nil {
+		http.Redirect(w, req, "/", http.StatusSeeOther)
+		return
+	}
+
+	if c.Value == "" {
+		http.Redirect(w, req, "/", http.StatusSeeOther)
+		return
+	}
+}
+
 func getCode(str string) string {
 	h := hmac.New(sha256.New, []byte("ourkey"))
 	io.WriteString(h, str)
