@@ -5,17 +5,18 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"io"
+	"net/http"
 )
 
 func main() {
-	c := getCode("test@example.com")
-	fmt.Println(c)
-	c = getCode("test@exampl.com")
-	fmt.Println(c)
+	mux := http.DefaultServeMux
+	mux.HandleFunc("/", index)
+	mux.HandleFunc("/authenticate", auth)
+	http.ListenAndServe(":8080", nil)
 }
 
-func getCode(s string) string {
+func getCode(str string) string {
 	h := hmac.New(sha256.New, []byte("ourkey"))
-	io.WriteString(h, s)
+	io.WriteString(h, str)
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
