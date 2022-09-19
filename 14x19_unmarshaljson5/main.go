@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	var data int
-	rcvd := `42`
+	var data string
+	rcvd := `"Alice in Borderland"`
 	err := json.Unmarshal([]byte(rcvd), &data)
 	if err != nil {
 		log.Fatalln(err)
