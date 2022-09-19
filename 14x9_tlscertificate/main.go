@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -37,5 +39,24 @@ func marshal(w http.ResponseWriter, req *http.Request) {
 		Fname: "Louis",
 		Lname: "Vuitton",
 		Items: []string{"Modern", "Bag", "Very original"},
+	}
+	js, err := json.Marshal(p1)
+	if err != nil {
+		log.Println(err)
+	}
+	w.Write(js)
+}
+
+func encode(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	p1 := person{
+		Fname: "Louis",
+		Lname: "Vuitton",
+		Items: []string{"Modern", "Bag", "Very Original"},
+	}
+
+	err := json.NewEncoder(w).Encode(p1)
+	if err != nil {
+		log.Println(err)
 	}
 }
