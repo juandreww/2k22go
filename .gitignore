@@ -1,1 +1,6 @@
 golang-samples
+
+
+# security / ssl
+*.pem
+*.xxjson
