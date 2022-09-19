@@ -1,22 +1,12 @@
 package main
 
 import (
-	"log"
 	"net/http"
-
-	"rsc.io/letsencrypt"
 )
 
 func main() {
 	http.HandleFunc("/", index)
-
-	var enc letsencrypt.Manager
-	if err := enc.CacheFile("letsencrypt.cache"); err != nil {
-		log.Fatalln(err)
-	}
-
-	go http.ListenAndServe(":8080", http.HandlerFunc(letsencrypt.RedirectHTTP))
-
+	http.ListenAndServeTLS(":10443", "cert.pem", "key.pem", nil)
 }
 
 func index(w http.ResponseWriter, req *http.Request) {
