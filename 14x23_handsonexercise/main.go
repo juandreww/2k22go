@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-type statuscode []struct {
+type statuscode struct {
 	Description string `json:"Description"`
 	Code        int    `json:"Code"`
 }
