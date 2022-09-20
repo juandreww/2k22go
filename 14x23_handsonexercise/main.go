@@ -23,5 +23,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	fmt.Println(data)
+	for _, v := range data {
+		fmt.Println(v.Code, "-", v.Description)
+	}
 }
