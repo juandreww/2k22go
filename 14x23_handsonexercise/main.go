@@ -3,35 +3,25 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"os"
+	"log"
 )
 
-type model struct {
-	State    bool
-	Pictures []string
+type statuscode []struct {
+	Description string `json:"Description"`
+	Code        int    `json:"Code"`
 }
 
+type codes []statuscode
+
 func main() {
-	mod := model{
-		State: true,
-		Pictures: []string{
-			"one.jpg",
-			"two.jpg",
-			"three.jpg",
-		},
-	}
-	fmt.Println(mod)
+	var data codes
 
-	bs, err := json.Marshal(mod)
+	rcvd := `[{"Description":"StatusOK","Code":200},{"Description":"StatusMovedPermanently","Code":301},{"Description":"StatusFound","Code":302},{"Description":"StatusSeeOther","Code":303},{"Description":"StatusTemporaryRedirect","Code":307},{"Description":"StatusBadRequest","Code":400},{"Description":"StatusUnauthorized","Code":401},{"Description":"StatusPaymentRequired","Code":402},{"Description":"StatusForbidden","Code":403},{"Description":"StatusNotFound","Code":404},{"Description":"StatusMethodNotAllowed","Code":405},{"Description":"StatusTeapot","Code":418},{"Description":"StatusInternalServerError","Code":500}]`
+
+	err := json.Unmarshal([]byte(rcvd), &data)
 	if err != nil {
-		fmt.Println("error: ", err)
+		log.Fatalln(err)
 	}
 
-	fmt.Println(bs)
-	fmt.Println("--a--")
-
-	fmt.Println(string(bs))
-	fmt.Println("--b--")
-
-	os.Stdout.Write(bs)
+	fmt.Println(data)
 }
