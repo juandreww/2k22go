@@ -1,6 +1,8 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -28,4 +30,23 @@ func index(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	w.Header().Set("Content-Type", "text/html; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(str))
+}
+
+func getUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	u := models.User{
+		Name:   "Avaleska Zhang",
+		Gender: "female",
+		Age:    18,
+		Id:     p.ByName("id"),
+	}
+
+	js, err := json.Marshal(u)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "%s\n", js)
+
 }
