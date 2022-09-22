@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/google/uuid"
 	"github.com/juandreww/2k22go/15x3_postdelete1/models"
 	"github.com/julienschmidt/httprouter"
 )
@@ -60,7 +61,7 @@ func createUser(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 
 	json.NewDecoder(req.Body).Decode(&u)
 
-	u.Id = "007"
+	u.Id = uuid.New().String()
 	js, _ := json.Marshal(u)
 
 	w.Header().Set("Content-Type", "application/json")
