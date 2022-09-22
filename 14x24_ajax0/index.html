@@ -104,17 +104,26 @@
     <script>
         document.querySelector('h1').onclick = makeRequest;
 
+
         function makeRequest() {
+
+            // create a  XMLHttpRequest
             var xhr = new XMLHttpRequest();
 
+            // open the request
             xhr.open('GET', 'test.html');
 
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            // handles the response
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
                     alert(xhr.responseText);
                 }
-            }
+            };
+
+            // send the request
+            xhr.send();
         }
+
     </script>
 </body>
 </html>
