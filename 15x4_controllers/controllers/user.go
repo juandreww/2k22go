@@ -6,11 +6,17 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
-	"github.com/juandreww/2k22go/15x3_postdelete1/models"
+	"github.com/juandreww/2k22go/15x4_controllers/models"
 	"github.com/julienschmidt/httprouter"
 )
 
-func GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+type UserController struct{}
+
+func NewUserController() *UserController {
+	return &UserController{}
+}
+
+func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	u := models.NewUser{
 		Name:       "Garry Chapman",
 		Email:      "garrychapmanbros@gmail.com",
@@ -30,7 +36,7 @@ func GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	fmt.Fprintf(w, "%s\n", js)
 }
 
-func CreateUser(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	u := models.NewUser{}
 
 	json.NewDecoder(req.Body).Decode(&u)
@@ -43,7 +49,7 @@ func CreateUser(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	fmt.Fprintf(w, "%s\n", js)
 }
 
-func DeleteUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, "Write code to delete user\n")
 }
