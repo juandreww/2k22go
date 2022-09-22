@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/juandreww/2k22go/15x1_withjson/models"
+	"github.com/juandreww/2k22go/15x3_postdelete1/models"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -36,7 +36,7 @@ func index(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 }
 
 func getUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
-	u := models.User{
+	u := models.NewUser{
 		Name:   "Avaleska Zhang",
 		Gender: "female",
 		Age:    18,
