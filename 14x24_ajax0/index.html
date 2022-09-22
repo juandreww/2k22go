@@ -102,6 +102,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 
     <script>
+
+        const cors = require("cors")
+
+        app.use(
+            cors({
+                origin: "http://127.0.0.1:5500",
+                methods: ["GET","POST"],
+            })
+        )
+        
         document.querySelector('h1').onclick = makeRequest;
 
 
@@ -111,7 +121,7 @@
             var xhr = new XMLHttpRequest();
 
             // open the request
-            xhr.open('GET', 'test.html');
+            xhr.open('GET', 'test.html', true);
 
             // handles the response
             xhr.onreadystatechange = function () {
