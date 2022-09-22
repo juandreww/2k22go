@@ -37,10 +37,12 @@ func index(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 
 func getUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	u := models.NewUser{
-		Name:   "Avaleska Zhang",
-		Gender: "female",
-		Age:    18,
-		Id:     p.ByName("id"),
+		Name:       "Garry Chapman",
+		Email:      "garrychapmanbros@gmail.com",
+		Occupation: "Account Executive",
+		Location:   "South UK",
+		Age:        "35",
+		Id:         p.ByName("id"),
 	}
 
 	js, err := json.Marshal(u)
