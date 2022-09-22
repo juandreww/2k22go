@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Status Code</title>
+</head>
+<body>
+
+<!-- IMPORTANT -->
+<!-- this is Javascript, not Go code -->
+<script>
+    var statusCode = [
+        {
+            "Description": "StatusOK",
+            "Code": 200
+        },
+        {
+            "Description": "StatusMovedPermanently",
+            "Code": 301
+        },
+        {
+            "Description": "StatusFound",
+            "Code": 302
+        },
+        {
+            "Description": "StatusSeeOther",
+            "Code": 303
+        },
+        {
+            "Description": "StatusTemporaryRedirect",
+            "Code": 307
+        },
+        {
+            "Description": "StatusBadRequest",
+            "Code": 400
+        },
+        {
+            "Description": "StatusUnauthorized",
+            "Code": 401
+        },
+        {
+            "Description": "StatusPaymentRequired",
+            "Code": 402
+        },
+        {
+            "Description": "StatusForbidden",
+            "Code": 403
+        },
+        {
+            "Description": "StatusNotFound",
+            "Code": 404
+        },
+        {
+            "Description": "StatusMethodNotAllowed",
+            "Code": 405
+        },
+        {
+            "Description": "StatusTeapot",
+            "Code": 418
+        },
+        {
+            "Description": "StatusInternalServerError",
+            "Code": 500
+        },
+    ];
+
+    var transmit = JSON.stringify(statusCode);
+    document.write(transmit);
+</script>
+</body>
+</html>
