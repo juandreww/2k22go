@@ -109,7 +109,11 @@
             // handles the response
             xhr.onreadystatechange = function () {
                 if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200){
-                    alert(xhr.responseText);
+                    var b = document.querySelector('body');
+                    var myHeadingOne = document.createElement('h1');
+                    var myHeadingOneText = document.createTextNode(xhr.responseText);
+                    myHeadingOne.appendChild(myHeadingOneText);
+                    b.appendChild(myHeadingOne);
                 }
             };
 
