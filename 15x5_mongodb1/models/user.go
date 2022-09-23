@@ -1,10 +1,10 @@
 package models
 
 type NewUser struct {
-	Name       string `json:"Name"`
-	Email      string `json:"Email"`
-	Occupation string `json:"Occupation"`
-	Location   string `json:"Location"`
-	Age        string `json:"Age"`
-	Id         string `json:"id"`
+	Name       string `json:"Name" bson:"name"`
+	Email      string `json:"Email" bson:"gender"`
+	Occupation string `json:"Occupation" bson:"age"`
+	Location   string `json:"Location" bson:"location"`
+	Age        string `json:"Age" bson:"age"`
+	Id         string `json:"id" bson:"_id"`
 }
