@@ -13,6 +13,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+type student struct {
+	Name  string `bson:"name"`
+	Grade int    `bson:"Grade"`
+}
+
 type UserController struct {
 	cl *mongo.Collection
 }
@@ -47,11 +52,10 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 	json.NewDecoder(req.Body).Decode(&u)
 
 	u.Id = uuid.New().String()
-	ins, err := uc.cl.InsertOne(context.TODO(), u)
+	_, err := uc.cl.InsertOne(context.TODO(), student{"Wick", 2})
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Inserted a single document: ", ins.InsertedID)
 
 	js, _ := json.Marshal(u)
 
