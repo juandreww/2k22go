@@ -1,8 +1,10 @@
 package controllers
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -45,6 +47,12 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 	json.NewDecoder(req.Body).Decode(&u)
 
 	u.Id = uuid.New().String()
+	ins, err := uc.cl.InsertOne(context.TODO(), u)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Inserted a single document: ", ins.InsertedID)
+
 	js, _ := json.Marshal(u)
 
 	w.Header().Set("Content-Type", "application/json")
