@@ -8,12 +8,14 @@ import (
 	"github.com/google/uuid"
 	"github.com/juandreww/2k22go/15x5_mongodb1/models"
 	"github.com/julienschmidt/httprouter"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type UserController struct {
+	cl *mongo.Collection
 }
 
-func NewUserController() *UserController {
+func NewUserController(cl *mongo.Collection) *UserController {
 	return &UserController{}
 }
 
