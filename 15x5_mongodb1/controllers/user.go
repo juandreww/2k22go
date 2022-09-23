@@ -6,17 +6,15 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
-	"github.com/juandreww/2k22go/15x4_controllers/models"
+	"github.com/juandreww/2k22go/15x5_mongodb1/models"
 	"github.com/julienschmidt/httprouter"
-	"gopkg.in/mgo.v2"
 )
 
 type UserController struct {
-	session *mgo.Session
 }
 
-func NewUserController(s *mgo.Session) *UserController {
-	return &UserController{s}
+func NewUserController() *UserController {
+	return &UserController{}
 }
 
 func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
