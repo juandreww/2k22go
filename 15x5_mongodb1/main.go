@@ -5,6 +5,7 @@ import (
 
 	"github.com/juandreww/2k22go/15x5_mongodb1/controllers"
 	"github.com/julienschmidt/httprouter"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"gopkg.in/mgo.v2"
 )
 
@@ -25,4 +26,8 @@ func getSession() *mgo.Session {
 	}
 
 	return s
+}
+
+func clientSession() {
+	cOpt := options.Client().ApplyURI("mongodb://localhost:27017")
 }
