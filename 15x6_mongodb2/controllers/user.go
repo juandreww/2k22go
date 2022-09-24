@@ -18,7 +18,7 @@ type UserController struct {
 
 func NewUserController(cl *mongo.Database) *UserController {
 	fmt.Println(cl)
-	return &UserController{}
+	return &UserController{cl}
 }
 
 func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
