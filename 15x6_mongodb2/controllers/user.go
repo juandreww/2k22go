@@ -10,6 +10,7 @@ import (
 	"github.com/juandreww/2k22go/15x6_mongodb2/models"
 	"github.com/julienschmidt/httprouter"
 	"go.mongodb.org/mongo-driver/mongo"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var ctx = context.Background()
@@ -24,12 +25,12 @@ func NewUserController(cl *mongo.Database) *UserController {
 
 func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	fmt.Println(p.ByName("fname"))
-	u := models.Contacts{
-		Fname: p.ByName("fname"),
-		Lname: "Ayu",
-	}
+	// u := models.Contacts{
+	// 	Fname: p.ByName("fname"),
+	// 	Lname: "Ayu",
+	// }
 
-	data, err := uc.cl.Collection("contacts").Find(ctx, u)
+	data, err := uc.cl.Collection("contacts").Find(ctx, bson.M{"fname": p.ByName("fname")})
 	checkError(err)
 	defer data.Close(ctx)
 
