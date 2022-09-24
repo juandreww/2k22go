@@ -5,6 +5,7 @@ import (
 	"text/template"
 	"time"
 
+	"github.com/juandreww/2k22go/15x5_mongodb1/controllers"
 	"github.com/juandreww/2k22go/15x9_refactoringsession2/models"
 )
 
@@ -12,9 +13,10 @@ var tpl *template.Template
 var dbSessionsCleaned time.Time
 var dbUser = map[string]models.UserNow{}
 
-// var dbSessions = map[string]models.session{}
+var dbSessions = map[string]models.Session{}
 
 func main() {
+	ctl := controllers.NewUserController(tpl)
 	// mux := http.DefaultServeMux
 	// mux.HandleFunc("/index", index)
 	// mux.HandleFunc("/atthebar", atthebar)

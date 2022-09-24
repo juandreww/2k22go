@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"time"
@@ -11,6 +12,14 @@ import (
 	"github.com/juandreww/2k22go/15x9_refactoringsession2/session"
 	"golang.org/x/crypto/bcrypt"
 )
+
+type Controller struct {
+	tpl *template.Template
+}
+
+func NewController(t *template.Template) *Controller {
+	return &Controller{t}
+}
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Welcome to The Lemon Bar. Your used method: ", r.Method)
