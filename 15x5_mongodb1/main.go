@@ -10,11 +10,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"gopkg.in/mgo.v2/bson"
 )
-
-var cred options.Credential
-
-cred.
 
 type Contacts struct {
 	Fname string `bson:"Fname"`
@@ -36,7 +33,7 @@ func main() {
 }
 
 func clientSession() (*mongo.Collection, error) {
-	cOpt := options.Client().ApplyURI("mongodb://localhost:27017")
+	cOpt := options.Client().ApplyURI("mongodb://admin:123@localhost")
 
 	cl, err := mongo.Connect(context.TODO(), cOpt)
 	if err != nil {
@@ -55,6 +52,17 @@ func clientSession() (*mongo.Collection, error) {
 	_, err = cl.Database("dbtest").Collection("contacts").InsertOne(context.TODO(), Contacts{"Abigail", "Ayu"})
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	csr, err := cl.Database("dbtest").Collection("contacts").Find(context.TODO(), bson.M{"Fname": "Abigail"})
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer csr.Close(context.TODO())
+
+	result := make([]Contacts, 0)
+	for csr.Next(context.TODO()) {
+
 	}
 
 	return collection, nil
