@@ -17,8 +17,8 @@ func main() {
 	fmt.Println("You are connected to MongoDB")
 	uc := controllers.NewUserController()
 	rt.GET("/user/:fname", uc.GetUser)
-	rt.POST("/user", uc.CreateUser)
-	rt.POST("/userupdate/:fname", uc.UpdateUser)
-	rt.DELETE("/user/:fname", uc.DeleteUser)
+	// rt.POST("/user", uc.CreateUser)
+	// rt.POST("/userupdate/:fname", uc.UpdateUser)
+	// rt.DELETE("/user/:fname", uc.DeleteUser)
 	http.ListenAndServe("localhost:8080", rt)
 }
