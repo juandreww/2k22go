@@ -58,7 +58,7 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 	json.NewDecoder(req.Body).Decode(&u)
 
 	// u.Id = uuid.New().String()
-	_, err := uc.cl.Collection("contacts").InsertOne(context.TODO(), u)
+	_, err := uc.cl.Collection("contacts").InsertOne(ctx, u)
 	checkError(err)
 
 	js, _ := json.Marshal(u)
