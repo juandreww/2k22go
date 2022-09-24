@@ -18,7 +18,6 @@ func main() {
 	uc := controllers.NewUserController(clientSession())
 	rt.GET("/user/:fname", uc.GetUser)
 	rt.POST("/user", uc.CreateUser)
-	rt.POST("/file", uc.TextMe)
 	rt.DELETE("/user/:fname", uc.DeleteUser)
 	http.ListenAndServe("localhost:8080", rt)
 }

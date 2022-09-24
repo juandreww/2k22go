@@ -55,15 +55,16 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 }
 
 func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	fn, err := os.Create("data.txt")
+	checkError(err)
+	defer fn.Close()
+
 	delete(uc.session, p.ByName("fname"))
+	json.NewEncoder(fn).Encode(uc.session)
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprintf(w, "Deleted record of %s\n", p.ByName("fname"))
-}
-
-func (uc UserController) TextMe(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
-
-	fmt.Println("Check it outasdfasdf")
 }
 
 func checkError(err error) {
