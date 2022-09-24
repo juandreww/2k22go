@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
-	"github.com/juandreww/2k22go/15x7_withoutmongodb/models"
+	"github.com/juandreww/2k22go/15x8_insertintofile/models"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -52,6 +53,17 @@ func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprintf(w, "Deleted record of %s\n", p.ByName("fname"))
+}
+
+func (uc UserController) TextMe(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	fn, err := os.Create("data.txt")
+	checkError(err)
+	defer fn.Close()
+
+	_, err = fn.WriteString("i am your lover\n")
+	checkError(err)
+
+	fmt.Println("Check it out")
 }
 
 func checkError(err error) {
