@@ -16,11 +16,11 @@ var ctx = context.Background()
 func main() {
 	rt := httprouter.New()
 	db, err := clientSession()
-	fmt.Println(db)
 	if err != nil {
 		panic(err)
 	}
 
+	fmt.Println("You are connected to MongoDB")
 	uc := controllers.NewUserController(db)
 	rt.GET("/user/:fname", uc.GetUser)
 	rt.POST("/user", uc.CreateUser)

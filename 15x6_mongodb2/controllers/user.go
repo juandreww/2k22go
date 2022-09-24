@@ -24,12 +24,6 @@ func NewUserController(cl *mongo.Database) *UserController {
 }
 
 func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
-	fmt.Println(p.ByName("fname"))
-	// u := models.Contacts{
-	// 	Fname: p.ByName("fname"),
-	// 	Lname: "Ayu",
-	// }
-
 	data, err := uc.cl.Collection("contacts").Find(ctx, bson.M{"Fname": p.ByName("fname")})
 	checkError(err)
 	defer data.Close(ctx)
@@ -46,11 +40,11 @@ func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p htt
 	}
 
 	if len(result) > 0 {
-		fmt.Println("First Name : ", result[0].Fname)
-		fmt.Println("Last Name : ", result[0].Lname)
+		for _, v := range result {
+			fmt.Println(v.Fname, v.Lname)
+		}
 	} else {
-		fmt.Println("Not Found")
-		fmt.Println(result)
+		fmt.Println("Not Found with Contact Name: " + p.ByName("fname"))
 	}
 }
 
