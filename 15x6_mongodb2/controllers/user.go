@@ -54,11 +54,11 @@ func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p htt
 }
 
 func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
-	u := models.NewUser{}
+	u := models.Contacts{}
 	json.NewDecoder(req.Body).Decode(&u)
 
 	// u.Id = uuid.New().String()
-	_, err := uc.cl.Collection("contacts").InsertOne(context.TODO(), models.Contacts{"Hageko", "Batam"})
+	_, err := uc.cl.Collection("contacts").InsertOne(context.TODO(), u)
 	checkError(err)
 
 	js, _ := json.Marshal(u)
