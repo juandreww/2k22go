@@ -24,6 +24,7 @@ func main() {
 	uc := controllers.NewUserController(db)
 	rt.GET("/user/:fname", uc.GetUser)
 	rt.POST("/user", uc.CreateUser)
+	rt.POST("/userupdate/:fname", uc.UpdateUser)
 	rt.DELETE("/user/:fname", uc.DeleteUser)
 	http.ListenAndServe("localhost:8080", rt)
 }
