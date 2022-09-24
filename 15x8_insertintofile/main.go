@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 
@@ -10,7 +9,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-var ctx = context.Background()
+// var ctx = context.Background()
 
 func main() {
 	rt := httprouter.New()
