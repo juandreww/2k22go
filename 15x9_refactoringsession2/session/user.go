@@ -9,6 +9,11 @@ import (
 	"github.com/juandreww/2k22go/15x9_refactoringsession2/models"
 )
 
+var dbSessionsCleaned time.Time
+var dbUser = map[string]models.UserNow{}
+
+var dbSessions = map[string]models.Session{}
+
 func AlreadySignup(w http.ResponseWriter, req *http.Request) bool {
 	cookie, err := req.Cookie("session-id")
 

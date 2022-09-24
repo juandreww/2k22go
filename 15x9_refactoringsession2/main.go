@@ -3,17 +3,11 @@ package main
 import (
 	"html/template"
 	"net/http"
-	"time"
 
 	"github.com/juandreww/2k22go/15x9_refactoringsession2/controllers"
-	"github.com/juandreww/2k22go/15x9_refactoringsession2/models"
 )
 
 var tpl *template.Template
-var dbSessionsCleaned time.Time
-var dbUser = map[string]models.UserNow{}
-
-var dbSessions = map[string]models.Session{}
 
 func main() {
 	ctl := controllers.NewUserController(tpl)
