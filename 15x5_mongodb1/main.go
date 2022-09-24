@@ -62,7 +62,13 @@ func clientSession() (*mongo.Collection, error) {
 
 	result := make([]Contacts, 0)
 	for csr.Next(context.TODO()) {
+		var row Contacts
+		err := csr.Decode(&row)
+		if err != nil {
+			log.Fatal(err)
+		}
 
+		result = append(result, row)
 	}
 
 	return collection, nil
