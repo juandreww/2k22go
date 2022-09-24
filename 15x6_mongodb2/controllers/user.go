@@ -64,6 +64,10 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 	fmt.Fprintf(w, "%s\n", js)
 }
 
+func (uc UserController) UpdateUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+
+}
+
 func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	data, err := uc.cl.Collection("contacts").Find(ctx, bson.M{"Fname": p.ByName("fname")})
 	checkError(err)
