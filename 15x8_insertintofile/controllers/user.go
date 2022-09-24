@@ -34,6 +34,10 @@ func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p htt
 }
 
 func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+	fn, err := os.Create("data.txt")
+	checkError(err)
+	defer fn.Close()
+
 	u := models.Contacts{}
 	json.NewDecoder(req.Body).Decode(&u)
 	fname := u.Fname
@@ -41,7 +45,9 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 	// u.Id = uuid.New().String()
 	uc.session[fname] = u
 
+	fmt.Println(uc)
 	js, _ := json.Marshal(u)
+	json.NewEncoder(fn).Encode(uc.session)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
@@ -56,25 +62,6 @@ func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p 
 }
 
 func (uc UserController) TextMe(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
-	fn, err := os.Create("data.txt")
-	checkError(err)
-	defer fn.Close()
-
-	_, err = fn.WriteString("i am your loverasdasfasdf\n")
-	checkError(err)
-
-	fmt.Println("Check it outasdfasdf")
-}
-
-func (uc UserController) TextMe2(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
-	err := os.Remove("data.txt")
-	checkError(err)
-	fn, err := os.Create("data.txt")
-	checkError(err)
-	defer fn.Close()
-
-	_, err = fn.WriteString("i am your lover asdasdf\n")
-	checkError(err)
 
 	fmt.Println("Check it outasdfasdf")
 }
