@@ -13,15 +13,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-type Controller struct {
+type UserController struct {
 	tpl *template.Template
 }
 
-func NewController(t *template.Template) *Controller {
-	return &Controller{t}
+func NewUserController(t *template.Template) *UserController {
+	return &UserController{t}
 }
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func (uc UserController) Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Welcome to The Lemon Bar. Your used method: ", r.Method)
 	cookie, err := r.Cookie("session-id")
 	if err != nil {
@@ -43,7 +43,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "index.gohtml", u)
 }
 
-func AtTheBar(w http.ResponseWriter, r *http.Request) {
+func (uc UserController) AtTheBar(w http.ResponseWriter, r *http.Request) {
 	// cookie, _ := r.Cookie("session-id")
 	session.ShowSessions()
 	if !session.AlreadySignup(w, r) {
@@ -60,7 +60,7 @@ func AtTheBar(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "atthebar.gohtml", u)
 }
 
-func SignUp(w http.ResponseWriter, r *http.Request) {
+func (uc UserController) SignUp(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Signup page: ", r.Method)
 	session.ShowSessions()
 	if r.Method == http.MethodPost {
@@ -95,7 +95,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
 }
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func (uc UserController) Login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Login page: ", r.Method)
 	session.ShowSessions()
 	if r.Method == http.MethodPost {
@@ -134,7 +134,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "login.gohtml", nil)
 }
 
-func Logout(w http.ResponseWriter, r *http.Request) {
+func (uc UserController) Logout(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("session-id")
 	session.ShowSessions()
 	if !session.AlreadySignup(w, r) {
