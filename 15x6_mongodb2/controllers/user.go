@@ -64,6 +64,8 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 }
 
 func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	fname := p.ByName("fname")
+
 	w.WriteHeader(http.StatusOK)
 	fmt.Fprint(w, "Write code to delete user\n")
 }
