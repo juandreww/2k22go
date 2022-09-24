@@ -65,9 +65,12 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 
 func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
 	fname := p.ByName("fname")
+	var selector = bson.M{"Fname": fname}
+	_, err := uc.cl.Collection("contacts").DeleteOne(ctx, selector)
+	checkError(err)
 
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, "Write code to delete user\n")
+	fmt.Fprint(w, "Remove contacts "+fname+" success\n")
 }
 
 func checkError(err error) {
