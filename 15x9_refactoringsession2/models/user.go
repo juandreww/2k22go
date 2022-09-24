@@ -3,8 +3,8 @@ package models
 import "time"
 
 type Session struct {
-	email        string
-	lastActivity time.Time
+	Email        string
+	LastActivity time.Time
 }
 
 type UserNow struct {
