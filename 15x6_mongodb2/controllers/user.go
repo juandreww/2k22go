@@ -34,7 +34,7 @@ func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p htt
 	defer data.Close(ctx)
 
 	result := make([]models.Contacts, 0)
-	for data.Next(context.TODO()) {
+	for data.Next(ctx) {
 		var row models.Contacts
 		err := data.Decode(&row)
 		if err != nil {
