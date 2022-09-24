@@ -63,7 +63,20 @@ func (uc UserController) TextMe(w http.ResponseWriter, req *http.Request, p http
 	_, err = fn.WriteString("i am your lover\n")
 	checkError(err)
 
-	fmt.Println("Check it out")
+	fmt.Println("Check it outasdfasdf")
+}
+
+func (uc UserController) TextMe2(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	err := os.Remove("data.txt")
+	checkError(err)
+	fn, err := os.Create("data.txt")
+	checkError(err)
+	defer fn.Close()
+
+	_, err = fn.WriteString("i am your lover asdasdf\n")
+	checkError(err)
+
+	fmt.Println("Check it outasdfasdf")
 }
 
 func checkError(err error) {

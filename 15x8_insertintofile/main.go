@@ -19,6 +19,7 @@ func main() {
 	rt.GET("/user/:fname", uc.GetUser)
 	rt.POST("/user", uc.CreateUser)
 	rt.POST("/file", uc.TextMe)
+	rt.POST("/file2", uc.TextMe2)
 	rt.DELETE("/user/:fname", uc.DeleteUser)
 	http.ListenAndServe("localhost:8080", rt)
 }
