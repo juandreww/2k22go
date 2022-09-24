@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/juandreww/2k22go/15x6_mongodb2/controllers"
@@ -15,6 +16,7 @@ var ctx = context.Background()
 func main() {
 	rt := httprouter.New()
 	db, err := clientSession()
+	fmt.Println(db)
 	if err != nil {
 		panic(err)
 	}
@@ -27,7 +29,7 @@ func main() {
 }
 
 func clientSession() (*mongo.Database, error) {
-	cOpt := options.Client().ApplyURI("mongodb://admin:123@localhost")
+	cOpt := options.Client().ApplyURI("mongodb://admin:123@localhost:27017")
 
 	cl, err := mongo.NewClient(cOpt)
 	if err != nil {

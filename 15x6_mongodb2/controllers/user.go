@@ -17,6 +17,7 @@ type UserController struct {
 }
 
 func NewUserController(cl *mongo.Database) *UserController {
+	fmt.Println(cl)
 	return &UserController{}
 }
 
@@ -42,16 +43,15 @@ func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p htt
 
 func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	u := models.NewUser{}
-
 	json.NewDecoder(req.Body).Decode(&u)
-
+	fmt.Println(uc.cl)
 	fmt.Println("aahaaaaaaaaaa")
 	// u.Id = uuid.New().String()
 	_, err := uc.cl.Collection("contacts").InsertOne(context.TODO(), models.Contacts{"Hageko", "Batam"})
 	checkError(err)
 
 	js, _ := json.Marshal(u)
-	fmt.Println("dadaaaaaaaaaa")
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprintf(w, "%s\n", js)
@@ -64,6 +64,7 @@ func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p 
 
 func checkError(err error) {
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("error lah")
+		// log.Fatal(err)
 	}
 }
