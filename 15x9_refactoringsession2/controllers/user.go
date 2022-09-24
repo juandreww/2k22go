@@ -17,8 +17,8 @@ type UserController struct {
 	tpl *template.Template
 }
 
-func NewUserController(t *template.Template) *UserController {
-	return &UserController{t}
+func NewUserController(tpl *template.Template) *UserController {
+	return &UserController{tpl}
 }
 
 func (uc UserController) Index(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +40,7 @@ func (uc UserController) Index(w http.ResponseWriter, r *http.Request) {
 	// 	u = dbUser[un]
 	// }
 
-	tpl.ExecuteTemplate(w, "index.gohtml", u)
+	uc.tpl.ExecuteTemplate(w, "index.gohtml", u)
 }
 
 func (uc UserController) AtTheBar(w http.ResponseWriter, r *http.Request) {
@@ -57,7 +57,7 @@ func (uc UserController) AtTheBar(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "007, please dont come to this bar", http.StatusForbidden)
 		return
 	}
-	tpl.ExecuteTemplate(w, "atthebar.gohtml", u)
+	uc.tpl.ExecuteTemplate(w, "atthebar.gohtml", u)
 }
 
 func (uc UserController) SignUp(w http.ResponseWriter, r *http.Request) {
@@ -92,7 +92,7 @@ func (uc UserController) SignUp(w http.ResponseWriter, r *http.Request) {
 		dbUser[email] = u
 	}
 
-	tpl.ExecuteTemplate(w, "signup.gohtml", nil)
+	uc.tpl.ExecuteTemplate(w, "signup.gohtml", nil)
 }
 
 func (uc UserController) Login(w http.ResponseWriter, r *http.Request) {
@@ -131,7 +131,7 @@ func (uc UserController) Login(w http.ResponseWriter, r *http.Request) {
 		dbSessions[cookie.Value] = models.Session{email, time.Now()}
 		http.Redirect(w, r, "/atthebar", http.StatusSeeOther)
 	}
-	tpl.ExecuteTemplate(w, "login.gohtml", nil)
+	uc.tpl.ExecuteTemplate(w, "login.gohtml", nil)
 }
 
 func (uc UserController) Logout(w http.ResponseWriter, r *http.Request) {
