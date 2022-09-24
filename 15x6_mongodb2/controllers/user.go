@@ -12,6 +12,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+var ctx = context.Background()
+
 type UserController struct {
 	cl *mongo.Database
 }
@@ -21,19 +23,33 @@ func NewUserController(cl *mongo.Database) *UserController {
 }
 
 func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
-	u := models.NewUser{
-		Name:       "Garry Chapman",
-		Email:      "garrychapmanbros@gmail.com",
-		Occupation: "Account Executive",
-		Location:   "South UK",
-		Age:        "35",
-		Id:         p.ByName("id"),
+	u := models.Contacts{
+		Fname: "Abigail",
+		Lname: "Ayu",
+	}
+
+	data, err := uc.cl.Collection("contacts").Find(ctx, u)
+	checkError(err)
+	defer data.Close(ctx)
+
+	result := make([]models.Contacts, 0)
+	for data.Next(context.TODO()) {
+		var row models.Contacts
+		err := data.Decode(&row)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		result = append(result, row)
+	}
+
+	if len(result) > 0 {
+		fmt.Println("First Name : ", result[0].Fname)
+		fmt.Println("Last Name : ", result[0].Lname)
 	}
 
 	js, err := json.Marshal(u)
-	if err != nil {
-		fmt.Println(err)
-	}
+	checkError(err)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
