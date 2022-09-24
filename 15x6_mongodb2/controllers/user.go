@@ -30,7 +30,7 @@ func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p htt
 	// 	Lname: "Ayu",
 	// }
 
-	data, err := uc.cl.Collection("contacts").Find(ctx, bson.M{"fname": p.ByName("fname")})
+	data, err := uc.cl.Collection("contacts").Find(ctx, bson.M{"Fname": p.ByName("fname")})
 	checkError(err)
 	defer data.Close(ctx)
 
