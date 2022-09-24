@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/juandreww/2k22go/15x6_mongodb2/models"
 	"github.com/julienschmidt/httprouter"
@@ -64,13 +65,57 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 }
 
 func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	data, err := uc.cl.Collection("contacts").Find(ctx, bson.M{"Fname": p.ByName("fname")})
+	checkError(err)
+	defer data.Close(ctx)
+
+	result := make([]models.Contacts, 0)
+	for data.Next(ctx) {
+		var row models.Contacts
+		err := data.Decode(&row)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		result = append(result, row)
+	}
+
+	if len(result) > 0 {
+		for _, v := range result {
+			fmt.Println(v.Fname, v.Lname)
+		}
+	} else {
+		fmt.Println("Not Found with Contact Name: " + p.ByName("fname"))
+	}
+
 	fname := p.ByName("fname")
 	var selector = bson.M{"Fname": fname}
-	_, err := uc.cl.Collection("contacts").DeleteOne(ctx, selector)
+	_, err = uc.cl.Collection("contacts").DeleteOne(ctx, selector)
 	checkError(err)
 
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprint(w, "Remove contacts "+fname+" success\n")
+	data, err = uc.cl.Collection("contacts").Find(ctx, bson.M{"Fname": p.ByName("fname")})
+	checkError(err)
+	defer data.Close(ctx)
+
+	result = make([]models.Contacts, 0)
+	for data.Next(ctx) {
+		var row models.Contacts
+		err := data.Decode(&row)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		result = append(result, row)
+	}
+
+	if len(result) > 0 {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "Remaining Contacts"+strconv.Itoa(len(result))+"\n")
+	} else {
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, "Remove contacts "+fname+" success\n")
+	}
+
 }
 
 func checkError(err error) {
