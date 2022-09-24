@@ -23,10 +23,10 @@ func AlreadySignup(w http.ResponseWriter, req *http.Request) bool {
 
 	s, ok := dbSessions[cookie.Value]
 	if ok {
-		s.lastActivity = time.Now()
+		s.LastActivity = time.Now()
 		dbSessions[cookie.Value] = s
 	}
-	_, ok = dbUser[s.email]
+	_, ok = dbUser[s.Email]
 	cookie.MaxAge = sessionLength
 	http.SetCookie(w, cookie)
 	return ok
@@ -47,9 +47,9 @@ func GetUser(w http.ResponseWriter, req *http.Request) models.UserNow {
 	http.SetCookie(w, cookie)
 
 	if s, ok := dbSessions[cookie.Value]; ok {
-		s.lastActivity = time.Now()
+		s.LastActivity = time.Now()
 		dbSessions[cookie.Value] = s
-		u = dbUser[s.email]
+		u = dbUser[s.Email]
 	}
 
 	return u
@@ -59,7 +59,7 @@ func CleanSessions() {
 	fmt.Println("BEFORE CLEAN") // for demonstration purposes
 	ShowSessions()              // for demonstration purposes
 	for k, v := range dbSessions {
-		if time.Now().Sub(v.lastActivity) > (time.Second * 30) {
+		if time.Now().Sub(v.LastActivity) > (time.Second * 30) {
 			delete(dbSessions, k)
 		}
 	}
