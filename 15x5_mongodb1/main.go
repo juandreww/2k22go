@@ -8,9 +8,9 @@ import (
 
 	"github.com/juandreww/2k22go/15x5_mongodb1/controllers"
 	"github.com/julienschmidt/httprouter"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"gopkg.in/mgo.v2/bson"
 )
 
 type Contacts struct {
@@ -69,6 +69,11 @@ func clientSession() (*mongo.Collection, error) {
 		}
 
 		result = append(result, row)
+	}
+
+	if len(result) > 0 {
+		fmt.Println("First Name : ", result[0].Fname)
+		fmt.Println("Last Name : ", result[0].Lname)
 	}
 
 	return collection, nil
