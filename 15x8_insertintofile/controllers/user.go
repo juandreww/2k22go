@@ -60,7 +60,7 @@ func (uc UserController) TextMe(w http.ResponseWriter, req *http.Request, p http
 	checkError(err)
 	defer fn.Close()
 
-	_, err = fn.WriteString("i am your lover\n")
+	_, err = fn.WriteString("i am your loverasdasfasdf\n")
 	checkError(err)
 
 	fmt.Println("Check it outasdfasdf")
