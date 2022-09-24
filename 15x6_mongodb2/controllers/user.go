@@ -65,7 +65,14 @@ func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ 
 }
 
 func (uc UserController) UpdateUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	u := models.Contacts{}
+	json.NewDecoder(req.Body).Decode(&u)
 
+	selector := bson.M{"Fname": p.ByName("fname")}
+	_, err := uc.cl.Collection("contacts").UpdateOne(ctx, selector, bson.M{"$set": u})
+	checkError(err)
+
+	fmt.Println("Update finished")
 }
 
 func (uc UserController) DeleteUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
