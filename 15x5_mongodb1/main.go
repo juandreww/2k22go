@@ -43,5 +43,5 @@ func clientSession() (*mongo.Collection, error) {
 	fmt.Println("Connected to MongoDB!")
 	collection := cl.Database("test").Collection("trainers")
 
-	return collection, nil
+	return collection, asdf
 }
