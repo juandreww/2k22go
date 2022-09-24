@@ -1,9 +1,11 @@
 package models
 
-// type session struct {
-// 	email        string
-// 	lastActivity time.Time
-// }
+import "time"
+
+type Session struct {
+	email        string
+	lastActivity time.Time
+}
 
 type UserNow struct {
 	FirstName string
