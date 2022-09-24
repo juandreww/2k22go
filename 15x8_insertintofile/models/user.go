@@ -11,5 +11,5 @@ type NewUser struct {
 
 type Contacts struct {
 	Fname string `bson:"Fname"`
-	Lname string `jbson:"Lname"`
+	Lname string `bson:"Lname"`
 }
