@@ -8,13 +8,15 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/juandreww/2k22go/15x6_mongodb2/models"
+	"github.com/juandreww/2k22go/15x7_withoutmongodb/models"
 	"github.com/julienschmidt/httprouter"
 	"go.mongodb.org/mongo-driver/mongo"
 	"gopkg.in/mgo.v2/bson"
 )
 
 var ctx = context.Background()
+
+var maps = make(map[models.Contacts]models.Contacts)
 
 type UserController struct {
 }

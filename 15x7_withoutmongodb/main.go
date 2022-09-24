@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/juandreww/2k22go/15x5_mongodb1/controllers"
+	"github.com/juandreww/2k22go/15x7_withoutmongodb/controllers"
 	"github.com/julienschmidt/httprouter"
 )
 
