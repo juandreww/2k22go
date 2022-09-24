@@ -12,6 +12,15 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+var cred options.Credential
+
+cred.
+
+type Contacts struct {
+	Fname string `bson:"Fname"`
+	Lname string `bson:"Lname"`
+}
+
 func main() {
 	rt := httprouter.New()
 	db, err := clientSession()
@@ -41,7 +50,12 @@ func clientSession() (*mongo.Collection, error) {
 	}
 
 	fmt.Println("Connected to MongoDB!")
-	collection := cl.Database("test").Collection("trainers")
+	collection := cl.Database("dbtest").Collection("contacts")
+
+	_, err = cl.Database("dbtest").Collection("contacts").InsertOne(context.TODO(), Contacts{"Abigail", "Ayu"})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	return collection, nil
 }
