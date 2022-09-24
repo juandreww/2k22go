@@ -3,37 +3,26 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"time"
+
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
-	"log"
-	"time"
 )
 
 var tpl *template.Template
 var dbSessionsCleaned time.Time
-var dbUser = map[string]user{}
-var dbSessions = map[string]session{}
+var dbUser = map[string]models.user{}
+var dbSessions = map[string]models.session{}
+
 const sessionLength int = 30
 
 func init() {
 	tpl = template.Must(template.ParseGlob("templates/*"))
 	bs, _ := bcrypt.GenerateFromPassword([]byte("jackywhacky"), bcrypt.MinCost)
-	dbUser["jackywhacky@gmail.com"] = user{"jacky","whacky","jackywhacky@gmail.com",bs, "admin"}
+	dbUser["jackywhacky@gmail.com"] = models.user{"jacky", "whacky", "jackywhacky@gmail.com", bs, "admin"}
 	dbSessionsCleaned = time.Now()
-}
-
-type session struct {
-	email           string
-	lastActivity time.Time
-}
-
-type user struct {
-	FirstName string
-	LastName string
-	Email string
-	Password []byte
-	Role string
 }
 
 func main() {
@@ -52,9 +41,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("session-id")
 	if err != nil {
 		uuid := uuid.New()
-		cookie = &http.Cookie {
-			Name:  "session-id",
-			Value: uuid.String(),
+		cookie = &http.Cookie{
+			Name:     "session-id",
+			Value:    uuid.String(),
 			HttpOnly: true,
 			// Secure: true,
 		}
@@ -72,7 +61,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 func atthebar(w http.ResponseWriter, r *http.Request) {
 	// cookie, _ := r.Cookie("session-id")
 	showSessions()
-	if (!alreadySignup(w, r))  {
+	if !alreadySignup(w, r) {
 		fmt.Println("here")
 		http.Redirect(w, r, "/signup", http.StatusSeeOther)
 		return
@@ -90,12 +79,11 @@ func signup(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Signup page: ", r.Method)
 	showSessions()
 	if r.Method == http.MethodPost {
-		fname :=  r.FormValue("firstname")
+		fname := r.FormValue("firstname")
 		lname := r.FormValue("lastname")
 		email := r.FormValue("email")
 		password := r.FormValue("password")
 		role := r.FormValue("role")
-		
 
 		bs, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
 		if err != nil {
@@ -103,19 +91,19 @@ func signup(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		u := user{fname, lname, email, bs, role,}
+		u := user{fname, lname, email, bs, role}
 
 		uuid := uuid.New()
-		cookie := &http.Cookie {
-			Name:  "session-id",
-			Value: uuid.String(),
+		cookie := &http.Cookie{
+			Name:     "session-id",
+			Value:    uuid.String(),
 			HttpOnly: true,
 			// Secure: true,
 		}
 
 		cookie.MaxAge = sessionLength
 		http.SetCookie(w, cookie)
-		dbSessions[cookie.Value] = session{email, time.Now(),}
+		dbSessions[cookie.Value] = session{email, time.Now()}
 		dbUser[email] = u
 	}
 
@@ -148,14 +136,14 @@ func login(w http.ResponseWriter, r *http.Request) {
 		}
 
 		uuid := uuid.New()
-		cookie := &http.Cookie {
-			Name:  "session-id",
-			Value: uuid.String(),
+		cookie := &http.Cookie{
+			Name:     "session-id",
+			Value:    uuid.String(),
 			HttpOnly: true,
 			// Secure: true,
 		}
 		http.SetCookie(w, cookie)
-		dbSessions[cookie.Value] = session{email, time.Now(),}
+		dbSessions[cookie.Value] = session{email, time.Now()}
 		http.Redirect(w, r, "/atthebar", http.StatusSeeOther)
 	}
 	tpl.ExecuteTemplate(w, "login.gohtml", nil)
@@ -164,7 +152,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 func logout(w http.ResponseWriter, r *http.Request) {
 	cookie, _ := r.Cookie("session-id")
 	showSessions()
-	if (!alreadySignup(w, r))  {
+	if !alreadySignup(w, r) {
 		fmt.Println("here")
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
