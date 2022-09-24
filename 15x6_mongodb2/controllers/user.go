@@ -23,8 +23,9 @@ func NewUserController(cl *mongo.Database) *UserController {
 }
 
 func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p httprouter.Params) {
+	fmt.Println(p.ByName("fname"))
 	u := models.Contacts{
-		Fname: "Abigail",
+		Fname: p.ByName("fname"),
 		Lname: "Ayu",
 	}
 
@@ -46,14 +47,10 @@ func (uc UserController) GetUser(w http.ResponseWriter, req *http.Request, p htt
 	if len(result) > 0 {
 		fmt.Println("First Name : ", result[0].Fname)
 		fmt.Println("Last Name : ", result[0].Lname)
+	} else {
+		fmt.Println("Not Found")
+		fmt.Println(result)
 	}
-
-	js, err := json.Marshal(u)
-	checkError(err)
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "%s\n", js)
 }
 
 func (uc UserController) CreateUser(w http.ResponseWriter, req *http.Request, _ httprouter.Params) {
