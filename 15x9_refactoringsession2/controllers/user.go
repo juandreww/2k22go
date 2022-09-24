@@ -86,10 +86,10 @@ func (uc UserController) SignUp(w http.ResponseWriter, r *http.Request) {
 			// Secure: true,
 		}
 
-		cookie.MaxAge = sessionLength
+		cookie.MaxAge = session.SessionLength
 		http.SetCookie(w, cookie)
-		dbSessions[cookie.Value] = models.Session{email, time.Now()}
-		dbUser[email] = u
+		session.DBSessions[cookie.Value] = models.Session{email, time.Now()}
+		session.DBUser[email] = u
 	}
 
 	uc.tpl.ExecuteTemplate(w, "signup.gohtml", nil)
@@ -105,7 +105,7 @@ func (uc UserController) Login(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(password)
 		fmt.Println()
 
-		u, ok := dbUser[email]
+		u, ok := session.DBUser[email]
 		fmt.Println(u)
 		fmt.Println()
 		fmt.Println(ok)
@@ -128,7 +128,7 @@ func (uc UserController) Login(w http.ResponseWriter, r *http.Request) {
 			// Secure: true,
 		}
 		http.SetCookie(w, cookie)
-		dbSessions[cookie.Value] = models.Session{email, time.Now()}
+		session.DBSessions[cookie.Value] = models.Session{email, time.Now()}
 		http.Redirect(w, r, "/atthebar", http.StatusSeeOther)
 	}
 	uc.tpl.ExecuteTemplate(w, "login.gohtml", nil)
@@ -143,7 +143,7 @@ func (uc UserController) Logout(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	delete(dbSessions, cookie.Value)
+	delete(session.DBSessions, cookie.Value)
 	cookie = &http.Cookie{
 		Name:   "session-id",
 		Value:  "",
