@@ -33,7 +33,14 @@ func main() {
 		w.Write([]byte(text))
 	})
 
-	http.ListenAndServe(":8080", nil)
+	server := new(http.Server)
+	server.Handler = mux
+	server.Addr = "0.0.0.0" + port
+	log.Println("Server starting at ", server.Addr)
+	err := server.ListenAndServe()
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
 
 func index(w http.ResponseWriter, _ *http.Request) {
