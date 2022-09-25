@@ -1,4 +1,14 @@
 FROM golang:latest
 MAINTAINER juandreww108@gmail.com
 
-ENV PORT 8000po
+RUN apk update && apk add --no-cache git
+
+WORKDIR /app
+
+COPY . .
+
+RUN go mod tidy
+
+RUN go build -o binary
+
+ENTRYPOINT ["/app/binary"]
