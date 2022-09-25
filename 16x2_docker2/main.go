@@ -15,14 +15,31 @@ func main() {
 
 	instanceID := os.Getenv("INSTANCE_ID")
 
-	http.HandleFunc("/", index)
-	http.HandleFunc("/index1", index)
-	http.HandleFunc("/index2", index2)
+	mux := http.DefaultServeMux
+	mux.HandleFunc("/", index)
+	mux.HandleFunc("/index1", index)
+	mux.HandleFunc("/index2", index2)
+	mux.HandleFunc("/ok", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != "GET" {
+			http.Error(w, "http method not allowed", http.StatusBadRequest)
+			return
+		}
+
+		text := "Hello world"
+		if instanceID != "" {
+			text = text + ". From " + instanceID
+		}
+
+		w.Write([]byte(text))
+	})
+
 	http.ListenAndServe(":8080", nil)
 }
 
 func index(w http.ResponseWriter, _ *http.Request) {
-	io.WriteString(w, "Hello from docker index 1")
+	hello := "Hello from Docker 1"
+
+	w.Write([]byte(hello))
 }
 
 func index2(w http.ResponseWriter, _ *http.Request) {
