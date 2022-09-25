@@ -35,7 +35,7 @@ func main() {
 
 	server := new(http.Server)
 	server.Handler = mux
-	server.Addr = "0.0.0.0" + port
+	server.Addr = "0.0.0.0:" + port
 	log.Println("Server starting at ", server.Addr)
 	err := server.ListenAndServe()
 	if err != nil {
