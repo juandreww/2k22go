@@ -13,4 +13,5 @@ type UserNow struct {
 	Email     string
 	Password  []byte
 	Role      string
+	Role2     string
 }
