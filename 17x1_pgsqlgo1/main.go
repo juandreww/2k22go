@@ -10,7 +10,7 @@ import (
 type Pricing struct {
 	ID    string
 	Title string
-	Price string
+	Price float32
 }
 
 func main() {
@@ -33,8 +33,13 @@ func main() {
 		checkError(err)
 		prices = append(prices, pc)
 	}
+
 	if err = rows.Err(); err != nil {
 		panic(err)
+	}
+
+	for _, pc := range prices {
+		fmt.Printf("%s, %s, %.2f\n", pc.ID, pc.Title, pc.Price)
 	}
 }
 
