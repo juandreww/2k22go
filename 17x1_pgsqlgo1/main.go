@@ -7,6 +7,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
+type Pricing struct {
+	ID    string
+	Title string
+	Price string
+}
+
 func main() {
 	db, err := sql.Open("postgres", "postgres://clara:password@localhost/cube0?sslmode=disable")
 	checkError(err)
@@ -16,6 +22,7 @@ func main() {
 	checkError(err)
 
 	fmt.Println("Welcome to the postgres.")
+
 }
 
 func checkError(err error) {
