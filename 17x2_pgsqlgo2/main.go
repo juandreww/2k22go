@@ -20,7 +20,6 @@ func init() {
 	var err error
 	db, err = sql.Open("postgres", "postgres://clara:password@localhost/cube0?sslmode=disable")
 	checkError(err)
-	defer db.Close()
 
 	err = db.Ping()
 	checkError(err)
@@ -41,6 +40,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 	rows, err := db.Query("SELECT * FROM pricing;")
 	if err != nil {
+		fmt.Println("44")
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
@@ -51,6 +51,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		pc := Pricing{}
 		err := rows.Scan(&pc.ID, &pc.Title, &pc.Price)
 		if err != nil {
+			fmt.Println("54")
 			http.Error(w, http.StatusText(500), 500)
 			return
 		}
@@ -58,6 +59,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = rows.Err(); err != nil {
+		fmt.Println("63")
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
