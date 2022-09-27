@@ -29,14 +29,15 @@ func init() {
 
 func main() {
 	http.HandleFunc("/index", index)
+	http.HandleFunc("/index/show", indexShow)
 	http.ListenAndServe(":8080", nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	// if r.Method != "GET" {
-	// 	http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
-	// 	return
-	// }
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
 
 	rows, err := db.Query("SELECT * FROM pricing;")
 	if err != nil {
@@ -67,6 +68,10 @@ func index(w http.ResponseWriter, r *http.Request) {
 	for _, pc := range prices {
 		fmt.Printf("%s, %s, %.2f\n", pc.ID, pc.Title, pc.Price)
 	}
+}
+
+func indexShow(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func checkError(err error) {
