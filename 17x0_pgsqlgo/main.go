@@ -1,20 +1,25 @@
 package main
 
 import (
-	"io"
-	"net/http"
+	"database/sql"
+	"fmt"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	mux := http.DefaultServeMux
-	mux.HandleFunc("/index", index)
-	mux.HandleFunc("/", index)
-	err := http.ListenAndServe(":80", nil)
+	db, err := sql.Open("postgres", "postgres://clara:password@localhost/employees?sslmode=disable")
+	checkError(err)
+	defer db.Close()
+
+	err = db.Ping()
+	checkError(err)
+
+	fmt.Println("Welcome to the postgres.")
+}
+
+func checkError(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func index(w http.ResponseWriter, req *http.Request) {
-	io.WriteString(w, "Oh yeah, I'm running on AWS.")
 }
