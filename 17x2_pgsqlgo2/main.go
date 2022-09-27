@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"net/http"
 
 	_ "github.com/lib/pq"
 )
@@ -13,8 +14,11 @@ type Pricing struct {
 	Price float32
 }
 
-func main() {
-	db, err := sql.Open("postgres", "postgres://clara:password@localhost/cube0?sslmode=disable")
+var db *sql.DB
+
+func init() {
+	var err error
+	db, err = sql.Open("postgres", "postgres://clara:password@localhost/cube0?sslmode=disable")
 	checkError(err)
 	defer db.Close()
 
@@ -22,20 +26,40 @@ func main() {
 	checkError(err)
 
 	fmt.Println("Welcome to the postgres.")
+}
+
+func main() {
+	http.HandleFunc("/index", index)
+	http.ListenAndServe(":8080", nil)
+}
+
+func index(w http.ResponseWriter, r *http.Request) {
+	// if r.Method != "GET" {
+	// 	http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+	// 	return
+	// }
+
 	rows, err := db.Query("SELECT * FROM pricing;")
-	checkError(err)
+	if err != nil {
+		http.Error(w, http.StatusText(500), 500)
+		return
+	}
 	defer rows.Close()
 
 	prices := make([]Pricing, 0)
 	for rows.Next() {
 		pc := Pricing{}
 		err := rows.Scan(&pc.ID, &pc.Title, &pc.Price)
-		checkError(err)
+		if err != nil {
+			http.Error(w, http.StatusText(500), 500)
+			return
+		}
 		prices = append(prices, pc)
 	}
 
 	if err = rows.Err(); err != nil {
-		panic(err)
+		http.Error(w, http.StatusText(500), 500)
+		return
 	}
 
 	for _, pc := range prices {
