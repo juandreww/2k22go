@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	db, err := sql.Open("postgres", "postgres://clara:password@localhost/employees?sslmode=disable")
+	db, err := sql.Open("postgres", "postgres://clara:password@localhost/cube0?sslmode=disable")
 	checkError(err)
 	defer db.Close()
 
