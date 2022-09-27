@@ -7,11 +7,6 @@ type Session struct {
 	LastActivity time.Time
 }
 
-type SessioAgain struct {
-	Email        string
-	LastActivity time.Time
-}
-
 type UserNow struct {
 	FirstName string
 	LastName  string
