@@ -71,7 +71,30 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func indexShow(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
 
+	id := r.FormValue("id")
+	if id == "" {
+		http.Error(w, http.StatusText(400), http.StatusBadRequest)
+		return
+	}
+
+	row := db.QueryRow("SELECT * FROM pricing WHERE id = $1;", id)
+	pc := Pricing{}
+	err := row.Scan(&pc.ID, &pc.Title, &pc.Price)
+	switch {
+	case err == sql.ErrNoRows:
+		http.NotFound(w, r)
+		return
+	case err != nil:
+		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		return
+	}
+
+	fmt.Printf("%s, %s, %.2f\n", pc.ID, pc.Title, pc.Price)
 }
 
 func checkError(err error) {
