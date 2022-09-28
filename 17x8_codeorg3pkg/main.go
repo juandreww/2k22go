@@ -15,6 +15,7 @@ func init() {
 }
 
 func main() {
+	http.HandleFunc("/", index)
 	http.HandleFunc("/index", index)
 	http.HandleFunc("/index/show", indexShow)
 	http.HandleFunc("/index/create", indexCreateForm)
