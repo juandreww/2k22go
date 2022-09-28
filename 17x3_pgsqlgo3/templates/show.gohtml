@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Prices</title>
+    <title>Show Prices</title>
     <style>
         html, body, p {
             padding: 0;
@@ -20,17 +20,16 @@
             margin-left: 4rem;
             font-size: 2rem;
             color: black;
-          }
+        }
         .link {
             font-size: 1rem;
         }
     </style>
 </head>
 <body>
-{{range .}}
-<p><a href="/index/show?id={{.ID}}">{{.ID}}</a> - {{.Title}} - {{.Price}}</p>
-{{end}}
 
-<p class="link"><a href="/index/create">Insert A Book</a></p>
+<h2>{{.ID}} - {{.Title}} - {{.Price}}</h2>
+<p class="link"><a href="/index">All Prices</a></p>
+
 </body>
 </html>
