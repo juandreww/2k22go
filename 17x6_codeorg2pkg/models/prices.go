@@ -11,6 +11,10 @@ type Pricing struct {
 	Price float32
 }
 
+func AllPrices() ([]Pricing, error) {
+
+}
+
 func OnePrice(r *http.Request) (Pricing, error) {
 	pc := Pricing{}
 	id := r.FormValue("id")
