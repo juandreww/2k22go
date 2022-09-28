@@ -70,9 +70,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for _, pc := range prices {
-		fmt.Printf("%s, %s, %.2f\n", pc.ID, pc.Title, pc.Price)
-	}
+	tpl.ExecuteTemplate(w, "prices.gohtml", prices)
 }
 
 func indexShow(w http.ResponseWriter, r *http.Request) {
