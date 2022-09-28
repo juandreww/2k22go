@@ -79,3 +79,30 @@ func PutPrice(r *http.Request) (Pricing, error) {
 	}
 	return bk, nil
 }
+
+func UpdatePrice(r *http.Request) (Pricing, error) {
+	// get form values
+	bk := Pricing{}
+	bk.ID = r.FormValue("id")
+	bk.Title = r.FormValue("title")
+	p := r.FormValue("price")
+
+	// validate form values
+	if bk.ID == "" || bk.Title == "" || p == "" {
+		return bk, errors.New("400. Bad Request. Fields can't be empty.")
+	}
+
+	// convert form values
+	f64, err := strconv.ParseFloat(p, 32)
+	if err != nil {
+		return bk, errors.New("400. Bad Request. Fields can't be empty.")
+	}
+	bk.Price = float32(f64)
+
+	// insert values
+	_, err = db.Exec("UPDATE pricing SET id = $1, title=$2, price=$3 WHERE id=$1;", bk.ID, bk.Title, bk.Price)
+	if err != nil {
+		return bk, err
+	}
+	return bk, nil
+}

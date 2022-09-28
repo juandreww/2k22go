@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"net/http"
-	"strconv"
 	"text/template"
 
 	"github.com/juandreww/2k22go/17x6_codeorg2pkg/models"
@@ -89,16 +88,7 @@ func indexUpdateForm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id := r.FormValue("id")
-	if id == "" {
-		http.Error(w, http.StatusText(400), http.StatusBadRequest)
-		return
-	}
-
-	row := db.QueryRow("SELECT * FROM pricing WHERE id = $1", id)
-
-	bk := Pricing{}
-	err := row.Scan(&bk.ID, &bk.Title, &bk.Price)
+	bk, err := models.OnePrice(r)
 	switch {
 	case err == sql.ErrNoRows:
 		http.NotFound(w, r)
@@ -116,28 +106,8 @@ func indexUpdateProcess(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// get form values
-	bk := Pricing{}
-	bk.ID = r.FormValue("id")
-	bk.Title = r.FormValue("title")
-	p := r.FormValue("price")
+	bk, err := models.UpdatePrice(r)
 
-	// validate form values
-	if bk.ID == "" || bk.Title == "" || p == "" {
-		http.Error(w, http.StatusText(400), http.StatusBadRequest)
-		return
-	}
-
-	// convert form values
-	f64, err := strconv.ParseFloat(p, 32)
-	if err != nil {
-		http.Error(w, http.StatusText(406)+"Please hit back and enter a number for the price", http.StatusNotAcceptable)
-		return
-	}
-	bk.Price = float32(f64)
-
-	// insert values
-	_, err = db.Exec("UPDATE pricing SET id = $1, title=$2, price=$3 WHERE id=$1;", bk.ID, bk.Title, bk.Price)
 	if err != nil {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
 		return
