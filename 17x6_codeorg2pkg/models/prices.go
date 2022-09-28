@@ -104,5 +104,6 @@ func UpdatePrice(r *http.Request) (Pricing, error) {
 	if err != nil {
 		return bk, err
 	}
+
 	return bk, nil
 }
