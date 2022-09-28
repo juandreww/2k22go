@@ -1,9 +1,11 @@
-package models
+package prices
 
 import (
 	"errors"
 	"net/http"
 	"strconv"
+
+	"github.com/juandreww/2k22go/17x8_codeorg3pkg/config"
 )
 
 type Pricing struct {
@@ -13,7 +15,7 @@ type Pricing struct {
 }
 
 func AllPrices() ([]Pricing, error) {
-	rows, err := db.Query("SELECT * FROM pricing;")
+	rows, err := config.DB.Query("SELECT * FROM pricing;")
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +45,7 @@ func OnePrice(r *http.Request) (Pricing, error) {
 		return pc, errors.New("400. Bad Request")
 	}
 
-	row := db.QueryRow("SELECT * FROM pricing WHERE id = $1;", id)
+	row := config.DB.QueryRow("SELECT * FROM pricing WHERE id = $1;", id)
 	err := row.Scan(&pc.ID, &pc.Title, &pc.Price)
 
 	if err != nil {
@@ -73,7 +75,7 @@ func PutPrice(r *http.Request) (Pricing, error) {
 	bk.Price = float32(f64)
 
 	// insert values
-	_, err = db.Exec("INSERT INTO pricing (id, title, price) VALUES ($1, $2, $3)", bk.ID, bk.Title, bk.Price)
+	_, err = config.DB.Exec("INSERT INTO pricing (id, title, price) VALUES ($1, $2, $3)", bk.ID, bk.Title, bk.Price)
 	if err != nil {
 		return bk, errors.New("500. Internal Server Error." + err.Error())
 	}
@@ -100,7 +102,7 @@ func UpdatePrice(r *http.Request) (Pricing, error) {
 	bk.Price = float32(f64)
 
 	// insert values
-	_, err = db.Exec("UPDATE pricing SET id = $1, title=$2, price=$3 WHERE id=$1;", bk.ID, bk.Title, bk.Price)
+	_, err = config.DB.Exec("UPDATE pricing SET id = $1, title=$2, price=$3 WHERE id=$1;", bk.ID, bk.Title, bk.Price)
 	if err != nil {
 		return bk, err
 	}
@@ -114,7 +116,7 @@ func DeletePrice(r *http.Request) error {
 		return errors.New("400. Bad Request.")
 	}
 
-	_, err := db.Exec("DELETE FROM pricing WHERE id=$1;", id)
+	_, err := config.DB.Exec("DELETE FROM pricing WHERE id=$1;", id)
 	if err != nil {
 		return errors.New("500. Internal Server Error")
 	}

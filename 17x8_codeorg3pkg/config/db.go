@@ -1,4 +1,4 @@
-package models
+package config
 
 import (
 	"database/sql"
@@ -7,14 +7,14 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var db *sql.DB
+var DB *sql.DB
 
 func init() {
 	var err error
-	db, err = sql.Open("postgres", "postgres://clara:password@localhost/cube0?sslmode=disable")
+	DB, err = sql.Open("postgres", "postgres://clara:password@localhost/cube0?sslmode=disable")
 	checkError(err)
 
-	err = db.Ping()
+	err = DB.Ping()
 	checkError(err)
 
 	fmt.Println("Welcome to the postgres.")

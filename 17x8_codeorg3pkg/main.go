@@ -2,20 +2,22 @@ package main
 
 import (
 	"net/http"
+
+	"github.com/juandreww/2k22go/17x8_codeorg3pkg/prices"
 )
 
 func main() {
 	http.HandleFunc("/", index)
-	http.HandleFunc("/index", prices.index)
-	http.HandleFunc("/index/show", indexShow)
-	http.HandleFunc("/index/create", indexCreateForm)
-	http.HandleFunc("/index/create/process", indexCreateProcess)
-	http.HandleFunc("/index/update", indexUpdateForm)
-	http.HandleFunc("/index/update/process", indexUpdateProcess)
-	http.HandleFunc("/index/delete/process", indexDeleteProcess)
+	http.HandleFunc("/index", prices.Index)
+	http.HandleFunc("/index/show", prices.IndexShow)
+	http.HandleFunc("/index/create", prices.IndexCreateForm)
+	http.HandleFunc("/index/create/process", prices.IndexCreateProcess)
+	http.HandleFunc("/index/update", prices.IndexUpdateForm)
+	http.HandleFunc("/index/update/process", prices.IndexUpdateProcess)
+	http.HandleFunc("/index/delete/process", prices.IndexDeleteProcess)
 	http.ListenAndServe(":8080", nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "/books", http.StatusSeeOther)
+	http.Redirect(w, r, "/index", http.StatusSeeOther)
 }
