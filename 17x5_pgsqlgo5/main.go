@@ -209,6 +209,28 @@ func indexUpdateProcess(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "updated.gohtml", bk)
 }
 
+func indexDeleteProcess(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
+
+	id := r.FormValue("id")
+	if id == "" {
+		http.Error(w, http.StatusText(400), http.StatusBadRequest)
+		return
+	}
+
+	// delete book
+	_, err := db.Exec("DELETE FROM pricing WHERE id=$1;", id)
+	if err != nil {
+		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/index", http.StatusSeeOther)
+}
+
 func checkError(err error) {
 	if err != nil {
 		panic(err)
