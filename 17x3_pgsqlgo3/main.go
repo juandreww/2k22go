@@ -97,7 +97,7 @@ func indexShow(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("%s, %s, %.2f\n", pc.ID, pc.Title, pc.Price)
+	tpl.ExecuteTemplate(w, "show.gohtml", pc)
 }
 
 func indexCreateForm(w http.ResponseWriter, r *http.Request) {
