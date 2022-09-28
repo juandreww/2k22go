@@ -7,27 +7,13 @@ import (
 	"strconv"
 	"text/template"
 
+	"github.com/juandreww/2k22go/17x6_codeorg2pkg/models"
 	_ "github.com/lib/pq"
 )
 
-type Pricing struct {
-	ID    string
-	Title string
-	Price float32
-}
-
-var db *sql.DB
 var tpl *template.Template
 
 func init() {
-	var err error
-	db, err = sql.Open("postgres", "postgres://clara:password@localhost/cube0?sslmode=disable")
-	checkError(err)
-
-	err = db.Ping()
-	checkError(err)
-
-	fmt.Println("Welcome to the postgres.")
 	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
 }
 
@@ -83,15 +69,8 @@ func indexShow(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id := r.FormValue("id")
-	if id == "" {
-		http.Error(w, http.StatusText(400), http.StatusBadRequest)
-		return
-	}
+	row, err := models.OnePrice(r)
 
-	row := db.QueryRow("SELECT * FROM pricing WHERE id = $1;", id)
-	pc := Pricing{}
-	err := row.Scan(&pc.ID, &pc.Title, &pc.Price)
 	switch {
 	case err == sql.ErrNoRows:
 		http.NotFound(w, r)
