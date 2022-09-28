@@ -30,6 +30,8 @@ func init() {
 func main() {
 	http.HandleFunc("/index", index)
 	http.HandleFunc("/index/show", indexShow)
+	http.HandleFunc("/index/create", indexCreateForm)
+	http.HandleFunc("/index/create/process", indexCreateProcess)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -95,6 +97,14 @@ func indexShow(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Printf("%s, %s, %.2f\n", pc.ID, pc.Title, pc.Price)
+}
+
+func indexCreateForm(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func indexCreateProcess(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func checkError(err error) {
