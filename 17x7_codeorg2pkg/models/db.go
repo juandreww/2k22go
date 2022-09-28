@@ -3,6 +3,8 @@ package models
 import (
 	"database/sql"
 	"fmt"
+
+	_ "github.com/lib/pq"
 )
 
 var db *sql.DB
