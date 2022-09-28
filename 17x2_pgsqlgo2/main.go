@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"text/template"
 
 	_ "github.com/lib/pq"
 )
@@ -15,6 +16,7 @@ type Pricing struct {
 }
 
 var db *sql.DB
+var tpl *template.Template
 
 func init() {
 	var err error
@@ -25,6 +27,7 @@ func init() {
 	checkError(err)
 
 	fmt.Println("Welcome to the postgres.")
+	tpl = template.Must(template.ParseGlob("templates/*.gohtml"))
 }
 
 func main() {
@@ -100,7 +103,7 @@ func indexShow(w http.ResponseWriter, r *http.Request) {
 }
 
 func indexCreateForm(w http.ResponseWriter, r *http.Request) {
-
+	tpl.ExecuteTemplate(w, "create.gohtml", nil)
 }
 
 func indexCreateProcess(w http.ResponseWriter, r *http.Request) {
