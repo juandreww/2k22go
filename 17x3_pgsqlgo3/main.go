@@ -132,7 +132,7 @@ func indexCreateProcess(w http.ResponseWriter, r *http.Request) {
 	bk.Price = float32(f64)
 
 	// insert values
-	_, err = db.Exec("INSERT INTO pricing (id, title, author, price) VALUES ($1, $2, $3)", bk.ID, bk.Title, bk.Price)
+	_, err = db.Exec("INSERT INTO pricing (id, title, price) VALUES ($1, $2, $3)", bk.ID, bk.Title, bk.Price)
 	if err != nil {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
 		return
