@@ -123,14 +123,8 @@ func indexDeleteProcess(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id := r.FormValue("id")
-	if id == "" {
-		http.Error(w, http.StatusText(400), http.StatusBadRequest)
-		return
-	}
+	err := models.DeletePrice(r)
 
-	// delete book
-	_, err := db.Exec("DELETE FROM pricing WHERE id=$1;", id)
 	if err != nil {
 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
 		return
