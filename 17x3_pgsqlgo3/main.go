@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"net/http"
+	"strconv"
 	"text/template"
 
 	_ "github.com/lib/pq"
@@ -105,7 +106,40 @@ func indexCreateForm(w http.ResponseWriter, r *http.Request) {
 }
 
 func indexCreateProcess(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
 
+	// get form values
+	bk := Pricing{}
+	bk.ID = r.FormValue("id")
+	bk.Title = r.FormValue("title")
+	p := r.FormValue("price")
+
+	// validate form values
+	if bk.ID == "" || bk.Title == "" || p == "" {
+		http.Error(w, http.StatusText(400), http.StatusBadRequest)
+		return
+	}
+
+	// convert form values
+	f64, err := strconv.ParseFloat(p, 32)
+	if err != nil {
+		http.Error(w, http.StatusText(406)+"Please hit back and enter a number for the price", http.StatusNotAcceptable)
+		return
+	}
+	bk.Price = float32(f64)
+
+	// insert values
+	_, err = db.Exec("INSERT INTO pricing (id, title, author, price) VALUES ($1, $2, $3)", bk.ID, bk.Title, bk.Price)
+	if err != nil {
+		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		return
+	}
+
+	// confirm insertion
+	tpl.ExecuteTemplate(w, "created.gohtml", bk)
 }
 
 func checkError(err error) {
