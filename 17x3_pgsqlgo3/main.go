@@ -145,11 +145,67 @@ func indexCreateProcess(w http.ResponseWriter, r *http.Request) {
 }
 
 func indexUpdateForm(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
 
+	id := r.FormValue("id")
+	if id == "" {
+		http.Error(w, http.StatusText(400), http.StatusBadRequest)
+		return
+	}
+
+	row := db.QueryRow("SELECT * FROM pricing WHERE id = $1", id)
+
+	bk := Pricing{}
+	err := row.Scan(&bk.ID, &bk.Title, &bk.Price)
+	switch {
+	case err == sql.ErrNoRows:
+		http.NotFound(w, r)
+		return
+	case err != nil:
+		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		return
+	}
+	tpl.ExecuteTemplate(w, "update.gohtml", bk)
 }
 
 func indexUpdateProcess(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		return
+	}
 
+	// get form values
+	bk := Pricing{}
+	bk.ID = r.FormValue("id")
+	bk.Title = r.FormValue("title")
+	p := r.FormValue("price")
+
+	// validate form values
+	if bk.ID == "" || bk.Title == "" || p == "" {
+		http.Error(w, http.StatusText(400), http.StatusBadRequest)
+		return
+	}
+
+	// convert form values
+	f64, err := strconv.ParseFloat(p, 32)
+	if err != nil {
+		http.Error(w, http.StatusText(406)+"Please hit back and enter a number for the price", http.StatusNotAcceptable)
+		return
+	}
+	bk.Price = float32(f64)
+
+	// insert values
+	_, err = db.Exec("UPDATE pricing SET id = $1, title=$2, price=$3 WHERE id=$1;", bk.ID, bk.Title, bk.Price)
+	if err != nil {
+		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		return
+	}
+
+	// confirm insertion
+	tpl.ExecuteTemplate(w, "updated.gohtml", bk)
 }
 
 func checkError(err error) {
