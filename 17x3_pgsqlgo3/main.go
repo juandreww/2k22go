@@ -36,6 +36,8 @@ func main() {
 	http.HandleFunc("/index/show", indexShow)
 	http.HandleFunc("/index/create", indexCreateForm)
 	http.HandleFunc("/index/create/process", indexCreateProcess)
+	http.HandleFunc("/index/update", indexUpdateForm)
+	http.HandleFunc("/index/update/process", indexUpdateProcess)
 	http.ListenAndServe(":8080", nil)
 }
 
@@ -140,6 +142,14 @@ func indexCreateProcess(w http.ResponseWriter, r *http.Request) {
 
 	// confirm insertion
 	tpl.ExecuteTemplate(w, "created.gohtml", bk)
+}
+
+func indexUpdateForm(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func indexUpdateProcess(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func checkError(err error) {
