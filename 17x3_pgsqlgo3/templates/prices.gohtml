@@ -28,7 +28,7 @@
 </head>
 <body>
 {{range .}}
-<p><a href="/index/show?id={{.ID}}">{{.ID}}</a> - {{.Title}} - {{.Price}}</p>
+    <p><a href="/index/show?id={{.ID}}">{{.ID}}</a> - {{.Title}} - {{.Price}}</p> <a href="/index/update?id={{.ID}}">update</a> </p>
 {{end}}
 
 <p class="link"><a href="/index/create">Insert A Book</a></p>
