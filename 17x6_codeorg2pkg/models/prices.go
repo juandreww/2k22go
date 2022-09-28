@@ -107,3 +107,16 @@ func UpdatePrice(r *http.Request) (Pricing, error) {
 
 	return bk, nil
 }
+
+func DeletePrice(r *http.Request) error {
+	id := r.FormValue("id")
+	if id == "" {
+		return errors.New("400. Bad Request.")
+	}
+
+	_, err := db.Exec("DELETE FROM pricing WHERE id=$1;", id)
+	if err != nil {
+		return errors.New("500. Internal Server Error")
+	}
+	return nil
+}
