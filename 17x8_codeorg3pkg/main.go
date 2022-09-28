@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/juandreww/2k22go/17x8_codeorg3pkg/prices"
@@ -19,5 +20,6 @@ func main() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("I love food")
 	http.Redirect(w, r, "/index", http.StatusSeeOther)
 }
