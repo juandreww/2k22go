@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -34,28 +33,8 @@ func index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rows, err := db.Query("SELECT * FROM pricing;")
+	prices, err := models.AllPrices()
 	if err != nil {
-		fmt.Println("44")
-		http.Error(w, http.StatusText(500), 500)
-		return
-	}
-	defer rows.Close()
-
-	prices := make([]Pricing, 0)
-	for rows.Next() {
-		pc := Pricing{}
-		err := rows.Scan(&pc.ID, &pc.Title, &pc.Price)
-		if err != nil {
-			fmt.Println("54")
-			http.Error(w, http.StatusText(500), 500)
-			return
-		}
-		prices = append(prices, pc)
-	}
-
-	if err = rows.Err(); err != nil {
-		fmt.Println("63")
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
@@ -69,7 +48,7 @@ func indexShow(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	row, err := models.OnePrice(r)
+	pc, err := models.OnePrice(r)
 
 	switch {
 	case err == sql.ErrNoRows:
@@ -93,30 +72,10 @@ func indexCreateProcess(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// get form values
-	bk := Pricing{}
-	bk.ID = r.FormValue("id")
-	bk.Title = r.FormValue("title")
-	p := r.FormValue("price")
+	bk, err := models.PutPrice(r)
 
-	// validate form values
-	if bk.ID == "" || bk.Title == "" || p == "" {
-		http.Error(w, http.StatusText(400), http.StatusBadRequest)
-		return
-	}
-
-	// convert form values
-	f64, err := strconv.ParseFloat(p, 32)
 	if err != nil {
-		http.Error(w, http.StatusText(406)+"Please hit back and enter a number for the price", http.StatusNotAcceptable)
-		return
-	}
-	bk.Price = float32(f64)
-
-	// insert values
-	_, err = db.Exec("INSERT INTO pricing (id, title, price) VALUES ($1, $2, $3)", bk.ID, bk.Title, bk.Price)
-	if err != nil {
-		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		http.Error(w, http.StatusText(406), http.StatusNotAcceptable)
 		return
 	}
 
