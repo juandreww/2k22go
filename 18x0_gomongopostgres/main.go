@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/juandreww/2k22go/17x8_codeorg3pkg/prices"
+	"github.com/juandreww/2k22go/18x0_gomongopostgres/prices"
 )
 
 func main() {
@@ -16,6 +16,9 @@ func main() {
 	http.HandleFunc("/index/update", prices.IndexUpdateForm)
 	http.HandleFunc("/index/update/process", prices.IndexUpdateProcess)
 	http.HandleFunc("/index/delete/process", prices.IndexDeleteProcess)
+
+	http.HandleFunc("/staffs", staffs.List)
+
 	http.ListenAndServe(":8080", nil)
 }
 
