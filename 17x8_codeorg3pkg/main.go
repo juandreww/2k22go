@@ -21,5 +21,6 @@ func main() {
 
 func index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("I love food")
+	fmt.Println("I love food")
 	http.Redirect(w, r, "/index", http.StatusSeeOther)
 }
