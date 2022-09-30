@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/juandreww/2k22go/18x0_gomongopostgres/prices"
+	"github.com/juandreww/2k22go/18x0_gomongopostgres/staffs"
 )
 
 func main() {
@@ -23,7 +24,6 @@ func main() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("I love food")
 	fmt.Println("I love food")
 	http.Redirect(w, r, "/index", http.StatusSeeOther)
 }
