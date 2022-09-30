@@ -1,10 +1,14 @@
 package staffs
 
-import "net/http"
+import (
+	"net/http"
 
-func List(w http.Response, r *http.Request) {
+	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
+)
+
+func List(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -14,5 +18,5 @@ func List(w http.Response, r *http.Request) {
 		return
 	}
 
-	//
+	config.TPL.ExecuteTemplate(w, "staffs.gohtml", list)
 }
