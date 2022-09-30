@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/juandreww/2k22go/17x8_codeorg3pkg/config"
+	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
 )
 
 type Pricing struct {
