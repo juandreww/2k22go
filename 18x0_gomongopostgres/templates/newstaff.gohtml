@@ -108,27 +108,13 @@
     <div class="container-sm">
         <div class="card">
             <div class="card-body">
-                <h3>Procube Add New Staffs</h3>
-                <h5><a href="/newstaff">Add new staff</a></h5>
-                <table style="width: 100%" class="currency">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>UserName</th>
-                        <th>Password</th>
-                        <th>IsActive</th>
-                    </tr>
-                    {{range .}}
-                        <tr>
-                            <td>{{.ID}}</td>
-                            <td>{{.Name}}</td>
-                            <td>{{.UserName}}</td>
-                            <td>{{.Password}}</td>
-                            <td>{{.IsActive}}</td>
-                        </tr>
-                    {{end}}
-                </table>
-                <br>
+                <form method="post" action="/staff/new/save">
+                    <input type="text" name="name" placeholder="name" required>
+                    <input type="text" name="username" placeholder="username" required>
+                    <input type="text" name="password" placeholder="password" required>
+                    <input type="checkbox" name="isactive" placeholder="isactive" required>
+                    <input type="submit">
+                </form>
             </div>
         </div>
     </div>
