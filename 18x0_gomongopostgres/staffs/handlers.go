@@ -55,7 +55,7 @@ func EditStaffForm(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	case err != nil:
-		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
 	config.TPL.ExecuteTemplate(w, "editstaffform.gohtml", bk)
