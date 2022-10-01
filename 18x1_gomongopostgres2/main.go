@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/juandreww/2k22go/18x0_gomongopostgres/prices"
-	"github.com/juandreww/2k22go/18x0_gomongopostgres/staffs"
+	"github.com/juandreww/2k22go/18x1_gomongopostgres2/prices"
+	"github.com/juandreww/2k22go/18x1_gomongopostgres2/staffs"
 )
 
 func main() {

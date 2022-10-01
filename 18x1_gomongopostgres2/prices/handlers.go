@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"net/http"
 
-	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
+	"github.com/juandreww/2k22go/18x1_gomongopostgres2/config"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {

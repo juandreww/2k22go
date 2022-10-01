@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/google/uuid"
-	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
+	"github.com/juandreww/2k22go/18x1_gomongopostgres2/config"
 )
 
 type Staff struct {
