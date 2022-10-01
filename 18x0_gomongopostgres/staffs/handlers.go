@@ -14,13 +14,11 @@ func List(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// list, err := AllStaffs()
-	// if err != nil {
-	// 	http.Error(w, http.StatusText(500), 500)
-	// 	return
-	// }
-
-	list := 0
+	list, err := AllStaffs()
+	if err != nil {
+		http.Error(w, http.StatusText(500), 500)
+		return
+	}
 
 	config.TPL.ExecuteTemplate(w, "staffs.gohtml", list)
 }
