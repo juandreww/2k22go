@@ -81,7 +81,7 @@ func EditStaffSave(w http.ResponseWriter, r *http.Request) {
 
 func DeleteStaff(w http.ResponseWriter, r *http.Request) {
 	if r.Method != "GET" {
-		http.Error(w, http.StatusText(405), http.StatusMethodNotAllowed)
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -92,5 +92,5 @@ func DeleteStaff(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/index", http.StatusSeeOther)
+	config.TPL.ExecuteTemplate(w, "deletestaff.gohtml", p)
 }
