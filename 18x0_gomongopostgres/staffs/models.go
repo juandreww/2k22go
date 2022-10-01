@@ -1,6 +1,8 @@
 package staffs
 
-import "github.com/juandreww/2k22go/18x0_gomongopostgres/config"
+import (
+	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
+)
 
 type Staff struct {
 	ID       string
