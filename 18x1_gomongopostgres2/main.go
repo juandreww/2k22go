@@ -8,12 +8,13 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/", index)
 	http.HandleFunc("/staff", staffs.List)
 	http.HandleFunc("/staff/new/form", staffs.NewStaffForm)
 	http.HandleFunc("/staff/new/save", staffs.NewStaffSave)
 	http.HandleFunc("/staff/edit/form", staffs.EditStaffForm)
 	http.HandleFunc("/staff/edit/save", staffs.EditStaffSave)
-	http.HandleFunc("/staff/delete", staffs.DeleteStaff)
+	// http.HandleFunc("/staff/delete", staffs.DeleteStaff)
 
 	http.ListenAndServe(":8080", nil)
 }

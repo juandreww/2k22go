@@ -1,12 +1,18 @@
 package staffs
 
 import (
+	"context"
 	"errors"
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/google/uuid"
 	"github.com/juandreww/2k22go/18x1_gomongopostgres2/config"
+	"gopkg.in/mgo.v2/bson"
 )
+
+var ctx = context.Background()
 
 type Staff struct {
 	ID       string
@@ -17,16 +23,14 @@ type Staff struct {
 }
 
 func AllStaffs() ([]Staff, error) {
-	rows, err := config.DB.Query("SELECT * FROM employees;")
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
+	rows, err := config.DB.Collection("employees").Find(ctx, bson.M{})
+	checkError(err)
+	defer rows.Close(ctx)
 
 	list := make([]Staff, 0)
-	for rows.Next() {
+	for rows.Next(ctx) {
 		p := Staff{}
-		err := rows.Scan(&p.ID, &p.Name, &p.UserName, &p.Password, &p.IsActive)
+		err := rows.Decode(&p)
 		checkError(err)
 
 		list = append(list, p)
@@ -56,7 +60,7 @@ func CreateStaff(r *http.Request) (Staff, error) {
 	}
 
 	// insert values
-	_, err := config.DB.Exec("INSERT INTO employees (id, name, username, password, isactive) VALUES ($1, $2, $3, $4, $5)", p.ID, p.Name, p.UserName, p.Password, p.IsActive)
+	_, err := config.DB.Collection("employees").InsertOne(ctx, p)
 	if err != nil {
 		return p, errors.New("500. Internal Server Error." + err.Error())
 	}
@@ -70,11 +74,22 @@ func OneStaff(r *http.Request) (Staff, error) {
 		return p, errors.New("400. Bad Request")
 	}
 
-	row := config.DB.QueryRow("SELECT * FROM employees WHERE id = $1;", id)
-	err := row.Scan(&p.ID, &p.Name, &p.UserName, &p.Password, &p.IsActive)
-	if err != nil {
-		return p, err
+	row, err := config.DB.Collection("employees").Find(ctx, bson.M{"id": id})
+	fmt.Println(row)
+	checkError(err)
+	defer row.Close(ctx)
+
+	for row.Next(ctx) {
+		tmp := Staff{}
+		err := row.Decode(&tmp)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		p = tmp
 	}
+
+	fmt.Println(p)
 
 	return p, nil
 }
@@ -100,7 +115,8 @@ func UpdateStaff(r *http.Request) (Staff, error) {
 	}
 
 	// insert values
-	_, err := config.DB.Exec("UPDATE employees SET name = $1, username=$2, password = $3, isactive = $4 WHERE id=$5;", p.Name, p.UserName, p.Password, p.IsActive, p.ID)
+	selector := bson.M{"id": p.ID}
+	_, err := config.DB.Collection("employees").UpdateOne(ctx, selector, bson.M{"$set": p})
 	if err != nil {
 		return p, err
 	}
@@ -108,20 +124,20 @@ func UpdateStaff(r *http.Request) (Staff, error) {
 	return p, nil
 }
 
-func ModelDeleteStaff(r *http.Request) (Staff, error) {
-	id := r.FormValue("id")
-	if id == "" {
-		return Staff{}, errors.New("400. Bad Request")
-	}
+// func ModelDeleteStaff(r *http.Request) (Staff, error) {
+// 	id := r.FormValue("id")
+// 	if id == "" {
+// 		return Staff{}, errors.New("400. Bad Request")
+// 	}
 
-	p, _ := OneStaff(r)
+// 	p, _ := OneStaff(r)
 
-	_, err := config.DB.Exec("DELETE FROM employees WHERE id=$1;", id)
-	if err != nil {
-		return p, errors.New("500. Internal Server Error")
-	}
-	return p, nil
-}
+// 	_, err := config.DB.Exec("DELETE FROM employees WHERE id=$1;", id)
+// 	if err != nil {
+// 		return p, errors.New("500. Internal Server Error")
+// 	}
+// 	return p, nil
+// }
 
 func checkError(err error) {
 	if err != nil {
