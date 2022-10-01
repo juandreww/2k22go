@@ -2,6 +2,7 @@ package staffs
 
 import (
 	"database/sql"
+	"fmt"
 	"net/http"
 
 	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
@@ -49,7 +50,8 @@ func EditStaffForm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	bk, err := OneStaff(r)
+	p, err := OneStaff(r)
+
 	switch {
 	case err == sql.ErrNoRows:
 		http.NotFound(w, r)
@@ -58,5 +60,6 @@ func EditStaffForm(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
-	config.TPL.ExecuteTemplate(w, "editstaffform.gohtml", bk)
+	fmt.Println("ada")
+	config.TPL.ExecuteTemplate(w, "editstaffform.gohtml", p)
 }
