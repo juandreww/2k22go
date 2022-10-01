@@ -108,6 +108,21 @@ func UpdateStaff(r *http.Request) (Staff, error) {
 	return p, nil
 }
 
+func ModelDeleteStaff(r *http.Request) (Staff, error) {
+	id := r.FormValue("id")
+	if id == "" {
+		return Staff{}, errors.New("400. Bad Request.")
+	}
+
+	p, err := OneStaff(r)
+
+	_, err = config.DB.Exec("DELETE FROM employees WHERE id=$1;", id)
+	if err != nil {
+		return p, errors.New("500. Internal Server Error")
+	}
+	return p, nil
+}
+
 func checkError(err error) {
 	if err != nil {
 		panic(err)
