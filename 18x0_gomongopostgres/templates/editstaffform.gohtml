@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Procube, List Staffs</title>
+    <title>Procube, New Staffs</title>
 
     <style>
         html, body {
@@ -13,8 +13,8 @@
         }
         
         body {
-            background: rgb(34,74,195) !important;
-            background: linear-gradient(0deg, rgba(34,74,195,1) 0%, rgba(128,146,190,1) 50%, rgba(255,255,255,1) 65%) !important;
+            background: rgb(195,186,34);
+            background: linear-gradient(0deg, rgba(195,186,34,1) 0%, rgba(255,255,255,1) 65%);
         }
         
         label, input {
@@ -39,7 +39,7 @@
         input[type=submit] {
             margin-top: 25px;
             width: 100%;
-            background-color: #1e88e5;
+            background-color: #c32222;
             color: white;
             padding: 14px 20px;
             margin: 8px 0;
@@ -52,6 +52,11 @@
             box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
         }
 
+        input[type=checkbox] {
+            width: 25px;
+            height: 25px;
+        }
+
         .spacing10 {
             margin-bottom: 40px;
         }
@@ -61,12 +66,12 @@
             left: 20px;
             top: 40px;
             max-width: 50%;
-            width: 960px !important;
+            width: 540px !important;
         }
 
         @media (min-width: 1200px) {
             .container{
-                max-width: 960px !important;
+                max-width: 540px !important;
             }
         }
 
@@ -94,7 +99,7 @@
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
-            background-color: #5c4dfe;
+            background-color: #c32222;
             color: white;
         }
     </style>
@@ -108,32 +113,14 @@
     <div class="container-sm">
         <div class="card">
             <div class="card-body">
-                <h3>Procube List Staffs</h3>
-                <h5><a href="/staff/new/form">Add new staff</a></h5>
-                <table style="width: 100%" class="currency">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>UserName</th>
-                        <th>Password</th>
-                        <th>IsActive</th>
-                        <th>Action</th>
-                    </tr>
-                    {{range .}}
-                        <tr>
-                            <td>{{.ID}}</td>
-                            <td>{{.Name}}</td>
-                            <td>{{.UserName}}</td>
-                            <td>{{.Password}}</td>
-                            <td>{{.IsActive}}</td>
-                            <td>
-                                <a class="btn btn-warning btn-sm" href="/staff/edit/form?id={{ .ID }}">Edit</a>
-							    <a class="btn btn-danger btn-sm" href="/staff/delete?id={{ .ID }}">Delete</a>
-                            </td>
-                        </tr>
-                    {{end}}
-                </table>
-                <br>
+                <h3>Procube Add New Staff</h3>
+                <form method="post" action="/staff/new/save">
+                    <input type="text" name="name" placeholder="Name" default={{.Name}} required>
+                    <input type="text" name="username" placeholder="Username" default={{.UserName}} required>
+                    <input type="text" name="password" placeholder="Password" default={{.Password}} required>
+                    <input type="checkbox" name="isactive" default={{.IsActive}} placeholder="isactive">
+                    <input type="submit">
+                </form>
             </div>
         </div>
     </div>

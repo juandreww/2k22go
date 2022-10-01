@@ -63,6 +63,23 @@ func CreateStaff(r *http.Request) (Staff, error) {
 	return p, nil
 }
 
+func OneStaff(r *http.Request) (Staff, error) {
+	p := Staff{}
+	id := r.FormValue("id")
+	if id == "" {
+		return p, errors.New("400. Bad Request")
+	}
+
+	row := config.DB.QueryRow("SELECT * FROM employees WHERE id = $1;", id)
+	err := row.Scan(&p.ID, &p.Name, &p.UserName, p.Password, p.IsActive)
+
+	if err != nil {
+		return p, err
+	}
+
+	return p, nil
+}
+
 func checkError(err error) {
 	if err != nil {
 		panic(err)

@@ -1,6 +1,7 @@
 package staffs
 
 import (
+	"database/sql"
 	"net/http"
 
 	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
@@ -40,4 +41,22 @@ func NewStaffSave(w http.ResponseWriter, r *http.Request) {
 
 	// confirm insertion
 	config.TPL.ExecuteTemplate(w, "newstaffcreated.gohtml", bk)
+}
+
+func EditStaffForm(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+
+	bk, err := OneStaff(r)
+	switch {
+	case err == sql.ErrNoRows:
+		http.NotFound(w, r)
+		return
+	case err != nil:
+		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		return
+	}
+	config.TPL.ExecuteTemplate(w, "editstaffform.gohtml", bk)
 }

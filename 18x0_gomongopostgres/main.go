@@ -21,6 +21,7 @@ func main() {
 	http.HandleFunc("/staff", staffs.List)
 	http.HandleFunc("/staff/new/form", staffs.NewStaffForm)
 	http.HandleFunc("/staff/new/save", staffs.NewStaffSave)
+	http.HandleFunc("/staff/edit/form", staffs.EditStaffForm)
 
 	http.ListenAndServe(":8080", nil)
 }
