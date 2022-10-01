@@ -13,8 +13,8 @@
         }
         
         body {
-            background: rgb(195,186,34);
-            background: linear-gradient(0deg, rgba(195,186,34,1) 0%, rgba(255,255,255,1) 65%);
+            background: rgb(246,235,41);
+            background: linear-gradient(0deg, rgba(246,235,41,1) 0%, rgba(255,255,255,1) 65%);
         }
         
         label, input {
@@ -39,7 +39,7 @@
         input[type=submit] {
             margin-top: 25px;
             width: 100%;
-            background-color: #c32222;
+            background-color: #f6eb29;
             color: white;
             padding: 14px 20px;
             margin: 8px 0;
@@ -113,12 +113,12 @@
     <div class="container-sm">
         <div class="card">
             <div class="card-body">
-                <h3>Procube Add New Staff</h3>
+                <h3>Procube Edit Staff</h3>
                 <form method="post" action="/staff/new/save">
-                    <input type="text" name="name" placeholder="Name" default={{.Name}} required>
-                    <input type="text" name="username" placeholder="Username" default={{.UserName}} required>
-                    <input type="text" name="password" placeholder="Password" default={{.Password}} required>
-                    <input type="checkbox" name="isactive" default={{.IsActive}} placeholder="isactive">
+                    <input type="text" name="name" placeholder="Name" value={{.Name}} required>
+                    <input type="text" name="username" placeholder="Username" value={{.UserName}} required>
+                    <input type="text" name="password" placeholder="Password" value={{.Password}} required>
+                    <input type="checkbox" name="isactive" value={{.IsActive}} placeholder="isactive">
                     <input type="submit">
                 </form>
             </div>

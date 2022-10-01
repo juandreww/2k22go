@@ -71,8 +71,7 @@ func OneStaff(r *http.Request) (Staff, error) {
 	}
 
 	row := config.DB.QueryRow("SELECT * FROM employees WHERE id = $1;", id)
-	err := row.Scan(&p.ID, &p.Name, &p.UserName, p.Password, p.IsActive)
-
+	err := row.Scan(&p.ID, &p.Name, &p.UserName, &p.Password, &p.IsActive)
 	if err != nil {
 		return p, err
 	}
