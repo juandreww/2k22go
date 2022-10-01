@@ -28,7 +28,7 @@ func SaveCurrency(w http.ResponseWriter, r *http.Request) {
 	cur := Currency{}
 	IsExist := false
 	sqlStatement := `SELECT id, name FROM currency WHERE (id=$1 OR name=$2);`
-	row := con.QueryRow(sqlStatement, data.ID, data.Name)
+	row := config.DB.QueryRow(sqlStatement, data.ID, data.Name)
 	err := row.Scan(&cur.ID, &cur.Name)
 	switch err {
 	case sql.ErrNoRows:
@@ -43,12 +43,12 @@ func SaveCurrency(w http.ResponseWriter, r *http.Request) {
 		sqlStatement = `
 			INSERT INTO currency (id, name)
 			VALUES ($1, $2)`
-		_, err := con.Exec(sqlStatement, data.ID, data.Name)
+		_, err := config.DB.Exec(sqlStatement, data.ID, data.Name)
 		if err != nil {
 			panic(err)
 		}
 	} else {
-		data = currency{
+		data = Currency{
 			"error",
 			"error",
 		}
@@ -57,11 +57,11 @@ func SaveCurrency(w http.ResponseWriter, r *http.Request) {
 	config.TPL.ExecuteTemplate(w, "index.gohtml", data)
 }
 
-func listCurrency(w http.ResponseWriter, r *http.Request) {
+func ListCurrency(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is listcurrency api: ", r.Method)
 	var list []Currency
 
-	rows, err := con.Query("SELECT id, name FROM currency ORDER BY id ASC")
+	rows, err := config.DB.Query("SELECT id, name FROM currency ORDER BY id ASC")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -86,11 +86,11 @@ func listCurrency(w http.ResponseWriter, r *http.Request) {
 	config.TPL.ExecuteTemplate(w, "listcurrency.gohtml", list)
 }
 
-func listCurrencyRate(w http.ResponseWriter, r *http.Request) {
+func ListCurrencyRate(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("This is listcurrencyrate api: ", r.Method)
 	var list []ConfigConvertRate
 
-	rows, err := con.Query("SELECT cf.name currencyfrom, ct.name currencyto, round(p.rate,2) rate FROM currencyrate p LEFT JOIN currency cf ON cf.id = p.currencyfrom LEFT JOIN currency ct ON ct.id = p.currencyto ORDER BY p.id ASC")
+	rows, err := config.DB.Query("SELECT cf.name currencyfrom, ct.name currencyto, round(p.rate,2) rate FROM currencyrate p LEFT JOIN currency cf ON cf.id = p.currencyfrom LEFT JOIN currency ct ON ct.id = p.currencyto ORDER BY p.id ASC")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -112,7 +112,7 @@ func listCurrencyRate(w http.ResponseWriter, r *http.Request) {
 	config.TPL.ExecuteTemplate(w, "listcurrencyrate.gohtml", list)
 }
 
-func addConversionRate(w http.ResponseWriter, r *http.Request) {
+func AddConversionRate(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		fmt.Println("This is add conversion rate api: ", r.Method)
 		data := ConfigConvertRate{
@@ -126,7 +126,7 @@ func addConversionRate(w http.ResponseWriter, r *http.Request) {
 		check1 := Currency{}
 
 		sqlStatement := `SELECT count(id) id FROM currency WHERE (id=$1 OR id=$2);`
-		row := con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
+		row := config.DB.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
 		err := row.Scan(&check1.ID)
 		IsError := HandleErrorOfSelect(w, err)
 		if IsError == true {
@@ -150,7 +150,7 @@ func addConversionRate(w http.ResponseWriter, r *http.Request) {
 
 		sqlStatement = `SELECT count(id) id FROM currencyrate 
 						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
-		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
+		row = config.DB.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
 		err = row.Scan(&str)
 		IsError = HandleErrorOfSelect(w, err)
 		if IsError == true {
@@ -175,7 +175,7 @@ func addConversionRate(w http.ResponseWriter, r *http.Request) {
 		}
 
 		sqlStatement = `SELECT nullif(max(id),0) id FROM currencyrate`
-		row = con.QueryRow(sqlStatement)
+		row = config.DB.QueryRow(sqlStatement)
 		err = row.Scan(&str)
 		IsError = HandleErrorOfSelect(w, err)
 		if IsError == true {
@@ -187,7 +187,7 @@ func addConversionRate(w http.ResponseWriter, r *http.Request) {
 		sqlStatement = `
 			INSERT INTO currencyrate (id, currencyfrom, currencyto, rate)
 			VALUES ($1, $2, $3, $4)`
-		_, err = con.Exec(sqlStatement, intval, data.CurrencyFrom, data.CurrencyTo, data.Rate)
+		_, err = config.DB.Exec(sqlStatement, intval, data.CurrencyFrom, data.CurrencyTo, data.Rate)
 		if err != nil {
 			panic(err)
 		}
@@ -204,7 +204,7 @@ func addConversionRate(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func convertCurrency(w http.ResponseWriter, r *http.Request) {
+func ConvertCurrency(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		fmt.Println("This is add convertcurrency api: ", r.Method)
 		data := ConfigConvertRate{
@@ -220,7 +220,7 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 		check1 := Currency{}
 
 		sqlStatement := `SELECT count(id) id FROM currency WHERE (id=$1 OR id=$2);`
-		row := con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
+		row := config.DB.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
 		err := row.Scan(&check1.ID)
 		IsError := HandleErrorOfSelect(w, err)
 		if IsError == true {
@@ -244,7 +244,7 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 
 		sqlStatement = `SELECT count(id) id FROM currencyrate 
 						WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
-		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
+		row = config.DB.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
 		err = row.Scan(&str)
 		IsError = HandleErrorOfSelect(w, err)
 		if IsError == true {
@@ -262,7 +262,7 @@ func convertCurrency(w http.ResponseWriter, r *http.Request) {
 		sqlStatement = `SELECT currencyfrom, currencyto,rate FROM currencyrate 
 					WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))
 					LIMIT 1`
-		row = con.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
+		row = config.DB.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
 		err = row.Scan(&val1, &val2, &str)
 		IsError = HandleErrorOfSelect(w, err)
 		if IsError == true {
