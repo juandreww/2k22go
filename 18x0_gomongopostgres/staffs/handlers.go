@@ -2,7 +2,6 @@ package staffs
 
 import (
 	"database/sql"
-	"fmt"
 	"net/http"
 
 	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
@@ -60,6 +59,5 @@ func EditStaffForm(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 		return
 	}
-	fmt.Println("ada")
 	config.TPL.ExecuteTemplate(w, "editstaffform.gohtml", p)
 }
