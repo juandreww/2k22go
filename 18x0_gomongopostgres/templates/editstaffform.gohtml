@@ -115,11 +115,11 @@
             <div class="card-body">
                 <h3>Procube Edit Staff</h3>
                 <h5><a href="/staff">List Staff</a></h5>
-                <form method="post" action="/staff/new/save">
+                <form method="post" action="/staff/edit/save?id={{.ID}}" >
                     <input type="text" name="name" placeholder="Name" value={{.Name}} required>
                     <input type="text" name="username" placeholder="Username" value={{.UserName}} required>
                     <input type="text" name="password" placeholder="Password" value={{.Password}} required>
-                    <input type="checkbox" name="isactive" value={{.IsActive}} placeholder="isactive">
+                    <input type="checkbox" name="isactive" placeholder="isactive" {{if eq .IsActive true}} checked {{end}}>
                     <input type="submit">
                 </form>
             </div>

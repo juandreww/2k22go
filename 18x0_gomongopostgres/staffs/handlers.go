@@ -61,3 +61,20 @@ func EditStaffForm(w http.ResponseWriter, r *http.Request) {
 	}
 	config.TPL.ExecuteTemplate(w, "editstaffform.gohtml", p)
 }
+
+func EditStaffSave(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
+
+	p, err := UpdateStaff(r)
+
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+		return
+	}
+
+	// confirm insertion
+	config.TPL.ExecuteTemplate(w, "updated.gohtml", p)
+}

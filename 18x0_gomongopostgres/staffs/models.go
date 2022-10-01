@@ -79,6 +79,35 @@ func OneStaff(r *http.Request) (Staff, error) {
 	return p, nil
 }
 
+func UpdateStaff(r *http.Request) (Staff, error) {
+	// get form values
+	p := Staff{}
+	p.ID = r.FormValue("id")
+	p.Name = r.FormValue("name")
+	p.UserName = r.FormValue("username")
+	p.Password = r.FormValue("password")
+
+	checkActive := r.FormValue("isactive")
+	if checkActive == "on" {
+		p.IsActive = true
+	} else {
+		p.IsActive = false
+	}
+
+	// validate form values
+	if p.Name == "" || p.UserName == "" || p.Password == "" {
+		return p, errors.New("400. Bad request. All fields must be complete")
+	}
+
+	// insert values
+	_, err := config.DB.Exec("UPDATE employees SET name = $1, username=$2, password = $3, isactive = $4 WHERE id=$5;", p.Name, p.UserName, p.Password, p.IsActive, p.ID)
+	if err != nil {
+		return p, err
+	}
+
+	return p, nil
+}
+
 func checkError(err error) {
 	if err != nil {
 		panic(err)
