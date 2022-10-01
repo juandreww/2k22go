@@ -20,3 +20,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 
 	config.TPL.ExecuteTemplate(w, "staffs.gohtml", list)
 }
+
+func NewStaff(w http.ResponseWriter, r *http.Request) {
+	config.TPL.ExecuteTemplate(w, "newstaff.gohtml", nil)
+}
