@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/juandreww/2k22go/99x0_attngamecurrency/config"
 )
@@ -107,4 +108,90 @@ func ModelListCurrencyRate(w http.ResponseWriter) []ConfigConvertRate {
 		list = append(list, cur)
 	}
 	return list
+}
+
+func ModelConvertCurrency(w http.ResponseWriter, r *http.Request) Currency {
+	data := ConfigConvertRate{
+		r.FormValue("currencyfrom"),
+		r.FormValue("currencyto"),
+		r.FormValue("amount"),
+	}
+	fmt.Println(data)
+
+	var str string
+	var intval int
+	var floatval, amount float64
+	check1 := Currency{}
+
+	sqlStatement := `SELECT count(id) id FROM currency WHERE (id=$1 OR id=$2);`
+	row := config.DB.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo)
+	err := row.Scan(&check1.ID)
+	IsError := HandleErrorOfSelect(w, err)
+	if IsError == true {
+		tmp := Currency{
+			"error",
+			"All CurrencyID is not found in database",
+		}
+		config.TPL.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
+		return Currency{}
+	} else {
+		intval, err = strconv.Atoi(check1.ID)
+		if intval < 2 {
+			tmp := Currency{
+				"error",
+				"One of the CurrencyID is not found in database",
+			}
+			config.TPL.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
+			return Currency{}
+		}
+	}
+
+	sqlStatement = `SELECT count(id) id FROM currencyrate 
+					WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))`
+	row = config.DB.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
+	err = row.Scan(&str)
+	IsError = HandleErrorOfSelect(w, err)
+	if IsError == true {
+		if str != "0" {
+			tmp := Currency{
+				"error",
+				"CurrencyRate is not exist in the database (1)",
+			}
+			config.TPL.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
+			return Currency{}
+		}
+	}
+
+	var val1, val2 string
+	sqlStatement = `SELECT currencyfrom, currencyto,rate FROM currencyrate 
+				WHERE ((currencyfrom=$1 AND currencyto=$2) OR (currencyfrom=$3 AND currencyto=$4))
+				LIMIT 1`
+	row = config.DB.QueryRow(sqlStatement, data.CurrencyFrom, data.CurrencyTo, data.CurrencyTo, data.CurrencyFrom)
+	err = row.Scan(&val1, &val2, &str)
+	IsError = HandleErrorOfSelect(w, err)
+	if IsError == true {
+		tmp := Currency{
+			"error",
+			"CurrencyRate is not exist in the database (2)",
+		}
+		config.TPL.ExecuteTemplate(w, "convertcurrency.gohtml", tmp)
+		return Currency{}
+	}
+
+	floatval, err = strconv.ParseFloat(str, 64)
+	amount, err = strconv.ParseFloat(data.Rate, 64)
+	if data.CurrencyFrom == val1 {
+		amount = amount * floatval
+	} else {
+		amount = amount / floatval
+	}
+
+	str = fmt.Sprintf("%.2f", amount)
+
+	tmp := Currency{
+		"succeed",
+		"Congrats! You converted rate to " + str,
+	}
+
+	return tmp
 }
