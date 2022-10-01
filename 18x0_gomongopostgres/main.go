@@ -19,7 +19,7 @@ func main() {
 	http.HandleFunc("/index/delete/process", prices.IndexDeleteProcess)
 
 	http.HandleFunc("/staffs", staffs.List)
-	http.HandleFunc("/staffs", staffs.List)
+	http.HandleFunc("/newstaff", staffs.NewStaff)
 
 	http.ListenAndServe(":8080", nil)
 }
