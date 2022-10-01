@@ -71,18 +71,24 @@ func EditStaffSave(w http.ResponseWriter, r *http.Request) {
 	config.TPL.ExecuteTemplate(w, "editstaffsave.gohtml", p)
 }
 
-// func DeleteStaff(w http.ResponseWriter, r *http.Request) {
-// 	if r.Method != "GET" {
-// 		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
-// 		return
-// 	}
+func DeleteStaff(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "GET" {
+		http.Error(w, http.StatusText(http.StatusMethodNotAllowed), http.StatusMethodNotAllowed)
+		return
+	}
 
-// 	p, err := ModelDeleteStaff(r)
+	v, err := OneStaff(r)
+	if err != nil {
+		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		return
+	}
 
-// 	if err != nil {
-// 		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
-// 		return
-// 	}
+	err = ModelDeleteStaff(r)
 
-// 	config.TPL.ExecuteTemplate(w, "deletestaff.gohtml", p)
-// }
+	if err != nil {
+		http.Error(w, http.StatusText(500), http.StatusInternalServerError)
+		return
+	}
+
+	config.TPL.ExecuteTemplate(w, "deletestaff.gohtml", v)
+}

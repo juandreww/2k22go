@@ -3,7 +3,6 @@ package staffs
 import (
 	"context"
 	"errors"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -75,7 +74,6 @@ func OneStaff(r *http.Request) (Staff, error) {
 	}
 
 	row, err := config.DB.Collection("employees").Find(ctx, bson.M{"id": id})
-	fmt.Println(row)
 	checkError(err)
 	defer row.Close(ctx)
 
@@ -88,8 +86,6 @@ func OneStaff(r *http.Request) (Staff, error) {
 
 		p = tmp
 	}
-
-	fmt.Println(p)
 
 	return p, nil
 }
@@ -124,20 +120,18 @@ func UpdateStaff(r *http.Request) (Staff, error) {
 	return p, nil
 }
 
-// func ModelDeleteStaff(r *http.Request) (Staff, error) {
-// 	id := r.FormValue("id")
-// 	if id == "" {
-// 		return Staff{}, errors.New("400. Bad Request")
-// 	}
+func ModelDeleteStaff(r *http.Request) error {
+	id := r.FormValue("id")
+	if id == "" {
+		return errors.New("400. Bad Request")
+	}
 
-// 	p, _ := OneStaff(r)
+	selector := bson.M{"id": id}
+	_, err := config.DB.Collection("employees").DeleteOne(ctx, selector)
+	checkError(err)
 
-// 	_, err := config.DB.Exec("DELETE FROM employees WHERE id=$1;", id)
-// 	if err != nil {
-// 		return p, errors.New("500. Internal Server Error")
-// 	}
-// 	return p, nil
-// }
+	return nil
+}
 
 func checkError(err error) {
 	if err != nil {
