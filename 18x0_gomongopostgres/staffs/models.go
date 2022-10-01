@@ -31,6 +31,33 @@ func AllStaffs() ([]Staff, error) {
 	return list, nil
 }
 
+// func CreateStaff(r *http.Request) (Staff, error) {
+// 	// get form values
+// 	bk := Staff{}
+// 	bk.ID = r.FormValue("id")
+// 	bk.Title = r.FormValue("title")
+// 	p := r.FormValue("price")
+
+// 	// validate form values
+// 	if bk.ID == "" || bk.Title == "" || p == "" {
+// 		return bk, errors.New("400. Bad request. All fields must be complete.")
+// 	}
+
+// 	// convert form values
+// 	f64, err := strconv.ParseFloat(p, 32)
+// 	if err != nil {
+// 		return bk, errors.New("406. Not Acceptable. Price must be a number.")
+// 	}
+// 	bk.Price = float32(f64)
+
+// 	// insert values
+// 	_, err = config.DB.Exec("INSERT INTO pricing (id, title, price) VALUES ($1, $2, $3)", bk.ID, bk.Title, bk.Price)
+// 	if err != nil {
+// 		return bk, errors.New("500. Internal Server Error." + err.Error())
+// 	}
+// 	return bk, nil
+// }
+
 func checkError(err error) {
 	if err != nil {
 		panic(err)
