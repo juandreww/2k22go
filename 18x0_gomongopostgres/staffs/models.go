@@ -1,6 +1,10 @@
 package staffs
 
 import (
+	"errors"
+	"net/http"
+
+	"github.com/google/uuid"
 	"github.com/juandreww/2k22go/18x0_gomongopostgres/config"
 )
 
@@ -31,32 +35,33 @@ func AllStaffs() ([]Staff, error) {
 	return list, nil
 }
 
-// func CreateStaff(r *http.Request) (Staff, error) {
-// 	// get form values
-// 	bk := Staff{}
-// 	bk.ID = r.FormValue("id")
-// 	bk.Title = r.FormValue("title")
-// 	p := r.FormValue("price")
+func CreateStaff(r *http.Request) (Staff, error) {
+	// get form values
+	p := Staff{}
+	p.Name = r.FormValue("name")
+	p.UserName = r.FormValue("username")
+	p.Password = r.FormValue("password")
+	checkActive := r.FormValue("isactive")
+	if checkActive == "on" {
+		p.IsActive = true
+	} else {
+		p.IsActive = false
+	}
 
-// 	// validate form values
-// 	if bk.ID == "" || bk.Title == "" || p == "" {
-// 		return bk, errors.New("400. Bad request. All fields must be complete.")
-// 	}
+	p.ID = uuid.New().String()
 
-// 	// convert form values
-// 	f64, err := strconv.ParseFloat(p, 32)
-// 	if err != nil {
-// 		return bk, errors.New("406. Not Acceptable. Price must be a number.")
-// 	}
-// 	bk.Price = float32(f64)
+	// validate form values
+	if p.Name == "" || p.UserName == "" || p.Password == "" {
+		return p, errors.New("400. Bad request. All fields must be complete")
+	}
 
-// 	// insert values
-// 	_, err = config.DB.Exec("INSERT INTO pricing (id, title, price) VALUES ($1, $2, $3)", bk.ID, bk.Title, bk.Price)
-// 	if err != nil {
-// 		return bk, errors.New("500. Internal Server Error." + err.Error())
-// 	}
-// 	return bk, nil
-// }
+	// insert values
+	_, err := config.DB.Exec("INSERT INTO employees (id, name, username, password, isactive) VALUES ($1, $2, $3, $4, $5)", p.ID, p.Name, p.UserName, p.Password, p.IsActive)
+	if err != nil {
+		return p, errors.New("500. Internal Server Error." + err.Error())
+	}
+	return p, nil
+}
 
 func checkError(err error) {
 	if err != nil {
